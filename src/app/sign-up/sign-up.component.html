@@ -1,8 +1,9 @@
 <div class="site">
     <div class="signUp-logo">
-        <img src="./img/icons/Capa 1.svg" alt="Join-Logo" />
+        <img src="../../assets/img/Capa 1.svg" alt="Join-Logo" />
     </div>
-    <form class="signUp" id="signUpForm">
+
+    <form (ngSubmit)="onSubmit()" class="signUp" id="signUpForm" [formGroup]="newUserForm">
         <div class="signUpHeader">
             <div class="closeSignUp" id="backToLogIn">
                 <img src="../../assets/img/Vector.svg" alt="Back" />
@@ -12,52 +13,81 @@
                 <div class="border-bottom"></div>
             </h1>
         </div>
+
+
+
         <div class="input-layout">
             <div class="input-field">
-                <input type="text" id="name" required placeholder="Name" />
+                <input formControlName="name" type="text" id="name" placeholder="Name" />
                 <div class="icon">
                     <img src="../../assets/img/person-grey.svg" alt="Person" />
                 </div>
             </div>
+
+            <div class="login-error"
+                [ngClass]="{'full-opacity': newUserForm.controls['name'].invalid && newUserForm.controls['name'].touched}">
+                <p>This field is required</p>
+            </div>
+
+
             <div class="confirmPassword">
                 <div class="input-field" id="emailField">
-                    <input type="email" id="email" required placeholder="Email" />
+                    <input formControlName="email" type="email" id="email" placeholder="Email" />
                     <div class="icon">
                         <img src="../../assets/img/mail.svg" alt="E-Mail" />
                     </div>
                 </div>
-                <div class="signUp-error-pw none" id="errorMessageEmail">
-                    <p>Ups! your email already exists</p>
-                </div>
             </div>
+
+            <div class="login-error"
+                [ngClass]="{'full-opacity': newUserForm.controls['email'].invalid && newUserForm.controls['email'].touched}">
+                <p>This field is required and must be an valid email address</p>
+            </div>
+
             <div class="input-field">
-                <input minlength="1" type="password" id="password" required placeholder="Password" />
+                <input formControlName="password_1" type="password" id="password" placeholder="Password" />
                 <div class="icon">
                     <img id="pwIcon" src="../../assets/img/lock.svg" alt="Lock" />
                 </div>
             </div>
+
+            <div class="login-error"
+                [ngClass]="{'full-opacity': newUserForm.controls['password_1'].invalid && newUserForm.controls['password_1'].touched}">
+                <p>The password is required and must contain 5 characters</p>
+            </div>
+
+
             <div class="confirmPassword">
                 <div class="input-field" id="cpwField">
-                    <input minlength="1" type="password" id="confirmPassword" required placeholder="Confirm Password" />
+                    <input formControlName="password_2" type="password" id="confirmPassword"
+                        placeholder="Confirm Password" />
                     <div class="icon">
                         <img id="cpwIcon" src="../../assets/img/lock.svg" alt="Lock" />
                     </div>
                 </div>
-                <div class="signUp-error-pw none" id="errorMessage">
-                    <p>Ups! your password don't match</p>
-                </div>
             </div>
 
-            <div class="input-checkbox" id="inputCheckbox">
-                <img src="../../assets/img/checkbox-unchecked.svg" alt="Checkbox" id="checkbox"
-                    onclick="acceptCheckbox()" />
-                <p>I accept the</p>
-                <a href="#" onclick="newTab('1')"> Privacy policy</a>
+            <div class="login-error"
+                [ngClass]="{'full-opacity': newUserForm.controls['password_2'].invalid && newUserForm.controls['password_2'].touched}">
+                <p>The password is required and must contain 5 characters</p>
             </div>
+
+            <div class="login-error"
+                [ngClass]="{'full-opacity': newUserForm.errors?.['passwordMatch'] && newUserForm.controls['password_1'].dirty && newUserForm.controls['password_2'].dirty}">
+                <p>Passwords don´t match</p>
+            </div>
+
+            <mat-checkbox [ngModelOptions]="{standalone: true}" class="input-checkbox" [(ngModel)]="checkbox"
+                [color]="'primary'">I accept the <a href="#" onclick="newTab('1')"> Privacy policy</a></mat-checkbox>
+
+
             <div class="signUp-error-pw confirmBox zero-opacity" id="errorMessageBox">
                 <p>Please accept the privacy policy</p>
             </div>
         </div>
-        <input class="signUp-btn" type="submit" value="Sign up" />
+        <input [ngClass]="{'form-validate' :  newUserForm.valid && checkbox}" class="signUp-btn" type="submit"
+            [disabled]="newUserForm.invalid || !checkbox" value="Sign up" />
     </form>
+
+
 </div>

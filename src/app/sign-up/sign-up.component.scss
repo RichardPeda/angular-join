@@ -45,7 +45,7 @@
     border-radius: 30px;
     background-color: #ffffff;
     box-shadow: $box-shadow;
-    gap: 32px;
+    gap: 16px;
 }
 
 .signUpHeader {
@@ -121,7 +121,7 @@
     max-width: 422px;
     width: 100%;
     height: 48px;
-    margin-bottom: 24px;
+    margin-top: 12px;
     border: 1px solid $clr-font-light;
     border-radius: 8px;
 }
@@ -178,7 +178,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .input-checkbox p:hover {
@@ -223,11 +223,18 @@
     font-weight: 700;
 }
 
-.signUp-btn:hover {
+.form-validate:hover {
     cursor: pointer;
     background-color: $clr-light-blue;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
 }
+
+
+// .signUp-btn:hover {
+//     cursor: pointer;
+//     background-color: $clr-light-blue;
+//     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+// }
 
 footer {
     position: fixed;
@@ -263,25 +270,10 @@ footer {
     cursor: default;
 }
 
-#pwIcon[src='./img/icons/visibility_off.svg']:hover {
-    cursor: pointer;
-}
-
-#pwIcon[src='./img/icons/visibility.svg']:hover {
-    cursor: pointer;
-}
-
 #cpwIcon {
     cursor: default;
 }
 
-#cpwIcon[src='./img/icons/visibility_off.svg']:hover {
-    cursor: pointer;
-}
-
-#cpwIcon[src='./img/icons/visibility.svg']:hover {
-    cursor: pointer;
-}
 
 @keyframes slide-up {
     0% {
@@ -397,4 +389,22 @@ footer {
 
 #errorMessageBox {
     color: $clr-prio-red;
+}
+
+
+
+.login-error {
+    width: 100%;
+    display: flex;
+    font-size: 12px;
+    color: $clr-prio-red;
+    margin-block: 5px 0;
+    opacity: 0;
+    p{
+        margin: 0;
+    }
+}
+
+.full-opacity{
+    opacity: 1 !important;
 }
