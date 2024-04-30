@@ -1,0 +1,63 @@
+<div class="site">
+    <div class="signUp-logo">
+        <img src="./img/icons/Capa 1.svg" alt="Join-Logo" />
+    </div>
+    <form class="signUp" id="signUpForm">
+        <div class="signUpHeader">
+            <div class="closeSignUp" id="backToLogIn">
+                <img src="../../assets/img/Vector.svg" alt="Back" />
+            </div>
+            <h1>
+                Sign up
+                <div class="border-bottom"></div>
+            </h1>
+        </div>
+        <div class="input-layout">
+            <div class="input-field">
+                <input type="text" id="name" required placeholder="Name" />
+                <div class="icon">
+                    <img src="../../assets/img/person-grey.svg" alt="Person" />
+                </div>
+            </div>
+            <div class="confirmPassword">
+                <div class="input-field" id="emailField">
+                    <input type="email" id="email" required placeholder="Email" />
+                    <div class="icon">
+                        <img src="../../assets/img/mail.svg" alt="E-Mail" />
+                    </div>
+                </div>
+                <div class="signUp-error-pw none" id="errorMessageEmail">
+                    <p>Ups! your email already exists</p>
+                </div>
+            </div>
+            <div class="input-field">
+                <input minlength="1" type="password" id="password" required placeholder="Password" />
+                <div class="icon">
+                    <img id="pwIcon" src="../../assets/img/lock.svg" alt="Lock" />
+                </div>
+            </div>
+            <div class="confirmPassword">
+                <div class="input-field" id="cpwField">
+                    <input minlength="1" type="password" id="confirmPassword" required placeholder="Confirm Password" />
+                    <div class="icon">
+                        <img id="cpwIcon" src="../../assets/img/lock.svg" alt="Lock" />
+                    </div>
+                </div>
+                <div class="signUp-error-pw none" id="errorMessage">
+                    <p>Ups! your password don't match</p>
+                </div>
+            </div>
+
+            <div class="input-checkbox" id="inputCheckbox">
+                <img src="../../assets/img/checkbox-unchecked.svg" alt="Checkbox" id="checkbox"
+                    onclick="acceptCheckbox()" />
+                <p>I accept the</p>
+                <a href="#" onclick="newTab('1')"> Privacy policy</a>
+            </div>
+            <div class="signUp-error-pw confirmBox zero-opacity" id="errorMessageBox">
+                <p>Please accept the privacy policy</p>
+            </div>
+        </div>
+        <input class="signUp-btn" type="submit" value="Sign up" />
+    </form>
+</div>
