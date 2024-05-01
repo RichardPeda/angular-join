@@ -1,1 +1,93 @@
-<p>summary works!</p>
+
+
+<app-header></app-header>
+<app-navbar></app-navbar>
+
+
+<div class="content">
+
+
+    <div class="summary-container">
+        <div class="summary-header">
+            <div class="summary-titel">
+                <h1>Join 360</h1>
+            </div>
+            <div class="summary-border-mid"></div>
+            <div class="summary-header-text">
+                <p>Key Metrics at a Glance</p>
+            </div>
+            <div class="summary-border-bottom"></div>
+        </div>
+        <div class="summary-body">
+            <div class="summary-overview">
+                <div class="overview-top">
+                    <div class="overview-top-card" id="toDoCard" >
+                        <div class="top-icon">
+                            <img  id="pencil" src="../../assets/img/pencil-dark.svg" alt="Pencil" />
+                        </div>
+                        <div class="top-content">
+                            <div class="task-number" id="toDo">1</div>
+                            <div class="subtitel">To-do</div>
+                        </div>
+                    </div>
+                    <div class="overview-top-card" id="doneCard" onmouseover="hoverDone()" onmouseout="outDone()"
+                        onclick="initBoardHTML()">
+                        <div class="top-icon">
+                            <img id="done" src="../../assets/img/done-dark.svg" alt="Done" />
+                        </div>
+                        <div class="top-content">
+                            <div class="task-number" id="done1">1</div>
+                            <div class="subtitel">Done</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="overview-mid">
+                    <div class="overview-mid-card" onclick="initBoardHTML()">
+                        <div class="mid-card-left">
+                            <div class="mid-icon">
+                                <img src="../../assets/img/urgents.svg" alt="Urgent" />
+                            </div>
+                            <div class="top-content">
+                                <div class="task-number" id="urgent">1</div>
+                                <div class="subtitel">Urgent</div>
+                            </div>
+                        </div>
+                        <div class="mid-card-mid"></div>
+                        <div class="mid-card-right">
+                            <div class="card-right-date" id="actuell-date">
+                                October 16, 2022
+                            </div>
+                            <div class="subtitel">Upcoming Deadline</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="overview-bottom">
+                    <div class="overview-bottom-card" onclick="initBoardHTML()">
+                        <div class="top-content">
+                            <div class="task-number" id="inBoard">1</div>
+                            <div class="subtitel">Tasks in Board</div>
+                        </div>
+                    </div>
+                    <div class="overview-bottom-card" onclick="initBoardHTML()">
+                        <div class="top-content">
+                            <div class="task-number" id="inProgress">1</div>
+                            <div class="subtitel">Tasks in Progress</div>
+                        </div>
+                    </div>
+                    <div class="overview-bottom-card" onclick="initBoardHTML()">
+                        <div class="top-content">
+                            <div class="task-number" id="feedback">1</div>
+                            <div class="subtitel">Awaiting Feedback</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="summary-greet" id="summaryGreet">
+                <div class="greet-body" id="greeting">
+                    <p>Good morning</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
