@@ -5,11 +5,13 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { NavbarComponent } from './shared/modules/navbar/navbar.component';
 import { HeaderComponent } from './shared/modules/header/header.component';
 import { SummaryComponent } from './summary/summary.component';
+import { ContactsComponent } from './contacts/contacts.component';
 
 export const routes: Routes = [
     // { path: '', component: LoginComponent, data: { animation: 'openClosePage' } },
     // { path: 'signup', component: SignUpComponent, data: { animation: 'openClosePage' } },
     // { path: '', component: NavbarComponent },
     // { path: '', component: HeaderComponent },
-    { path: '', component: SummaryComponent },
+    // { path: '', component: SummaryComponent },
+    { path: '', component: ContactsComponent },
 ];

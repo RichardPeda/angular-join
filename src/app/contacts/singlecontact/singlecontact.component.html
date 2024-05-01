@@ -1,0 +1,12 @@
+
+
+
+
+
+<div id="contact-container" class="contact-container" onclick="showContactDetails(); setHighlight()">
+    <div class="initials-badge" [ngStyle]="{'background-color': contact.badgecolor}">{{contact.initials}}</div>
+    <div class="d-column-flex-start">
+        <div class="contact-name">{{contact.name}}</div>
+        <div class="contact-email">{{contact.email}}</div>
+    </div>
+</div>

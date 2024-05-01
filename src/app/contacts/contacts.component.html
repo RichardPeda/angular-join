@@ -1,0 +1,39 @@
+<div class="main-contacts-container">
+    <div id="contacts-list" class="contacts-list">
+        <div class="btn-container">
+            <button class="btn-grey btn-add-contact" onclick="openAddContactSlider()">
+
+            </button>
+        </div>
+
+
+
+        <div id="register-container">
+            <div id="registerbox-${registerLetter}" class="d-column-flex-start full-width">
+                <div class="registerbox">R</div>
+            </div>
+            @for (contact of dummyContacts; track $index) {
+            <app-singlecontact [contact]="contact"></app-singlecontact>
+            }
+
+
+        </div>
+    </div>
+
+    <div id="contact-details-section">
+        <div id="click-background" class="d-none" onclick="closeDetailsMenu()"></div>
+        <div id="btn-details-container" class="btn-details-container d-none">
+            <button class="btn-grey btn-details-menu" onclick="openDetailsMenu()">
+            </button>
+        </div>
+        <div id="arrow-back-lightblue" class="d-none" onclick="initContactsHTML()"><img
+                src="../../assets/img/arrow-back-lightblue.svg" alt=""></div>
+        <div class="contacts-section-headline">
+            <h1 class="no-margin">Contacts</h1>
+            <div class="separator-upright-lightblue"></div>
+            <span class="headline-claim">Better with a team</span>
+        </div>
+
+        <div id="contact-details"></div>
+    </div>
+</div>

@@ -21,19 +21,18 @@
         <div class="summary-body">
             <div class="summary-overview">
                 <div class="overview-top">
-                    <div class="overview-top-card" id="toDoCard" >
+                    <div class="overview-top-card" id="toDoCard" (mouseover)="changeImg('pencil')" (mouseout)="resetImg('pencil')">
                         <div class="top-icon">
-                            <img  id="pencil" src="../../assets/img/pencil-dark.svg" alt="Pencil" />
+                            <img [src]="penImgSrc[penImgIdx]"  id="pencil" alt="Pencil" />
                         </div>
                         <div class="top-content">
                             <div class="task-number" id="toDo">1</div>
                             <div class="subtitel">To-do</div>
                         </div>
                     </div>
-                    <div class="overview-top-card" id="doneCard" onmouseover="hoverDone()" onmouseout="outDone()"
-                        onclick="initBoardHTML()">
+                    <div class="overview-top-card" id="doneCard" (mouseover)="changeImg('done')" (mouseout)="resetImg('done')">
                         <div class="top-icon">
-                            <img id="done" src="../../assets/img/done-dark.svg" alt="Done" />
+                            <img [src]="doneImgSrc[doneImgIdx]" id="done"  alt="Done" />
                         </div>
                         <div class="top-content">
                             <div class="task-number" id="done1">1</div>
@@ -42,7 +41,7 @@
                     </div>
                 </div>
                 <div class="overview-mid">
-                    <div class="overview-mid-card" onclick="initBoardHTML()">
+                    <div class="overview-mid-card">
                         <div class="mid-card-left">
                             <div class="mid-icon">
                                 <img src="../../assets/img/urgents.svg" alt="Urgent" />
@@ -62,19 +61,19 @@
                     </div>
                 </div>
                 <div class="overview-bottom">
-                    <div class="overview-bottom-card" onclick="initBoardHTML()">
+                    <div class="overview-bottom-card">
                         <div class="top-content">
                             <div class="task-number" id="inBoard">1</div>
                             <div class="subtitel">Tasks in Board</div>
                         </div>
                     </div>
-                    <div class="overview-bottom-card" onclick="initBoardHTML()">
+                    <div class="overview-bottom-card">
                         <div class="top-content">
                             <div class="task-number" id="inProgress">1</div>
                             <div class="subtitel">Tasks in Progress</div>
                         </div>
                     </div>
-                    <div class="overview-bottom-card" onclick="initBoardHTML()">
+                    <div class="overview-bottom-card">
                         <div class="top-content">
                             <div class="task-number" id="feedback">1</div>
                             <div class="subtitel">Awaiting Feedback</div>
