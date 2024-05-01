@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { inject } from '@angular/core';
-import { Firestore, collectionData, collection, doc, onSnapshot } from '@angular/fire/firestore';
+import { Firestore, collectionData, collection, doc, onSnapshot, addDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { User } from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class UserdataService {
         console.log(user.data());
       });
     })
-  
+
 
 
     // this.users$ = collectionData(this.getUserRef());
@@ -33,6 +34,14 @@ export class UserdataService {
     // })
   }
 
+  async addUser(user: User) {
+    const docRef = await addDoc(this.getUserRef(), {
+      name: user.name,
+      email: user.email,
+      password: user.password,
+    });
+    console.log("Document written with ID: ", docRef.id);
+  }
 
   ngOnDestroy() {
     this.unsubUsers();

@@ -4,12 +4,13 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { LogoAnimationComponent } from '../logo-animation/logo-animation.component';
 import { UserdataService } from '../services/userdata.service';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatCheckboxModule, LogoAnimationComponent],
+  imports: [CommonModule, ReactiveFormsModule, MatCheckboxModule, LogoAnimationComponent, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

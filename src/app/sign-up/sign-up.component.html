@@ -3,9 +3,9 @@
         <img src="../../assets/img/Capa 1.svg" alt="Join-Logo" />
     </div>
 
-    <form (ngSubmit)="onSubmit()" class="signUp" id="signUpForm" [formGroup]="newUserForm">
+    <form (ngSubmit)="onSubmit()" class="signUp" [formGroup]="newUserForm">
         <div class="signUpHeader">
-            <div class="closeSignUp" id="backToLogIn">
+            <div [routerLink]="['']" class="closeSignUp">
                 <img src="../../assets/img/Vector.svg" alt="Back" />
             </div>
             <h1>
