@@ -103,7 +103,7 @@ body {
 }
 
 .full-width{
-    width: 100%;
+    width: 75%;
 }
 
 .d-column-flex-start {
@@ -143,64 +143,15 @@ body {
     color: $clr-dark-gray;
 }
 
-.details-container {
-    margin-left: 55px;
-    margin-top: 39px;
-}
 
-.detail-header {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-}
 
-.name-right {
-    height: 88px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
 
-.function-container {
-    display: flex;
-    gap: 10px;
-}
 
-.edit-delete-btn {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    font-weight: 400;
-    gap: 11px;
-    cursor: pointer;
-    border: none;
-    color: $clr-dark-gray;
-    background-color: white;
-}
 
-.edit-delete-btn:hover {
-    color: $clr-light-blue;
-}
 
-#edit-btn img {
-    filter: invert(21%) sepia(15%) saturate(1620%) hue-rotate(176deg) brightness(95%) contrast(91%);
-    width: 18px;
-    height: 18px;
-}
 
-#delete-btn img {
-    filter: invert(21%) sepia(15%) saturate(1620%) hue-rotate(176deg) brightness(95%) contrast(91%);
-    width: 16px;
-    height: 18px;
-}
 
-#edit-btn:hover img {
-    filter: invert(59%) sepia(91%) saturate(1353%) hue-rotate(166deg) brightness(90%) contrast(95%);
-}
 
-#delete-btn:hover img {
-    filter: invert(59%) sepia(91%) saturate(1353%) hue-rotate(166deg) brightness(90%) contrast(95%);
-}
 
 .contact-information-header {
     font-weight: 400;
@@ -511,6 +462,7 @@ label {
         display: flex;
         align-items: center;
         width: 90vw;
+       
         height: 78px;
         padding: 15px 24px 15px 37px;
         border-bottom: 1px solid $clr-light-gray;
@@ -624,14 +576,8 @@ label {
         font-weight: 500;
     }
 
-    /*Contact Details*/
-    .person-details-badge {
-        font-size: 27px;
-        font-weight: 400;
-        width: 80px;
-        height: 80px;
-        margin-right: 20px;
-    }
+
+ 
 
     .contacts-section-headline {
         display: flex;
@@ -687,21 +633,7 @@ label {
         font-weight: 700;
     }
 
-    .function-container {
-        flex-direction: column;
-        position: fixed;
-        bottom: 96px;
-        right: 8px;
-        background-color: white;
-        width: 116px;
-        height: 100px;
-        justify-content: center;
-        padding-left: 8px;
-        box-shadow: $header-box-shadow;
-        border-radius: 20px 20px 0 20px;
-        transform: translateX(+200%);
-        z-index: 23;
-    }
+   
 
     #click-background {
         width: 100vw;
@@ -898,3 +830,4 @@ label {
     filter: brightness(0) saturate(100%) invert(100%);
     filter: invert(77%) sepia(32%) saturate(7234%) hue-rotate(165deg) brightness(92%) contrast(91%);
 }
+

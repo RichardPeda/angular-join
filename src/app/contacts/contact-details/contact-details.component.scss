@@ -1,0 +1,104 @@
+@import '../../../colors.scss';
+
+
+.details-container {
+    margin-left: 55px;
+    margin-top: 39px;
+}
+
+.detail-header {
+   
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+
+    h2 {
+        margin-block: 0;
+    }
+}
+
+
+.person-details-badge {
+    width: 120px;
+    height: 120px;
+    padding: 30px;
+    border: 3px solid white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 72px;
+    color: white;
+    font-size: 47px;
+    font-weight: 500;
+}
+
+.person-details-badge {
+    font-size: 27px;
+    font-weight: 400;
+    width: 80px;
+    height: 80px;
+    margin-right: 20px;
+}
+
+#edit-btn img {
+    filter: invert(21%) sepia(15%) saturate(1620%) hue-rotate(176deg) brightness(95%) contrast(91%);
+    width: 18px;
+    height: 18px;
+}
+
+#delete-btn img {
+    filter: invert(21%) sepia(15%) saturate(1620%) hue-rotate(176deg) brightness(95%) contrast(91%);
+    width: 16px;
+    height: 18px;
+}
+
+#edit-btn:hover img {
+    filter: invert(59%) sepia(91%) saturate(1353%) hue-rotate(166deg) brightness(90%) contrast(95%);
+}
+
+#delete-btn:hover img {
+    filter: invert(59%) sepia(91%) saturate(1353%) hue-rotate(166deg) brightness(90%) contrast(95%);
+}
+
+.edit-delete-btn {
+    display: flex;
+    // align-items: center;
+    font-size: 16px;
+    font-weight: 400;
+    gap: 11px;
+    cursor: pointer;
+    border: none;
+    color: $clr-dark-gray;
+    background-color: white;
+}
+
+.edit-delete-btn:hover {
+    color: $clr-light-blue;
+}
+
+.function-container {
+    display: flex;
+    gap: 10px;
+    flex-direction: row;
+
+    background-color: white;
+    // width: 116px;
+    // height: 100px;
+    justify-content: center;
+    // padding-left: 8px;
+    // box-shadow: $header-box-shadow;
+    border-radius: 20px 20px 0 20px;
+    // transform: translateX(+200%);
+    // z-index: 23;
+}
+
+.name-right {
+ 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: nowrap;
+}

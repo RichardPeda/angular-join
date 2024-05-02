@@ -9,14 +9,16 @@
 
 
         <div id="register-container">
-            <div id="registerbox-${registerLetter}" class="d-column-flex-start full-width">
-                <div class="registerbox">R</div>
-            </div>
-            @for (contact of dummyContacts; track $index) {
-            <app-singlecontact [contact]="contact"></app-singlecontact>
+            @for (letter of registerLetters; track $index) {
+                <div class="d-column-flex-start full-width">
+                    <div class="registerbox">{{letter}}</div>
+                </div>
+                @for (contact of usercontacts; track $index) {
+                    @if (contact.register.includes(letter)) {
+                        <app-singlecontact [isSelected]="(contact.name == selectedContact.name)" (selectedContact)="showContactDetails($event)" [contact]="contact"></app-singlecontact>
+                    }
+                }
             }
-
-
         </div>
     </div>
 
@@ -34,6 +36,6 @@
             <span class="headline-claim">Better with a team</span>
         </div>
 
-        <div id="contact-details"></div>
+    <app-contact-details [contact]="selectedContact"></app-contact-details>
     </div>
 </div>

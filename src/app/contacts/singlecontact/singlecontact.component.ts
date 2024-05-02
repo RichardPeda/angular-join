@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Contact } from '../../interfaces/contact.interface';
 import { CommonModule } from '@angular/common';
 
@@ -7,9 +7,10 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './singlecontact.component.html',
-  styleUrl: './singlecontact.component.scss'
+  styleUrl: './singlecontact.component.scss',
 })
 export class SinglecontactComponent {
+  @Output() selectedContact = new EventEmitter<Contact>();
 
   @Input() contact: Contact = {
     badgecolor: '',
@@ -18,9 +19,12 @@ export class SinglecontactComponent {
     phone: '',
     initials: '',
     register: '',
-    selected: false
+    selected: false,
+  };
+
+  @Input() isSelected : boolean = false;
+
+  selectContact(currentContact: Contact) {
+    this.selectedContact.emit(currentContact);
   }
-
-
-
 }
