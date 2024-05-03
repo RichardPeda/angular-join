@@ -4,7 +4,7 @@
         <div class="name-right">
             <h2>{{contact.name}}</h2>
             <div class="function-container">
-                <button id="edit-btn" class="edit-delete-btn" >
+                <button id="edit-btn" class="edit-delete-btn" (click)="contactService.editContact(contact)" >
                     <img src="../../assets/img/pencil-black.svg" alt="">    
                     <span>Edit</span>
                 </button>

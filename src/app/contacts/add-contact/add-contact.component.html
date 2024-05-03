@@ -1,51 +1,65 @@
-<div class="contact-slider">
+<div [@slideAnimation]="slideIn ? 'inside' : 'outside'" class="contact-slider">
     <div class="slider-header-container">
         <img src="../../../assets/img/join_logo.svg" alt="">
-        <h1 id="window-headline" class="no-margin clr-white">{{headline}}</h1>
-        @if (componentMode == 'add') {
-          <div id="window-claim" class="add-claim">Tasks are better with a team!</div>
+
+        @if (contactService.slideInMode == 'add') {
+        <h1 id="window-headline" class="no-margin clr-white">Add contact</h1>
+        }@else {
+        <h1 id="window-headline" class="no-margin clr-white">Edit contact</h1>
+        }
+
+
+
+        @if (contactService.slideInMode == 'add') {
+        <div id="window-claim" class="add-claim">Tasks are better with a team!</div>
         }
 
         <div class="separator-across-lightblue"></div>
     </div>
     <div class="contact-input-container">
-        <div class="cancel-x" onclick="setSlideOutEffects()"><img src="../../../assets/img/cancel.svg" alt=""></div>
+        <div class="cancel-x" (click)="closePopup()"><img src="../../../assets/img/cancel.svg" alt=""></div>
 
 
-        @if (componentMode == 'add') {
-            <div id="contact-badge" class="contact-badge">
-                <img src="../../../assets/img/person.svg" alt="">
-            </div>
+        @if (contactService.slideInMode == 'add') {
+        <div id="contact-badge" class="contact-badge">
+            <img src="../../../assets/img/person.svg" alt="">
+        </div>
         }@else {
-            <div id="contact-badge" class="contact-badge"  [ngStyle]="{'background-color': contact.badgecolor}">
-                {{contact.initials}}
-            </div>
+        <div id="contact-badge" class="contact-badge" [ngStyle]="{'background-color': contact.badgecolor}">
+            {{contact.initials}}
+        </div>
         }
 
 
         <form id="addContact-form" class="input-form-container">
             <div class="inputfields">
                 <label id="input-name-label">
-                    <input class="contact-inputField" type="text" id="contact-input-name" placeholder="Name" required>
+                    <input name="name" [(ngModel)]="contact.name" class="contact-inputField" type="text"
+                        id="contact-input-name" placeholder="Name" required>
                 </label>
                 <label id="input-email-label">
-                    <input class="contact-inputField" type="email" id="contact-input-email" placeholder="Email"
-                        required>
+                    <input name="email" [(ngModel)]="contact.email" class="contact-inputField" type="email"
+                        id="contact-input-email" placeholder="Email" required>
                 </label>
                 <label id="input-phone-label">
-                    <input class="contact-inputField" type="tel" id="contact-input-phone" placeholder="Phone" required>
+                    <input name="phone" [(ngModel)]="contact.phone" class="contact-inputField" type="tel"
+                        id="contact-input-phone" placeholder="Phone" required>
                 </label>
             </div>
             <div id="buttons-container" class="cancel-create-buttons-container">
-                @if (componentMode == 'add') {
-                    <button class="btn-white btn-pos" type="reset">Cancel <img src="../../../assets/img/cancel.svg" alt=""></button>
+                @if (contactService.slideInMode == 'add') {
+                <button class="btn-white btn-pos" type="reset">Cancel <img src="../../../assets/img/cancel.svg"
+                        alt=""></button>
+                <button id="createContactBtn" type="submit" class="btn-grey img-white btn-pos">
+                    Create contact<img src="../../../assets/img/checked.svg"></button>
                 }@else {
-                    <button class="btn-white btn-pos" type="reset">Delete</button>
+                <button class="btn-white btn-pos" type="reset">Delete</button>
+                <button id="createContactBtn" type="submit" class="btn-grey img-white btn-pos">
+                    Save<img src="../../../assets/img/checked.svg"></button>
                 }
 
 
-                <button id="createContactBtn" type="submit" class="btn-grey img-white btn-pos">
-                    {{rightBtnText}}<img src="../../../assets/img/checked.svg"></button>
+
             </div>
         </form>
     </div>

@@ -14,6 +14,6 @@ export const routes: Routes = [
     // { path: '', component: NavbarComponent },
     // { path: '', component: HeaderComponent },
     // { path: '', component: SummaryComponent },
-    // { path: '', component: ContactsComponent },
-    { path: '', component: AddContactComponent },
+    { path: '', component: ContactsComponent },
+    // { path: '', component: AddContactComponent },
 ];

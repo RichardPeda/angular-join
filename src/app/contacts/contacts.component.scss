@@ -1,7 +1,18 @@
 @import '../../colors.scss';
 
-/* @import url(general.css);
- */
+
+.content {
+    width: 100%;
+    height: 100%;
+    background-color: $clr-bg;
+    display: grid;
+    grid-template-rows: 96px 1fr;
+    grid-template-columns: 232px 1fr;
+    grid-template-areas:
+        "header header "
+        "sidebar content";
+}
+
 @keyframes fade-in {
     0% {
         opacity: 0;
@@ -39,6 +50,7 @@ body {
 
 
 .main-contacts-container {
+    grid-area: content;
     width: calc(100vw - 232px);
     height: calc(100vh - 96px);
     display: flex;
@@ -102,7 +114,7 @@ body {
     font-weight: 400;
 }
 
-.full-width{
+.full-width {
     width: 75%;
 }
 
@@ -337,7 +349,7 @@ body {
         display: flex;
         align-items: center;
         width: 90vw;
-       
+
         height: 78px;
         padding: 15px 24px 15px 37px;
         border-bottom: 1px solid $clr-light-gray;
@@ -371,7 +383,7 @@ body {
         transform: translate(+200%, -50%);
     }
 
-   
+
 
     .cancel-x {
         content: url('../../assets/img/cancel_white.svg');
@@ -391,7 +403,7 @@ body {
         margin-bottom: 60px;
     }
 
-  
+
 
     .clr-white {
         color: white;
@@ -420,10 +432,10 @@ body {
         margin-bottom: 48px;
     }
 
-   
 
 
- 
+
+
 
     .contacts-section-headline {
         display: flex;
@@ -479,7 +491,7 @@ body {
         font-weight: 700;
     }
 
-   
+
 
     #click-background {
         width: 100vw;
@@ -561,7 +573,7 @@ body {
         display: none;
     }
 
-   
+
 
     #createContactBtn img {
         width: 15.5px;
@@ -672,5 +684,17 @@ body {
 .btn-white:hover img {
     filter: brightness(0) saturate(100%) invert(100%);
     filter: invert(77%) sepia(32%) saturate(7234%) hue-rotate(165deg) brightness(92%) contrast(91%);
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 50;
+    display: none;
+}
+
+.show-overlay{
+    display: block;
 }
 

@@ -1,41 +1,54 @@
-<div class="main-contacts-container">
-    <div id="contacts-list" class="contacts-list">
-        <div class="btn-container">
-            <button class="btn-grey btn-add-contact" onclick="openAddContactSlider()">
-
-            </button>
-        </div>
 
 
+<app-header></app-header>
+<app-navbar></app-navbar>
 
-        <div id="register-container">
-            @for (letter of registerLetters; track $index) {
+<div class="content">
+
+    <div class="main-contacts-container">
+        <div id="contacts-list" class="contacts-list">
+            <div class="btn-container">
+                <button class="btn-grey btn-add-contact" (click)="contactService.addPopup()">
+
+                </button>
+            </div>
+
+
+
+            <div id="register-container">
+                @for (letter of registerLetters; track $index) {
                 <div class="d-column-flex-start full-width">
                     <div class="registerbox">{{letter}}</div>
                 </div>
-                @for (contact of usercontacts; track $index) {
-                    @if (contact.register.includes(letter)) {
-                        <app-singlecontact [isSelected]="(contact.name == selectedContact.name)" (selectedContact)="showContactDetails($event)" [contact]="contact"></app-singlecontact>
-                    }
+                @for (contact of contactService.contacts; track $index) {
+                @if (contact.register.includes(letter)) {
+                <app-singlecontact [isSelected]="(contact.name == contactService.selectedContact.name)"
+                    (selectedContact)="contactService.showContactDetails($event)" [contact]="contact"></app-singlecontact>
                 }
-            }
-        </div>
-    </div>
-
-    <div id="contact-details-section">
-        <div id="click-background" class="d-none" onclick="closeDetailsMenu()"></div>
-        <div id="btn-details-container" class="btn-details-container d-none">
-            <button class="btn-grey btn-details-menu" onclick="openDetailsMenu()">
-            </button>
-        </div>
-        <div id="arrow-back-lightblue" class="d-none" onclick="initContactsHTML()"><img
-                src="../../assets/img/arrow-back-lightblue.svg" alt=""></div>
-        <div class="contacts-section-headline">
-            <h1 class="no-margin">Contacts</h1>
-            <div class="separator-upright-lightblue"></div>
-            <span class="headline-claim">Better with a team</span>
+                }
+                }
+            </div>
         </div>
 
-    <app-contact-details [contact]="selectedContact"></app-contact-details>
+        <div id="contact-details-section">
+            <div id="click-background" class="d-none" onclick="closeDetailsMenu()"></div>
+            <div id="btn-details-container" class="btn-details-container d-none">
+                <button class="btn-grey btn-details-menu" onclick="openDetailsMenu()">
+                </button>
+            </div>
+            <div id="arrow-back-lightblue" class="d-none" onclick="initContactsHTML()"><img
+                    src="../../assets/img/arrow-back-lightblue.svg" alt=""></div>
+            <div class="contacts-section-headline">
+                <h1 class="no-margin">Contacts</h1>
+                <div class="separator-upright-lightblue"></div>
+                <span class="headline-claim">Better with a team</span>
+            </div>
+
+            <app-contact-details [contact]="contactService.selectedContact"></app-contact-details>
+        </div>
     </div>
+</div>
+
+<div class="overlay" [ngClass]="{'show-overlay': contactService.showSlider}">
+    <app-add-contact [contact]="contactService.slideInMode == 'edit' ?  contactService.selectedContact : contactService.emptyContact " (isClosed)="contactService.slideOutPopup($event)" [slideIn]="contactService.showSlider" ></app-add-contact>
 </div>

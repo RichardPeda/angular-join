@@ -71,7 +71,10 @@
     cursor: pointer;
     border: none;
     color: $clr-dark-gray;
-    background-color: white;
+    background-color: $clr-bg;
+    span{
+        background-color: $clr-bg;
+    }
 }
 
 .edit-delete-btn:hover {
