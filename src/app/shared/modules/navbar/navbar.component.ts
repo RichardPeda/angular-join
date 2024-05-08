@@ -23,4 +23,7 @@ export class NavbarComponent {
   linkToContacts() {
     this.router.navigate(['contacts/' + this.docId]);
   }
+  linkToAddTask(){
+    this.router.navigate(['addtask/' + this.docId]);
+  }
 }

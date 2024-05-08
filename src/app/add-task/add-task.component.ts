@@ -7,18 +7,47 @@ import {
   FormBuilder,
   Validators,
 } from '@angular/forms';
+import { User } from '../interfaces/user.interface';
+import { SessiondataService } from '../services/sessiondata.service';
+import { ContactSelectionComponent } from '../shared/modules/contact-selection/contact-selection.component';
 
 @Component({
   selector: 'app-add-task',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ContactSelectionComponent],
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss',
 })
 export class AddTaskComponent {
+  _subscriptionUser: any;
   submitBtnClicked = false;
+  localUser: User = {
+    id: '',
+    name: '',
+    email: '',
+    password: '',
+    contacts: [],
+    tasks: [],
+  };
 
-  constructor(private _formbuilder: FormBuilder) {}
+  constructor(
+    private _formbuilder: FormBuilder,
+    private sessionDataService: SessiondataService
+  ) {
+    this.localUser = this.sessionDataService.user;
+  }
+
+  ngOnInit() {
+    this._subscriptionUser = this.sessionDataService.userSubject.subscribe(
+      (user: User) => {
+        this.localUser = user;
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this._subscriptionUser.unsubscribe();
+  }
 
   taskForm = this._formbuilder.group({
     title: ['', Validators.required],
@@ -36,7 +65,6 @@ export class AddTaskComponent {
 
   btnIsClicked() {
     this.submitBtnClicked = true;
-    
   }
 
   validateRequiredFormMessage(form: FormControl) {

@@ -11,9 +11,9 @@ import { DataResolverService } from './services/data-resolver.service';
 import { AddTaskComponent } from './add-task/add-task.component';
 
 export const routes: Routes = [
-    // { path: '', component: LoginComponent, data: { animation: 'openClosePage' } },
+    { path: '', component: LoginComponent, data: { animation: 'openClosePage' } },
     { path: 'signup', component: SignUpComponent, data: { animation: 'openClosePage' } },
     { path: 'summary/:id', component: SummaryComponent },
     { path: 'contacts/:id', data:{title : 'contacts'}, component: ContactsComponent },
-    { path: '', data:{title : 'Add task'}, component: AddTaskComponent },
+    { path: 'addtask/:id', data:{title : 'Add task'}, component: AddTaskComponent },
 ];

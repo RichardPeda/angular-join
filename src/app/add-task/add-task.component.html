@@ -36,8 +36,11 @@
                             <img id="arrow-contacts" onclick="contactsDropdown.toggle()" class="addTask-arrow-btn"
                                 src="../../assets/img/arrow-down-small.svg" alt="" />
                         </div>
-                        <div class="addTask-dropdown-container contacts d-none" id="contact-dropdown-container">
-                            <!-- Will be rendered -->
+                        <!-- d-none -->
+                        <div class="addTask-dropdown-container contacts " id="contact-dropdown-container">
+                           @for (contact of localUser.contacts; track $index) {
+                            <app-contact-selection [contact]="contact"></app-contact-selection>
+                           }
                         </div>
                     </div>
                 </div>
