@@ -8,10 +8,12 @@ import { SummaryComponent } from './summary/summary.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { AddContactComponent } from './contacts/add-contact/add-contact.component';
 import { DataResolverService } from './services/data-resolver.service';
+import { AddTaskComponent } from './add-task/add-task.component';
 
 export const routes: Routes = [
-    { path: '', component: LoginComponent, data: { animation: 'openClosePage' } },
+    // { path: '', component: LoginComponent, data: { animation: 'openClosePage' } },
     { path: 'signup', component: SignUpComponent, data: { animation: 'openClosePage' } },
     { path: 'summary/:id', component: SummaryComponent },
-    { path: 'contacts/:id',resolve:{resolvedData: DataResolverService}, data:{title : 'contacts'}, component: ContactsComponent },
+    { path: 'contacts/:id', data:{title : 'contacts'}, component: ContactsComponent },
+    { path: '', data:{title : 'Add task'}, component: AddTaskComponent },
 ];
