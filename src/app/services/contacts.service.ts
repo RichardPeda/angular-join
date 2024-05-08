@@ -1,5 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Contact } from '../interfaces/contact.interface';
+import { UserdataService } from './userdata.service';
+import { SessiondataService } from './sessiondata.service';
 
 @Injectable({
   providedIn: 'root',
@@ -8,10 +10,9 @@ export class ContactsService {
   showSlider = false;
   slideInMode = 'add' || 'edit';
 
-  constructor() {}
-
-  contacts: Contact[] = [
+  dummycontacts: Contact[] = [
     {
+      contactID: '1',
       badgecolor: '#1FD7C1',
       initials: 'RS',
       register: 'R',
@@ -21,6 +22,7 @@ export class ContactsService {
       selected: false,
     },
     {
+      contactID: '2',
       badgecolor: '#00BEE8',
       initials: 'PN',
       register: 'P',
@@ -30,6 +32,7 @@ export class ContactsService {
       selected: false,
     },
     {
+      contactID: '3',
       badgecolor: '#FFA35E',
       initials: 'AF',
       register: 'A',
@@ -39,6 +42,7 @@ export class ContactsService {
       selected: false,
     },
     {
+      contactID: '4',
       badgecolor: '#FFA35E',
       initials: 'KE',
       register: 'K',
@@ -48,6 +52,7 @@ export class ContactsService {
       selected: false,
     },
     {
+      contactID: '5',
       badgecolor: '#FF745E',
       initials: 'KH',
       register: 'K',
@@ -57,6 +62,7 @@ export class ContactsService {
       selected: false,
     },
     {
+      contactID: '6',
       badgecolor: '#00BEE8',
       initials: 'CK',
       register: 'C',
@@ -66,6 +72,7 @@ export class ContactsService {
       selected: false,
     },
     {
+      contactID: '7',
       badgecolor: '#FF7A00',
       initials: 'JD',
       register: 'J',
@@ -75,6 +82,7 @@ export class ContactsService {
       selected: false,
     },
     {
+      contactID: '8',
       badgecolor: '#FF5EB3',
       initials: 'AS',
       register: 'A',
@@ -84,6 +92,7 @@ export class ContactsService {
       selected: false,
     },
     {
+      contactID: '9',
       badgecolor: '#6E52FF',
       initials: 'MP',
       register: 'M',
@@ -93,6 +102,7 @@ export class ContactsService {
       selected: false,
     },
     {
+      contactID: '10',
       badgecolor: '#9327FF',
       initials: 'EK',
       register: 'E',
@@ -103,7 +113,10 @@ export class ContactsService {
     },
   ];
 
+  contacts: Contact[] = [];
+
   selectedContact: Contact = {
+    contactID: '3',
     badgecolor: '#FFA35E',
     initials: 'AF',
     register: 'A',
@@ -114,6 +127,7 @@ export class ContactsService {
   };
 
   emptyContact: Contact = {
+    contactID: '',
     badgecolor: '',
     name: '',
     email: '',
@@ -122,6 +136,18 @@ export class ContactsService {
     register: '',
     selected: false,
   };
+
+  sessionService: SessiondataService = inject(SessiondataService);
+
+  constructor() {
+    this.getFirstContact()
+  }
+
+  getFirstContact() {
+    let contactArray = this.sessionService.user.contacts;
+    contactArray.sort(this.sessionService.compare);
+    this.selectedContact = contactArray[0];
+  }
 
   showContactDetails(currentContact: Contact) {
     this.selectedContact = currentContact;

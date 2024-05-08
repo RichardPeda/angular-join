@@ -16,11 +16,11 @@
 
 
             <div id="register-container">
-                @for (letter of registerLetters; track $index) {
+                @for (letter of registerletters; track $index) {
                 <div class="d-column-flex-start full-width">
                     <div class="registerbox">{{letter}}</div>
                 </div>
-                @for (contact of contactService.contacts; track $index) {
+                @for (contact of localUser.contacts; track $index) {
                 @if (contact.register.includes(letter)) {
                 <app-singlecontact [isSelected]="(contact.name == contactService.selectedContact.name)"
                     (selectedContact)="contactService.showContactDetails($event)" [contact]="contact"></app-singlecontact>
@@ -50,5 +50,5 @@
 </div>
 
 <div class="overlay" [ngClass]="{'show-overlay': contactService.showSlider}">
-    <app-add-contact [contact]="contactService.slideInMode == 'edit' ?  contactService.selectedContact : contactService.emptyContact " (isClosed)="contactService.slideOutPopup($event)" [slideIn]="contactService.showSlider" ></app-add-contact>
+    <app-add-contact  [contact]="contactService.slideInMode == 'edit' ?  contactService.selectedContact : contactService.emptyContact" (listUpdate)="sessionDataService.getRegisterLetters;" (isClosed)="contactService.slideOutPopup($event)" [slideIn]="contactService.showSlider" ></app-add-contact>
 </div>

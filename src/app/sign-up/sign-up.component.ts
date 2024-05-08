@@ -18,7 +18,7 @@ export class SignUpComponent {
 
   checkbox: boolean = false;
   newUserForm: FormGroup;
-  user: User = { name: '', email: '', password: '' }
+  user: User = { name: '', email: '', password: '',contacts:[], tasks : [] }
 
   constructor(private userService: UserdataService, private router: Router) {
     this.newUserForm = new FormGroup({
@@ -46,5 +46,7 @@ export class SignUpComponent {
     this.newUserForm.markAsUntouched();
     this.checkbox = false;
   }
+
+
 
 }

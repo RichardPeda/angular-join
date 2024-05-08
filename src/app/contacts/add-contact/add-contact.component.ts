@@ -10,6 +10,7 @@ import {
 } from '@angular/animations';
 import { ContactsService } from '../../services/contacts.service';
 import { FormsModule } from '@angular/forms';
+import { SessiondataService } from '../../services/sessiondata.service';
 
 @Component({
   selector: 'app-add-contact',
@@ -36,8 +37,8 @@ import { FormsModule } from '@angular/forms';
   ],
 })
 export class AddContactComponent {
-
   @Input() contact: Contact = {
+    contactID: '',
     badgecolor: '',
     name: '',
     email: '',
@@ -50,13 +51,69 @@ export class AddContactComponent {
 
   @Input() slideIn: boolean = false;
   @Output() isClosed = new EventEmitter<boolean>();
+  @Output() listUpdate = new EventEmitter<boolean>();
 
-
-  constructor(public contactService: ContactsService) {
-  }
+  constructor(
+    public contactService: ContactsService,
+    public sessionService: SessiondataService
+  ) {}
 
   closePopup() {
     this.slideIn = false;
     this.isClosed.emit(this.slideIn);
+  }
+
+  formSubmitted() {
+    if (this.contactService.slideInMode === 'add') this.addNewContact();
+    else this.editContact();
+  }
+
+  editContact() {
+    let update = false;
+    let newContacts: Contact[] = this.sessionService.user.contacts;
+    newContacts.forEach((contact) => {
+      if (contact.contactID === this.contact.contactID) {
+        contact.name = this.contact.name;
+        contact.email = this.contact.email;
+        contact.phone = this.contact.phone;
+        contact.initials = this.sessionService.getInitials(this.contact.name);
+        (contact.register = this.sessionService
+          .getInitials(this.contact.name)
+          .charAt(0)),
+          (update = true);
+      }
+    });
+    if (update) this.sessionService.setContact(newContacts);
+
+    this.listUpdate.emit(update);
+    update = false;
+    this.resetInput();
+    this.closePopup();
+  }
+
+  async addNewContact() {
+    let contact: Contact = {
+      contactID: Math.floor(100000 + Math.random() * 900000).toString(),
+      name: this.contact.name,
+      email: this.contact.email,
+      badgecolor: this.sessionService.getRandomBadgeColor(),
+      phone: this.contact.phone,
+      initials: this.sessionService.getInitials(this.contact.name),
+      register: this.sessionService.getInitials(this.contact.name).charAt(0),
+      selected: false,
+    };
+
+    let newContacts: Contact[] = this.sessionService.user.contacts;
+    newContacts.push(contact);
+
+    await this.sessionService.setContact(newContacts);
+    this.resetInput();
+    this.closePopup();
+  }
+
+  resetInput() {
+    this.contact.name = '';
+    this.contact.email = '';
+    this.contact.phone = '';
   }
 }

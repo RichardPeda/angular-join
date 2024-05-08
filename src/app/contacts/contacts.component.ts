@@ -1,4 +1,4 @@
-import { Component, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Contact } from '../interfaces/contact.interface';
 import { SinglecontactComponent } from './singlecontact/singlecontact.component';
 import { CommonModule } from '@angular/common';
@@ -7,6 +7,10 @@ import { HeaderComponent } from '../shared/modules/header/header.component';
 import { NavbarComponent } from '../shared/modules/navbar/navbar.component';
 import { AddContactComponent } from './add-contact/add-contact.component';
 import { ContactsService } from '../services/contacts.service';
+import { UserdataService } from '../services/userdata.service';
+import { SessiondataService } from '../services/sessiondata.service';
+import { ActivatedRoute } from '@angular/router';
+import { User } from '../interfaces/user.interface';
 
 @Component({
   selector: 'app-contacts',
@@ -22,53 +26,57 @@ import { ContactsService } from '../services/contacts.service';
   templateUrl: './contacts.component.html',
   styleUrl: './contacts.component.scss',
 })
-export class ContactsComponent {
- 
-
-  selectedContact: Contact = {
-    badgecolor: '#FFA35E',
-    initials: 'AF',
-    register: 'A',
-    name: 'Arne Fröhlich',
-    email: 'fröhlich@24-7.com',
-    phone: '+49 815 79183212',
-    selected: false,
+export class ContactsComponent implements OnInit {
+  _subscriptionUser: any;
+  _subscriptionLetters: any;
+  registerletters = [''];
+  localUser: User = {
+    id: '',
+    name: '',
+    email: '',
+    password: '',
+    contacts: [],
+    tasks: [],
   };
-  registerLetters: string[] = [];
+  // localUser: User;
 
-  
-
-  constructor(private _renderer: Renderer2, public contactService : ContactsService) {
-    this.getRegisterLetters();
-    this.contactService.contacts.sort(this.compare);
+  constructor(
+    private _renderer: Renderer2,
+    public contactService: ContactsService,
+    public userService: UserdataService,
+    public sessionDataService: SessiondataService,
+    public activatedroute: ActivatedRoute
+  ) {
+    this.localUser = this.sessionDataService.user;
+    console.log(
+      'sessiondata from contacts',
+      this.sessionDataService.user.contacts
+    );
+    
+    this.sessionDataService.getRegisterLetters(
+      this.sessionDataService.user.contacts!
+    );
+    this.registerletters = this.sessionDataService.registerLetters;
+    this.sessionDataService.user.contacts.sort(this.sessionDataService.compare);
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this._renderer.setStyle(document.body, 'overflow-x', 'hidden');
-  }
-
-  getRegisterLetters() {
-    this.contactService.contacts.forEach((contact) => {
-      if (!this.registerLetters.includes(contact.register)) {
-        this.registerLetters.push(contact.register);
+    this._subscriptionUser = this.sessionDataService.userSubject.subscribe(
+      (user: User) => {
+        this.localUser = user;
       }
-    });
-    this.registerLetters.sort();
+    );
+    this._subscriptionLetters =
+      this.sessionDataService.registerLettersSubject.subscribe(
+        (letters: string[]) => {
+          this.registerletters = letters;
+        }
+      );
   }
 
-  compare(a: Contact, b: Contact) {
-    if (a.register < b.register) {
-      return -1;
-    }
-    if (a.register > b.register) {
-      return 1;
-    }
-    return 0;
+  ngOnDestroy() {
+    this._subscriptionUser.unsubscribe();
+    this._subscriptionLetters.unsubscribe();
   }
-
-  showContactDetails(currentContact: Contact) {
-    this.selectedContact = currentContact;
-  }
-
-  
 }

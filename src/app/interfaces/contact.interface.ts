@@ -1,4 +1,5 @@
 export interface Contact {
+    contactID: string,
     badgecolor: string,
     name: string,
     email: string,

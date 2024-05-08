@@ -31,20 +31,34 @@
         }
 
 
-        <form id="addContact-form" class="input-form-container">
+        <form id="addContact-form" class="input-form-container" (ngSubmit)="formSubmitted()" #contactform="ngForm">
             <div class="inputfields">
                 <label id="input-name-label">
-                    <input name="name" [(ngModel)]="contact.name" class="contact-inputField" type="text"
-                        id="contact-input-name" placeholder="Name" required>
+                    <input #name="ngModel" name="name" [(ngModel)]="contact.name" class="contact-inputField" type="text"
+                        id="contact-input-name" placeholder="Name" required pattern="[a-zA-Z0-9\s]{1,}[a-zA-Z0-9]{1,}">
+
                 </label>
+                <div class="login-error" [ngClass]="{'full-opacity': name.invalid && name.touched}">
+                    <p>This field is required. Please enter a name</p>
+                </div>
+
                 <label id="input-email-label">
-                    <input name="email" [(ngModel)]="contact.email" class="contact-inputField" type="email"
-                        id="contact-input-email" placeholder="Email" required>
+                    <input #email="ngModel"  name="email" [(ngModel)]="contact.email" class="contact-inputField" type="email"
+                        id="contact-input-email" placeholder="Email" required
+                        pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}">
                 </label>
+                <div class="login-error" [ngClass]="{'full-opacity': email.invalid && email.touched}">
+                    <p>This field is required. Please enter a email address</p>
+                </div>
+
                 <label id="input-phone-label">
-                    <input name="phone" [(ngModel)]="contact.phone" class="contact-inputField" type="tel"
-                        id="contact-input-phone" placeholder="Phone" required>
+                    <input #phone="ngModel" name="phone" [(ngModel)]="contact.phone" class="contact-inputField" type="tel"
+                        id="contact-input-phone" placeholder="Phone" required pattern="[+0-9\s]{4,}">
                 </label>
+                <div class="login-error" [ngClass]="{'full-opacity': phone.invalid && phone.touched}">
+                    <p>This field is required. Please enter a phone number</p>
+                </div>
+
             </div>
             <div id="buttons-container" class="cancel-create-buttons-container">
                 @if (contactService.slideInMode == 'add') {

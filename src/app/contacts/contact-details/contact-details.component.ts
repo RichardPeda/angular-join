@@ -2,6 +2,7 @@ import { Component, inject, Input } from '@angular/core';
 import { Contact } from '../../interfaces/contact.interface';
 import { CommonModule } from '@angular/common';
 import { ContactsService } from '../../services/contacts.service';
+import { SessiondataService } from '../../services/sessiondata.service';
 
 @Component({
   selector: 'app-contact-details',
@@ -13,6 +14,7 @@ import { ContactsService } from '../../services/contacts.service';
 export class ContactDetailsComponent {
 
   @Input() contact: Contact = {
+    contactID : '',
     badgecolor: '',
     name: '',
     email: '',
@@ -23,6 +25,7 @@ export class ContactDetailsComponent {
   };
 
   contactService : ContactsService = inject(ContactsService)
+  sessionService : SessiondataService = inject(SessiondataService);
 
   constructor(){
 
