@@ -10,11 +10,12 @@ import {
 import { User } from '../interfaces/user.interface';
 import { SessiondataService } from '../services/sessiondata.service';
 import { ContactSelectionComponent } from '../shared/modules/contact-selection/contact-selection.component';
+import { ClickOutsideDirective } from '../shared/click-outside.directive';
 
 @Component({
   selector: 'app-add-task',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ContactSelectionComponent],
+  imports: [CommonModule, ReactiveFormsModule, ContactSelectionComponent, ClickOutsideDirective],
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss',
 })
@@ -29,6 +30,8 @@ export class AddTaskComponent {
     contacts: [],
     tasks: [],
   };
+
+  dropdownContactsClose = true;
 
   constructor(
     private _formbuilder: FormBuilder,
@@ -82,4 +85,12 @@ export class AddTaskComponent {
     }
     return showTitleMessage;
   }
+
+  toggleDropdownContacts(){
+    this.dropdownContactsClose = !this.dropdownContactsClose;
+  };
+
+  closeDropdownContacts(){
+    this.dropdownContactsClose = true;
+  };
 }

@@ -25,19 +25,19 @@
                 </div>
 
                 <!-- Contacts -->
-                <div class="addTask-input-element mb-12">
+                <div   class="addTask-input-element mb-12">
                     <label class="addTask-label" for="addTask-search-assign">Assigned To</label>
-                    <div id="addTask-assigned" class="addTask-inputField addTask-assigned">
+                    <div appClickOutside (clickOutside)="closeDropdownContacts()" id="addTask-assigned" class="addTask-inputField addTask-assigned">
                         <input onblur="clearOutlineBlue('addTask-assigned')"
                             onfocus="setOutlineBlue('addTask-assigned')" onkeyup="setFilter()"
                             class="addTask-searchField" type="text" id="addTask-search-assign"
                             placeholder="Select contacts to assign" />
                         <div class="addTask-round-btn-frame">
-                            <img id="arrow-contacts" onclick="contactsDropdown.toggle()" class="addTask-arrow-btn"
+                            <img id="arrow-contacts" (click)="toggleDropdownContacts()" class="addTask-arrow-btn"
                                 src="../../assets/img/arrow-down-small.svg" alt="" />
                         </div>
                         <!-- d-none -->
-                        <div class="addTask-dropdown-container contacts " id="contact-dropdown-container">
+                        <div class="addTask-dropdown-container contacts" [ngClass]="{'d-none' : dropdownContactsClose}"  id="contact-dropdown-container">
                            @for (contact of localUser.contacts; track $index) {
                             <app-contact-selection [contact]="contact"></app-contact-selection>
                            }

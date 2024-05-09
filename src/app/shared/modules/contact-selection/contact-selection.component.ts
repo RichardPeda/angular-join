@@ -7,12 +7,11 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './contact-selection.component.html',
-  styleUrl: './contact-selection.component.scss'
+  styleUrl: './contact-selection.component.scss',
 })
 export class ContactSelectionComponent {
-
   @Input() contact: Contact = {
-    contactID : '',
+    contactID: '',
     badgecolor: '',
     name: '',
     email: '',
@@ -22,4 +21,7 @@ export class ContactSelectionComponent {
     selected: false,
   };
 
+  selectItem() {
+    this.contact.selected = !this.contact.selected;
+  }
 }
