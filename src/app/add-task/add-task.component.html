@@ -25,10 +25,11 @@
                 </div>
 
                 <!-- Contacts -->
-                <div   class="addTask-input-element mb-12">
+                <div class="addTask-input-element mb-12">
                     <label class="addTask-label" for="addTask-search-assign">Assigned To</label>
-                    <div appClickOutside (clickOutside)="closeDropdownContacts()" id="addTask-assigned" class="addTask-inputField addTask-assigned">
-                        <input onblur="clearOutlineBlue('addTask-assigned')"
+                    <div appClickOutside (clickOutside)="closeDropdownContacts()" id="addTask-assigned"
+                        class="addTask-inputField addTask-assigned">
+                        <input formControlName="contactField" (input)="openDropdownContacts($event)" onblur="clearOutlineBlue('addTask-assigned')"
                             onfocus="setOutlineBlue('addTask-assigned')" onkeyup="setFilter()"
                             class="addTask-searchField" type="text" id="addTask-search-assign"
                             placeholder="Select contacts to assign" />
@@ -37,10 +38,11 @@
                                 src="../../assets/img/arrow-down-small.svg" alt="" />
                         </div>
                         <!-- d-none -->
-                        <div class="addTask-dropdown-container contacts" [ngClass]="{'d-none' : dropdownContactsClose}"  id="contact-dropdown-container">
-                           @for (contact of localUser.contacts; track $index) {
+                        <div class="addTask-dropdown-container contacts" [ngClass]="{'d-none' : dropdownContactsClose}"
+                            id="contact-dropdown-container">
+                            @for (contact of localUser.contacts; track $index) {
                             <app-contact-selection [contact]="contact"></app-contact-selection>
-                           }
+                            }
                         </div>
                     </div>
                 </div>
@@ -106,18 +108,21 @@
                 <!-- Category -->
                 <div class="addTask-input-element">
                     <label class="addTask-label required" for="addTask-category">Category</label>
-                    <div id="category-container" class="addTask-inputField addTask-assigned">
-                        <input formControlName="category" class="addTask-searchField" type="text" id="addTask-category"
+                    <div appClickOutside (clickOutside)="closeDropdownCategory()" id="category-container"
+                        class="addTask-inputField addTask-assigned">
+                        <input [disabled]="true" formControlName="category" class="addTask-searchField" type="text" id="addTask-category"
                             placeholder="Select task category" required />
                         <div class="addTask-round-btn-frame">
-                            <img id="arrow-category" onclick="categoryDropdown.toggle()" class="addTask-arrow-btn"
+                            <img id="arrow-category" (click)="toggleDropdownCategory()" class="addTask-arrow-btn"
                                 src="../../assets/img/arrow-down-small.svg" alt="" />
                         </div>
-                        <div class="addTask-dropdown-container d-none" id="category-dropdown-container">
-                            <div onclick="selectCategory(event)" class="category-element">
+                        <!-- d-none -->
+                        <div class="addTask-dropdown-container" [ngClass]="{'d-none' : dropdownCategoryClose}"
+                            id="category-dropdown-container">
+                            <div (click)="selectCategory('Technical Task')" class="category-element">
                                 <p class="addTask-dropdown-text">Technical Task</p>
                             </div>
-                            <div onclick="selectCategory(event)" class="category-element">
+                            <div (click)="selectCategory('User Story')" class="category-element">
                                 <p class="addTask-dropdown-text">User Story</p>
                             </div>
                         </div>

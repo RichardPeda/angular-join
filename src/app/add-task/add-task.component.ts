@@ -15,7 +15,12 @@ import { ClickOutsideDirective } from '../shared/click-outside.directive';
 @Component({
   selector: 'app-add-task',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ContactSelectionComponent, ClickOutsideDirective],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ContactSelectionComponent,
+    ClickOutsideDirective,
+  ],
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss',
 })
@@ -32,12 +37,24 @@ export class AddTaskComponent {
   };
 
   dropdownContactsClose = true;
+  dropdownCategoryClose = true;
+  catergoryString: string = 'Technical task';
+
+  taskForm = this._formbuilder.group({
+    title: ['', Validators.required],
+    description: [''],
+    contactField: [''],
+    date: ['', Validators.required],
+    priority: ['medium', Validators.required],
+    category: ['', Validators.required],
+  });
 
   constructor(
     private _formbuilder: FormBuilder,
     private sessionDataService: SessiondataService
   ) {
     this.localUser = this.sessionDataService.user;
+    this.taskForm.get('category')?.disable();
   }
 
   ngOnInit() {
@@ -51,14 +68,6 @@ export class AddTaskComponent {
   ngOnDestroy() {
     this._subscriptionUser.unsubscribe();
   }
-
-  taskForm = this._formbuilder.group({
-    title: ['', Validators.required],
-    description: [''],
-    date: ['', Validators.required],
-    priority: ['medium', Validators.required],
-    category: ['', Validators.required],
-  });
 
   createTask() {
     if (this.taskForm.valid) {
@@ -86,11 +95,31 @@ export class AddTaskComponent {
     return showTitleMessage;
   }
 
-  toggleDropdownContacts(){
+  toggleDropdownContacts() {
     this.dropdownContactsClose = !this.dropdownContactsClose;
-  };
+  }
 
-  closeDropdownContacts(){
+  closeDropdownContacts() {
     this.dropdownContactsClose = true;
-  };
+  }
+
+  openDropdownContacts(event: Event) {
+    if (this.taskForm.get('contactField')?.value == '')
+      this.dropdownContactsClose = true;
+    else this.dropdownContactsClose = false;
+  }
+
+  toggleDropdownCategory() {
+    this.dropdownCategoryClose = !this.dropdownCategoryClose;
+  }
+
+  closeDropdownCategory() {
+    this.dropdownCategoryClose = true;
+  }
+
+  selectCategory(category: string) {
+    this.taskForm.patchValue({
+      category: category,
+    });
+  }
 }
