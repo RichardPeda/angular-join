@@ -29,10 +29,9 @@
                     <label class="addTask-label" for="addTask-search-assign">Assigned To</label>
                     <div appClickOutside (clickOutside)="closeDropdownContacts()" id="addTask-assigned"
                         class="addTask-inputField addTask-assigned">
-                        <input formControlName="contactField" (input)="openDropdownContacts($event)" onblur="clearOutlineBlue('addTask-assigned')"
-                            onfocus="setOutlineBlue('addTask-assigned')" onkeyup="setFilter()"
-                            class="addTask-searchField" type="text" id="addTask-search-assign"
-                            placeholder="Select contacts to assign" />
+                        <input formControlName="contactField" (input)="filterContacts(); openDropdownContacts($event)"
+                            (keyup)="filterContacts()" class="addTask-searchField" type="text"
+                            id="addTask-search-assign" placeholder="Select contacts to assign" />
                         <div class="addTask-round-btn-frame">
                             <img id="arrow-contacts" (click)="toggleDropdownContacts()" class="addTask-arrow-btn"
                                 src="../../assets/img/arrow-down-small.svg" alt="" />
@@ -40,7 +39,7 @@
                         <!-- d-none -->
                         <div class="addTask-dropdown-container contacts" [ngClass]="{'d-none' : dropdownContactsClose}"
                             id="contact-dropdown-container">
-                            @for (contact of localUser.contacts; track $index) {
+                            @for (contact of filteredContacts; track $index) {
                             <app-contact-selection [contact]="contact"></app-contact-selection>
                             }
                         </div>
@@ -110,8 +109,8 @@
                     <label class="addTask-label required" for="addTask-category">Category</label>
                     <div appClickOutside (clickOutside)="closeDropdownCategory()" id="category-container"
                         class="addTask-inputField addTask-assigned">
-                        <input [disabled]="true" formControlName="category" class="addTask-searchField" type="text" id="addTask-category"
-                            placeholder="Select task category" required />
+                        <input formControlName="category" class="addTask-searchField" type="text"
+                            id="addTask-category" placeholder="Select task category" required />
                         <div class="addTask-round-btn-frame">
                             <img id="arrow-category" (click)="toggleDropdownCategory()" class="addTask-arrow-btn"
                                 src="../../assets/img/arrow-down-small.svg" alt="" />
