@@ -8,7 +8,7 @@ export class Guest implements User {
   public contacts: Contact[];
   public id?: string | undefined;
   public password: string;
-  public tasks?: Task[] | undefined;
+  public tasks: Task[];
 
   constructor() {
     (this.name = 'guest'),
@@ -116,7 +116,42 @@ export class Guest implements User {
           selected: false,
         },
       ]),
-      (this.tasks = []);
+      (this.tasks = [
+        {
+          title: 'Create Landing Page Design',
+          description: 'Design a captivating landing page for the new website.',
+          assignedContacts: [
+            {
+              badgecolor: '#FF745E',
+              contactID: '1',
+              initials: 'KH',
+              register: 'K',
+              name: 'Klara Himmel',
+              email: 'gerne@sommer.de',
+              phone: '+49 123 456 789',
+              selected: true,
+            },
+            {
+              badgecolor: '#00BEE8',
+              contactID: '2',
+              initials: 'CK',
+              register: 'C',
+              name: 'Christiane Krise',
+              email: 'krise@serveranbindung.de',
+              phone: '+49 221 3456413',
+              selected: true,
+            },
+          ],
+          priority: 'urgent',
+          category: 'Technical Task',
+          dueDate: '2024-04-10',
+          status: 'inProgress',
+          subtasks: [
+            { title: 'Draft initial concepts', done: false },
+            { title: 'Gather feedback from stakeholders', done: false },
+          ],
+        },
+      ]);
   }
 
   public toJSON() {

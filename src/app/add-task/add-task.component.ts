@@ -14,6 +14,8 @@ import { ClickOutsideDirective } from '../shared/click-outside.directive';
 import { Contact } from '../interfaces/contact.interface';
 import { TaskObject } from '../shared/models/task.model';
 import { Subtask } from '../interfaces/subtask.interface';
+import { SubtaskComponent } from '../shared/modules/subtask/subtask.component';
+import { SubtaskObject } from '../shared/models/subtask.model';
 
 @Component({
   selector: 'app-add-task',
@@ -23,6 +25,7 @@ import { Subtask } from '../interfaces/subtask.interface';
     ReactiveFormsModule,
     ContactSelectionComponent,
     ClickOutsideDirective,
+    SubtaskComponent,
   ],
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss',
@@ -39,12 +42,15 @@ export class AddTaskComponent {
     tasks: [],
   };
 
+  subtasks: string[] = [];
+
   filteredContacts: Contact[];
-  selectedContacts : Contact[];
-  subTasks: Subtask[];
+  selectedContacts: Contact[];
+  subTasks: Subtask[] = [];
 
   dropdownContactsClose = true;
   dropdownCategoryClose = true;
+  subtaskInputDisable = true;
   catergoryString: string = 'Technical task';
 
   taskForm = this._formbuilder.group({
@@ -54,6 +60,7 @@ export class AddTaskComponent {
     date: ['', Validators.required],
     priority: ['medium', Validators.required],
     category: ['', Validators.required],
+    subtask: [''],
   });
 
   constructor(
@@ -63,7 +70,6 @@ export class AddTaskComponent {
     this.localUser = this.sessionDataService.user;
     this.filteredContacts = this.localUser.contacts;
     this.selectedContacts = this.localUser.contacts;
-    this.subTasks = [];
 
     this.taskForm.controls['category'].disable();
   }
@@ -81,21 +87,16 @@ export class AddTaskComponent {
     this._subscriptionUser.unsubscribe();
   }
 
-findselectedContacts(){
- this.selectedContacts = []
-   this.localUser.contacts.forEach((c) => {
-    if(c.selected) this.selectedContacts.push(c)
-   })
-
-  
-  
-}
+  findselectedContacts() {
+    this.selectedContacts = [];
+    this.localUser.contacts.forEach((c) => {
+      if (c.selected) this.selectedContacts.push(c);
+    });
+  }
 
   createTask() {
     if (this.taskForm.valid) {
-
-      this.findselectedContacts()
-
+      this.findselectedContacts();
 
       let task = new TaskObject(
         this.taskForm.controls['title'].value,
@@ -174,5 +175,22 @@ findselectedContacts(){
     } else {
       this.filteredContacts = this.localUser.contacts;
     }
+  }
+
+  createSubtask() {
+    if (this.taskForm.controls['subtask'].valid) {
+      let subtask = new SubtaskObject(this.taskForm.controls['subtask'].value!);
+      this.subTasks.push(subtask);
+      console.log(this.subTasks);
+    }
+  }
+
+  enableSubtaskInput() {
+    this.subtaskInputDisable = false;
+  }
+
+  changeSubtaskTitle(title: string, index: number) {
+    if (title === '') this.subTasks.splice(index,1);
+    else this.subTasks[index].title = title;
   }
 }

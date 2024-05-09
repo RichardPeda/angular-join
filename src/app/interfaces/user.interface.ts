@@ -7,5 +7,5 @@ export interface User {
     email: string,
     password: string,
     contacts: Contact[],
-    tasks?: Task[]
+    tasks: Task[]
 }

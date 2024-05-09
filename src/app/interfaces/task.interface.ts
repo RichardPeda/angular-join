@@ -3,13 +3,13 @@ import { Subtask } from "./subtask.interface"
 
 export interface Task {
     title: string,
-    description?: string,
-    assignedContacts?: [Contact],
+    description: string,
+    assignedContacts?: Contact[],
     priority: 'urgent' | 'medium' | 'low',
     category: 'Technical Task' | 'User Story',
     dueDate: string,
     status: 'toDo' | 'inProgress' | 'awaitFeedback' | 'done',
-    subtasks?: [Subtask]
+    subtasks: Subtask[]
 }
 
 

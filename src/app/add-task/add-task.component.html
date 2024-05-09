@@ -109,8 +109,8 @@
                     <label class="addTask-label required" for="addTask-category">Category</label>
                     <div appClickOutside (clickOutside)="closeDropdownCategory()" id="category-container"
                         class="addTask-inputField addTask-assigned">
-                        <input formControlName="category" class="addTask-searchField" type="text"
-                            id="addTask-category" placeholder="Select task category" required />
+                        <input formControlName="category" class="addTask-searchField" type="text" id="addTask-category"
+                            placeholder="Select task category" required />
                         <div class="addTask-round-btn-frame">
                             <img id="arrow-category" (click)="toggleDropdownCategory()" class="addTask-arrow-btn"
                                 src="../../assets/img/arrow-down-small.svg" alt="" />
@@ -137,26 +137,35 @@
                 <div class="addTask-input-element">
                     <label class="addTask-label" for="addTask-subtask-input">Subtask</label>
                     <div ondblclick="enableSubtaskInput()" class="addTask-inputField-subtask">
-                        <input onkeydown="createTaskEnter(event)" readonly="true" class="addTask-inputField-sub"
-                            type="text" id="addTask-subtask-input" placeholder="Add new Subtask" />
+                        <input formControlName="subtask" class="addTask-inputField-sub" type="text"
+                            id="addTask-subtask-input" placeholder="Add new Subtask" />
 
-                        <div id="addTask-delete-accept-container" class="addTask-delete-accept-container d-none">
+                        <div id="addTask-delete-accept-container" [ngClass]="{'d-none' : subtaskInputDisable}"
+                            class="addTask-delete-accept-container">
                             <div class="addTask-round-btn-frame">
                                 <img onclick="disableSubtaskInput()" class="addTask-add-btn"
                                     src="../../assets/img/cancel.svg" alt="" />
                             </div>
-                            <div onclick="createSubtask()" class="addTask-round-btn-frame">
+                            <div (click)="createSubtask()" class="addTask-round-btn-frame">
                                 <img class="addTask-add-btn" src="../../assets/img/checked.svg" alt="" />
                             </div>
                         </div>
 
-                        <div onclick="enableSubtaskInput()" class="addTask-round-btn-frame" id="addTask-button-plus">
+                        <div (click)="enableSubtaskInput()" [ngClass]="{'d-none': !subtaskInputDisable}"
+                            class="addTask-round-btn-frame" id="addTask-button-plus">
                             <img class="addTask-add-btn" src="../../assets/img/add.svg" alt="" />
                         </div>
                     </div>
                 </div>
 
-                <div class="addTask-subtask-container" id="addTask-subtask-container"></div>
+                <div class="addTask-subtask-container" id="addTask-subtask-container">
+                    @for (subtask of subTasks; track subtask; let index = $index) {
+
+                    <app-subtask (updatedTitle)="changeSubtaskTitle($event,index)"
+                        [title]="subtask.title"></app-subtask>
+                    }
+
+                </div>
             </div>
         </div>
 
