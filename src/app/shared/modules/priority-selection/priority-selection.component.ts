@@ -14,6 +14,7 @@ export class PrioritySelectionComponent {
 
   selectPrio(title:string){
     this.prioSelection = title;
+    this.currentSelection.emit(this.prioSelection)
   }
 
 }

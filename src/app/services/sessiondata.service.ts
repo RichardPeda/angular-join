@@ -15,6 +15,7 @@ import {
 import { User } from '../interfaces/user.interface';
 import { Contact } from '../interfaces/contact.interface';
 import { Subject } from 'rxjs';
+import { Task } from '../interfaces/task.interface';
 @Injectable({
   providedIn: 'root',
 })
@@ -63,7 +64,7 @@ export class SessiondataService {
       (doc) => {
         let data = doc.data();
         this.user = this.userService.getCurrentUserData(doc.id, data!);
-        console.log(this.user);
+        console.log('dieser user', this.user);
         this.userSubject.next(this.user)
       }
     );
@@ -81,11 +82,20 @@ export class SessiondataService {
 
   async setContact(contact: Contact[]) {
     let docRef = this.userService.getSingleDocRef('users', this.docId);
-    console.log('is set');
+    console.log('contact is set');
     await updateDoc(docRef, {
       contacts: contact,
     });
     this.getRegisterLetters(contact)
+  }
+
+  async setTask(task: Task[]){
+    let docRef = this.userService.getSingleDocRef('users', this.docId);
+    console.log('task is set');
+    await updateDoc(docRef, {
+      tasks: task,
+    });
+    
   }
 
   deleteContact(contact: Contact) {

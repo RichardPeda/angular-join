@@ -56,7 +56,7 @@
                 <div class="addTask-input-element">
                     <label class="addTask-label required" for="addTask-input-date">Due Date</label>
                     <input formControlName="date" class="addTask-inputField" type="date" id="addTask-input-date"
-                        placeholder="dd/mm/yy" required />
+                        placeholder="dd/mm/yy"  />
                     <div class="login-error"
                         [ngClass]="{'full-opacity': validateRequiredFormMessage(taskForm.controls['date']) || showAllRequiredMessages(taskForm.controls['date'])}">
                         <p>This field is required</p>
@@ -65,7 +65,7 @@
 
                 <!-- Urgent, Medium, Low - Prio -->
                 <div class="addTask-input-element">
-                  <app-priority-selection></app-priority-selection>
+                  <app-priority-selection (currentSelection)="setPriority($event)"></app-priority-selection>
                 </div>
 
                 <!-- Category -->
@@ -74,12 +74,12 @@
                     <div appClickOutside (clickOutside)="closeDropdownCategory()" id="category-container"
                         class="addTask-inputField addTask-assigned">
                         <input formControlName="category" class="addTask-searchField" type="text" id="addTask-category"
-                            placeholder="Select task category" required />
+                            placeholder="Select task category" readonly="true"/>
                         <div class="addTask-round-btn-frame">
                             <img id="arrow-category" (click)="toggleDropdownCategory()" class="addTask-arrow-btn"
                                 src="../../assets/img/arrow-down-small.svg" alt="" />
                         </div>
-                        <!-- d-none -->
+                      
                         <div class="addTask-dropdown-container" [ngClass]="{'d-none' : dropdownCategoryClose}"
                             id="category-dropdown-container">
                             <div (click)="selectCategory('Technical Task')" class="category-element">
@@ -136,7 +136,7 @@
         <div class="addTask-controls">
             <p class="addTask-hint">This field is required</p>
             <div class="addTask-control-btn-container">
-                <button onclick="clearForm()" type="reset" class="addTask-control-btn cancel-btn">
+                <button onclick="clearForm()" class="addTask-control-btn cancel-btn">
                     Cancel
                     <svg class="cancel-svg" width="13" height="14" viewBox="0 0 13 14" fill="none"
                         xmlns="http://www.w3.org/2000/svg">

@@ -2,6 +2,7 @@ import { Contact } from "./contact.interface"
 import { Subtask } from "./subtask.interface"
 
 export interface Task {
+    taskID : string,
     title: string,
     description: string,
     assignedContacts?: Contact[],

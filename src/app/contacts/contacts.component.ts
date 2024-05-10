@@ -52,6 +52,7 @@ export class ContactsComponent implements OnInit {
       'sessiondata from contacts',
       this.sessionDataService.user.contacts
     );
+    console.log('lokaler user',this.localUser)
     
     this.sessionDataService.getRegisterLetters(
       this.sessionDataService.user.contacts!

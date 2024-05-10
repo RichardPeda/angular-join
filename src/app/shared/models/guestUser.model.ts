@@ -119,6 +119,7 @@ export class Guest implements User {
       (this.tasks = [
         {
           title: 'Create Landing Page Design',
+          taskID: '123456',
           description: 'Design a captivating landing page for the new website.',
           assignedContacts: [
             {

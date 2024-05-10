@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import {
   FormControl,
@@ -43,7 +43,11 @@ export class LoginComponent {
 
   firestore: Firestore = inject(Firestore);
 
-  constructor(public userService: UserdataService, private router: Router) {
+  constructor(
+    public userService: UserdataService,
+    private router: Router,
+    private location: Location
+  ) {
     this.userform = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
@@ -71,11 +75,13 @@ export class LoginComponent {
   async addNewGuestUser() {
     let guest = new Guest();
 
-    const docRef = await addDoc(this.userService.getUserRef(), guest.toJSON())
-    .then((docInfo) =>{
-      console.log(docInfo)
-      this.router.navigate(['summary/' + docInfo.id ]);
-      this.userService.saveIdInSessionStorage(docInfo.id)
+    const docRef = await addDoc(
+      this.userService.getUserRef(),
+      guest.toJSON()
+    ).then((docInfo) => {
+      console.log(docInfo);
+      this.router.navigate(['summary/' + docInfo.id]);
+      this.userService.saveIdInSessionStorage(docInfo.id);
     });
   }
 }

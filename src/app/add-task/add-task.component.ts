@@ -17,6 +17,7 @@ import { Subtask } from '../interfaces/subtask.interface';
 import { SubtaskComponent } from '../shared/modules/subtask/subtask.component';
 import { ProfileBadgeComponent } from '../shared/modules/profile-badge/profile-badge.component';
 import { PrioritySelectionComponent } from '../shared/modules/priority-selection/priority-selection.component';
+import { Task } from '../interfaces/task.interface';
 
 @Component({
   selector: 'app-add-task',
@@ -28,7 +29,7 @@ import { PrioritySelectionComponent } from '../shared/modules/priority-selection
     ClickOutsideDirective,
     SubtaskComponent,
     ProfileBadgeComponent,
-    PrioritySelectionComponent
+    PrioritySelectionComponent,
   ],
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss',
@@ -48,7 +49,7 @@ export class AddTaskComponent {
   subtasks: string[] = [];
 
   filteredContacts: Contact[];
-  selectedContacts: Contact[] = []
+  selectedContacts: Contact[] = [];
   subTasks: Subtask[] = [];
 
   dropdownContactsClose = true;
@@ -61,7 +62,7 @@ export class AddTaskComponent {
     description: [''],
     contactField: [''],
     date: ['', Validators.required],
-    priority: ['medium', Validators.required],
+    priority: ['medium'],
     category: ['', Validators.required],
     subtask: [''],
   });
@@ -73,8 +74,6 @@ export class AddTaskComponent {
     this.localUser = this.sessionDataService.user;
     this.filteredContacts = this.localUser.contacts;
     // this.selectedContacts = this.localUser.contacts;
-
-    this.taskForm.controls['category'].disable();
   }
 
   ngOnInit() {
@@ -82,7 +81,6 @@ export class AddTaskComponent {
       (user: User) => {
         this.localUser = user;
         this.filteredContacts = this.localUser.contacts;
-        
       }
     );
   }
@@ -97,25 +95,45 @@ export class AddTaskComponent {
       if (c.selected) this.selectedContacts.push(c);
     });
     console.log(this.selectedContacts);
-    
   }
 
   createTask() {
     if (this.taskForm.valid) {
       this.findselectedContacts();
+      let newTasks = this.sessionDataService.user.tasks;
 
-      let task = new TaskObject(
-        this.taskForm.controls['title'].value,
-        this.taskForm.controls['description'].value,
-        this.selectedContacts,
-        this.taskForm.controls['priority'].value,
-        this.taskForm.controls['category'].value,
-        this.taskForm.controls['date'].value,
-        'todo',
-        this.subTasks
-      );
-      console.log(task);
+      if (
+        this.taskForm.controls['category'].value ===
+          ('Technical Task' || 'User Story') &&
+        this.taskForm.controls['priority'].value ===
+          ('medium' || 'urgent' || 'low')
+      ) {
+        let task: Task = {
+          title: this.taskForm.controls['title'].value!,
+          taskID: Math.floor(100000 + Math.random() * 900000).toString(),
+          description: this.taskForm.controls['description'].value!,
+          assignedContacts: this.selectedContacts,
+          priority: this.taskForm.controls['priority'].value!,
+          category: this.taskForm.controls['category'].value!,
+          dueDate: this.taskForm.controls['date'].value!,
+          status: 'toDo',
+          subtasks: this.subTasks,
+        };
+        newTasks.push(task);
+        this.sessionDataService.setTask(newTasks);
+        this.resetForm();
+      }
     }
+  }
+
+  resetForm() {
+    this.taskForm.clearValidators();
+    this.taskForm.reset();
+    this.submitBtnClicked = false;
+  }
+
+  setPriority(prio: string) {
+    this.taskForm.controls['priority'].setValue(prio);
   }
 
   btnIsClicked() {
@@ -168,7 +186,7 @@ export class AddTaskComponent {
   }
 
   updateSelected() {
-    this.findselectedContacts();    
+    this.findselectedContacts();
   }
 
   filterContacts() {
