@@ -15,7 +15,8 @@ import { Contact } from '../interfaces/contact.interface';
 import { TaskObject } from '../shared/models/task.model';
 import { Subtask } from '../interfaces/subtask.interface';
 import { SubtaskComponent } from '../shared/modules/subtask/subtask.component';
-import { SubtaskObject } from '../shared/models/subtask.model';
+import { ProfileBadgeComponent } from '../shared/modules/profile-badge/profile-badge.component';
+import { PrioritySelectionComponent } from '../shared/modules/priority-selection/priority-selection.component';
 
 @Component({
   selector: 'app-add-task',
@@ -26,6 +27,8 @@ import { SubtaskObject } from '../shared/models/subtask.model';
     ContactSelectionComponent,
     ClickOutsideDirective,
     SubtaskComponent,
+    ProfileBadgeComponent,
+    PrioritySelectionComponent
   ],
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss',
@@ -45,7 +48,7 @@ export class AddTaskComponent {
   subtasks: string[] = [];
 
   filteredContacts: Contact[];
-  selectedContacts: Contact[];
+  selectedContacts: Contact[] = []
   subTasks: Subtask[] = [];
 
   dropdownContactsClose = true;
@@ -69,7 +72,7 @@ export class AddTaskComponent {
   ) {
     this.localUser = this.sessionDataService.user;
     this.filteredContacts = this.localUser.contacts;
-    this.selectedContacts = this.localUser.contacts;
+    // this.selectedContacts = this.localUser.contacts;
 
     this.taskForm.controls['category'].disable();
   }
@@ -79,6 +82,7 @@ export class AddTaskComponent {
       (user: User) => {
         this.localUser = user;
         this.filteredContacts = this.localUser.contacts;
+        
       }
     );
   }
@@ -92,6 +96,8 @@ export class AddTaskComponent {
     this.localUser.contacts.forEach((c) => {
       if (c.selected) this.selectedContacts.push(c);
     });
+    console.log(this.selectedContacts);
+    
   }
 
   createTask() {
@@ -161,6 +167,10 @@ export class AddTaskComponent {
     });
   }
 
+  updateSelected() {
+    this.findselectedContacts();    
+  }
+
   filterContacts() {
     let compare: string | null | undefined =
       this.taskForm.controls['contactField']?.value?.toLowerCase();
@@ -179,7 +189,11 @@ export class AddTaskComponent {
 
   createSubtask() {
     if (this.taskForm.controls['subtask'].valid) {
-      let subtask = new SubtaskObject(this.taskForm.controls['subtask'].value!);
+      // let subtask = new SubtaskObject(this.taskForm.controls['subtask'].value!);
+      let subtask: Subtask = {
+        title: this.taskForm.controls['subtask'].value!,
+        done: false,
+      };
       this.subTasks.push(subtask);
       console.log(this.subTasks);
     }
@@ -190,7 +204,7 @@ export class AddTaskComponent {
   }
 
   changeSubtaskTitle(title: string, index: number) {
-    if (title === '') this.subTasks.splice(index,1);
+    if (title === '') this.subTasks.splice(index, 1);
     else this.subTasks[index].title = title;
   }
 }
