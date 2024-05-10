@@ -18,6 +18,8 @@ import { SubtaskComponent } from '../shared/modules/subtask/subtask.component';
 import { ProfileBadgeComponent } from '../shared/modules/profile-badge/profile-badge.component';
 import { PrioritySelectionComponent } from '../shared/modules/priority-selection/priority-selection.component';
 import { Task } from '../interfaces/task.interface';
+import { HeaderComponent } from '../shared/modules/header/header.component';
+import { NavbarComponent } from '../shared/modules/navbar/navbar.component';
 
 @Component({
   selector: 'app-add-task',
@@ -30,6 +32,8 @@ import { Task } from '../interfaces/task.interface';
     SubtaskComponent,
     ProfileBadgeComponent,
     PrioritySelectionComponent,
+    HeaderComponent,
+    NavbarComponent
   ],
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss',
@@ -183,6 +187,7 @@ export class AddTaskComponent {
     this.taskForm.patchValue({
       category: category,
     });
+    this.closeDropdownCategory()
   }
 
   updateSelected() {

@@ -1,5 +1,16 @@
 @import '../../colors.scss';
 
+.content {
+    width: 100%;
+    height: 100%;
+    background-color: $clr-bg;
+    display: grid;
+    grid-template-rows: 96px 1fr;
+    grid-template-columns: 232px 1fr;
+    grid-template-areas:
+        "header header "
+        "sidebar content";
+}
 
 .mb-12 {
     margin-bottom: 12px !important;
@@ -48,6 +59,7 @@
 }
 
 #content-container {
+   grid-area: content;
     margin-left: 96px;
     margin-top: 110px;
     margin-right: 64px;

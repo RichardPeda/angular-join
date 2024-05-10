@@ -25,11 +25,14 @@ export class NavbarComponent {
   }
 
   ngOnInit() {
-    console.log(this.getURL());
+    this.selectedPageName = this.getURL();
   }
 
   linkToSummary() {
     this.router.navigate(['summary/' + this.docId]);
+  }
+  linkToBoard() {
+    this.router.navigate(['board/' + this.docId]);
   }
   linkToContacts() {
     this.router.navigate(['contacts/' + this.docId]);
@@ -43,6 +46,7 @@ export class NavbarComponent {
     if (path.includes('summary')) return 'summary';
     else if (path.includes('contacts')) return 'contacts';
     else if (path.includes('addtask')) return 'addtask';
-    else return 'undefinded';
+    else if (path.includes('board')) return 'board';
+    else return 'summary';
   }
 }

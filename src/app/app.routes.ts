@@ -9,6 +9,7 @@ import { ContactsComponent } from './contacts/contacts.component';
 import { AddContactComponent } from './contacts/add-contact/add-contact.component';
 import { DataResolverService } from './services/data-resolver.service';
 import { AddTaskComponent } from './add-task/add-task.component';
+import { BoardComponent } from './board/board/board.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent, data: { animation: 'openClosePage' } },
@@ -16,4 +17,5 @@ export const routes: Routes = [
     { path: 'summary/:id', component: SummaryComponent },
     { path: 'contacts/:id', data:{title : 'contacts'}, component: ContactsComponent },
     { path: 'addtask/:id', data:{title : 'Add task'}, component: AddTaskComponent },
+    { path: 'board/:id', data:{title : 'Board'}, component: BoardComponent },
 ];
