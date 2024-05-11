@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-priority-selection',
@@ -9,11 +9,12 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrl: './priority-selection.component.scss',
 })
 export class PrioritySelectionComponent {
-  @Output() currentSelection = new EventEmitter<'medium' | 'urgent' | 'low'>();
-  prioSelection: 'medium' | 'urgent' | 'low' = 'medium';
+  @Input() selection: 'medium' | 'urgent' | 'low' = 'medium';
+  @Output('currentSelection') selectionChange = new EventEmitter<'medium' | 'urgent' | 'low'>();
+ 
 
   selectPrio(title: 'medium' | 'urgent' | 'low') {
-    this.prioSelection = title;
-    this.currentSelection.emit(this.prioSelection);
+    this.selection = title;
+    this.selectionChange.emit(this.selection);
   }
 }

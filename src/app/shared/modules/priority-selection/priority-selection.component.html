@@ -1,6 +1,6 @@
 <div class="addTask-label">Prio</div>
 <div class="addTask-btn-container" id="addTask-input-prio">
-    <div (click)="selectPrio('urgent')" [ngClass]="{'selected' : prioSelection == 'urgent'}" class="addTask-prio-btn urgent">
+    <div (click)="selectPrio('urgent')" [ngClass]="{'selected' : selection == 'urgent'}" class="addTask-prio-btn urgent">
         Urgent
         <svg width="35" height="26" viewBox="0 0 35 26" fill="none"
             xmlns="http://www.w3.org/2000/svg">
@@ -12,7 +12,7 @@
                 fill="white" />
         </svg>
     </div>
-    <div (click)="selectPrio('medium')" [ngClass]="{'selected' : prioSelection == 'medium'}" class="addTask-prio-btn medium">
+    <div (click)="selectPrio('medium')" [ngClass]="{'selected' : selection == 'medium'}" class="addTask-prio-btn medium">
         Medium
         <svg width="21" height="8" viewBox="0 0 21 8" fill="none"
             xmlns="http://www.w3.org/2000/svg">
@@ -24,7 +24,7 @@
                 fill="#FFA800" />
         </svg>
     </div>
-    <div (click)="selectPrio('low')" [ngClass]="{'selected' : prioSelection == 'low'}" class="addTask-prio-btn low">
+    <div (click)="selectPrio('low')" [ngClass]="{'selected' : selection == 'low'}" class="addTask-prio-btn low">
         Low
         <svg width="21" height="16" viewBox="0 0 21 16" fill="none"
             xmlns="http://www.w3.org/2000/svg">

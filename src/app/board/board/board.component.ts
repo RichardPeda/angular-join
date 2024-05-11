@@ -23,6 +23,7 @@ import { DialogDetailCardComponent } from '../dialog-detail-card/dialog-detail-c
 })
 export class BoardComponent {
   _subscriptionUser: any;
+  _subscritiionDialog: any;
   localUser: User = {
     id: '',
     name: '',
@@ -53,15 +54,25 @@ export class BoardComponent {
 
   ngOnDestroy() {
     this._subscriptionUser.unsubscribe();
+    if (this._subscritiionDialog) {
+      this._subscritiionDialog.unsubscribe();
+    }
   }
 
-  openDialog(index:number) {
-    // console.log(this.localUser.tasks[0]);
-
-    this.dialog.open(DialogDetailCardComponent, {
+  openDialog(index: number) {
+    const dialogRef = this.dialog.open(DialogDetailCardComponent, {
       minWidth: 'min(400px, 100%)',
       maxHeight: '100%',
       data: this.localUser.tasks[index],
+    });
+    this._subscritiionDialog = dialogRef.afterClosed().subscribe((result) => {
+      // console.log('tasks', this.localUser.tasks);
+      // console.log(result);
+
+      if (result && result.event == 'delete')
+        this.localUser.tasks.splice(index, 1);
+
+      this.sessionDataService.setTask(this.localUser.tasks);
     });
   }
 }

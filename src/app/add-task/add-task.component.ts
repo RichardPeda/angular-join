@@ -78,7 +78,6 @@ export class AddTaskComponent {
   ) {
     this.localUser = this.sessionDataService.user;
     this.filteredContacts = this.localUser.contacts;
-    // this.selectedContacts = this.localUser.contacts;
   }
 
   ngOnInit() {
@@ -100,7 +99,6 @@ export class AddTaskComponent {
     this.localUser.contacts.forEach((c) => {
       if (c.selected) this.selectedContacts.push(c);
     });
-    console.log(this.selectedContacts);
   }
 
   checkValidPriority(value: string): boolean {
@@ -144,6 +142,7 @@ export class AddTaskComponent {
     this.submitBtnClicked = false;
     this.selectedContacts = [];
     this.subTasks = [];
+    this.priority = 'medium';
   }
 
   setPriority(prio: 'medium' | 'urgent' | 'low') {
@@ -176,7 +175,6 @@ export class AddTaskComponent {
 
   closeDropdownContacts() {
     this.dropdownContactsClose = true;
-    console.log('close is triggered');
   }
 
   openDropdownContacts(event: Event) {
@@ -222,13 +220,11 @@ export class AddTaskComponent {
 
   createSubtask() {
     if (this.taskForm.controls['subtask'].valid) {
-      // let subtask = new SubtaskObject(this.taskForm.controls['subtask'].value!);
       let subtask: Subtask = {
         title: this.taskForm.controls['subtask'].value!,
         done: false,
       };
       this.subTasks.push(subtask);
-      console.log(this.subTasks);
     }
   }
 

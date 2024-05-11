@@ -73,7 +73,7 @@
 
                     <!-- Urgent, Medium, Low - Prio -->
                     <div class="addTask-input-element">
-                        <app-priority-selection (currentSelection)="setPriority($event)"></app-priority-selection>
+                        <app-priority-selection [selection]="priority" (currentSelection)="setPriority($event)"></app-priority-selection>
                     </div>
 
                     <!-- Category -->

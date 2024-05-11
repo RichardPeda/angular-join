@@ -16,11 +16,10 @@ export class ProgressBarComponent {
       done: false,
     },
   ];
- 
 
   finishedSubtasks: number = 0;
   totalSubtasks: number = 0;
-  progress : number = 0;
+  progress: number = 0;
 
   ngOnChanges(changes: SimpleChange) {
     this.calcSubtasks();
@@ -29,16 +28,15 @@ export class ProgressBarComponent {
     this.calcSubtasks();
   }
 
-  
-
   calcSubtasks() {
     this.finishedSubtasks = 0;
     this.totalSubtasks = this.subtasks.length;
     this.subtasks.forEach((subtask) => {
       if (subtask.done) this.finishedSubtasks++;
     });
-    this.progress = this.totalSubtasks > 0 ? (this.finishedSubtasks / this.totalSubtasks) * 100 : 0;
-    console.log(this.progress);
-    
+    this.progress =
+      this.totalSubtasks > 0
+        ? (this.finishedSubtasks / this.totalSubtasks) * 100
+        : 0;
   }
 }

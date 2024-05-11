@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import {
   MatDialog,
   MAT_DIALOG_DATA,
@@ -18,5 +18,27 @@ import { CommonModule } from '@angular/common';
   styleUrl: './dialog-detail-card.component.scss',
 })
 export class DialogDetailCardComponent {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Task) {}
+  localData: Task;
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: Task,
+    public dialogRef: MatDialogRef<DialogDetailCardComponent>
+  ) {
+    this.localData = { ...data };
+  }
+
+  toggleSubtaskStatus(index: number) {
+    this.data.subtasks[index].done = !this.data.subtasks[index].done;
+  }
+
+  updateData() {
+    if (JSON.stringify(this.localData) !== JSON.stringify(this.data)) {
+      this.dialogRef.close({ event: 'update', data: this.data });
+    }else{
+      this.dialogRef.close({ event: 'close', data: this.data });
+    }
+  }
+
+  deleteTask() {
+    this.dialogRef.close({ event: 'delete' });
+  }
 }
