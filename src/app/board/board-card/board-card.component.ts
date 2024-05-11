@@ -1,4 +1,12 @@
-import { Component, Input, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChange,
+  SimpleChanges,
+} from '@angular/core';
 import { Task } from '../../interfaces/task.interface';
 import { Contact } from '../../interfaces/contact.interface';
 import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
@@ -26,10 +34,17 @@ export class BoardCardComponent {
     subtasks: [],
   };
 
- ngOnChanges(changes: SimpleChanges){
-// console.log(changes)
- }
- 
+  @Output() clicked = new EventEmitter<boolean>();
+
+  openCard = false;
+
+  ngOnChanges(changes: SimpleChanges) {
+    // console.log(changes)
+  }
+  openDetailCard() {
+    this.openCard=true;
+    this.clicked.emit(this.openCard);
+  }
 
   openCardMoveMenu() {}
 }

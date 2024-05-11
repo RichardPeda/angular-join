@@ -1,4 +1,4 @@
-<div data-id="${index}" draggable='true' onclick="openDetailCard()" ondragstart="drag(event); rotateCard(event)"
+<div data-id="${index}" draggable='true' (click)="openDetailCard()" ondragstart="drag(event); rotateCard(event)"
     id="card_${index}" class="board-task-card">
     <div class="board-card-header">
         <p class="board-task-category">{{task.category}}</p>
