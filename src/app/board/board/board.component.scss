@@ -245,17 +245,7 @@
     fill: $clr-light-blue;
 }
 
-.board-task-card {
-    width: 100%;
-    border-radius: 24px;
-    box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.08);
-    padding: 16px;
-    cursor: pointer;
-    z-index: 2;
-    background-color: white;
-    /* display: flex;
-    flex-direction: column; */
-}
+
 
 .board-task-category {
     background-color: $clr-task-userstory;
@@ -281,33 +271,9 @@
     -webkit-box-orient: vertical;
 }
 
-.board-task-progress {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    gap: 11px;
-    margin-block: 24px;
-}
 
-.board-task-progress p {
-    font-size: 12px;
-    margin: 0;
-}
 
-.board-task-progress-inner {
-    width: 50%;
-    height: 100%;
-    border-radius: 8px;
-    background-color: #4589ff;
-}
 
-.board-task-progressbar {
-    flex: 1;
-    background-color: #f4f4f4;
-    height: 8px;
-    border-radius: 8px;
-    overflow: hidden;
-}
 
 .board-task-profile-badge-container {
     display: flex;

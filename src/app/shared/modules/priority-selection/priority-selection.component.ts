@@ -9,12 +9,11 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrl: './priority-selection.component.scss',
 })
 export class PrioritySelectionComponent {
-  @Output() currentSelection = new EventEmitter<string>();
-  prioSelection = 'medium';
+  @Output() currentSelection = new EventEmitter<'medium' | 'urgent' | 'low'>();
+  prioSelection: 'medium' | 'urgent' | 'low' = 'medium';
 
-  selectPrio(title:string){
+  selectPrio(title: 'medium' | 'urgent' | 'low') {
     this.prioSelection = title;
-    this.currentSelection.emit(this.prioSelection)
+    this.currentSelection.emit(this.prioSelection);
   }
-
 }

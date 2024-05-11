@@ -48,12 +48,7 @@ export class ContactsComponent implements OnInit {
     public activatedroute: ActivatedRoute
   ) {
     this.localUser = this.sessionDataService.user;
-    console.log(
-      'sessiondata from contacts',
-      this.sessionDataService.user.contacts
-    );
-    console.log('lokaler user',this.localUser)
-    
+        
     this.sessionDataService.getRegisterLetters(
       this.sessionDataService.user.contacts!
     );

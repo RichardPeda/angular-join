@@ -1,5 +1,8 @@
 @import '../../../colors.scss';
 
+:host {
+    width: 100%;
+}
 
 .board-task-card {
     width: 100%;
@@ -95,4 +98,16 @@ h6 {
     margin-right: 8px;
     font-size: 10px;
     margin-left: -16px;
+}
+
+@media (max-width: 1420px) {
+
+    .board-task-card {
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        align-self: stretch;
+        width: 252px;
+        min-height: 252px;
+    }
 }

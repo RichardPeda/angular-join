@@ -37,6 +37,7 @@ export class BoardComponent {
     this._subscriptionUser = this.sessionDataService.userSubject.subscribe(
       (user: User) => {
         this.localUser = user;
+        console.log('user vom board', this.localUser.tasks)
       }
     );
   }

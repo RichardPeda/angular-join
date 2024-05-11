@@ -33,7 +33,7 @@ import { NavbarComponent } from '../shared/modules/navbar/navbar.component';
     ProfileBadgeComponent,
     PrioritySelectionComponent,
     HeaderComponent,
-    NavbarComponent
+    NavbarComponent,
   ],
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss',
@@ -66,10 +66,11 @@ export class AddTaskComponent {
     description: [''],
     contactField: [''],
     date: ['', Validators.required],
-    priority: ['medium'],
     category: ['', Validators.required],
     subtask: [''],
   });
+
+  priority: 'medium' | 'urgent' | 'low' = 'medium';
 
   constructor(
     private _formbuilder: FormBuilder,
@@ -85,6 +86,7 @@ export class AddTaskComponent {
       (user: User) => {
         this.localUser = user;
         this.filteredContacts = this.localUser.contacts;
+        console.log('contacts from addTask', this.filteredContacts);
       }
     );
   }
@@ -101,23 +103,29 @@ export class AddTaskComponent {
     console.log(this.selectedContacts);
   }
 
+  checkValidPriority(value: string): boolean {
+    if (value === 'medium') return true;
+    else if (value === 'urgent') return true;
+    else if (value === 'low') return true;
+    else return false;
+  }
+
   createTask() {
     if (this.taskForm.valid) {
       this.findselectedContacts();
       let newTasks = this.sessionDataService.user.tasks;
 
       if (
-        this.taskForm.controls['category'].value ===
-          ('Technical Task' || 'User Story') &&
-        this.taskForm.controls['priority'].value ===
-          ('medium' || 'urgent' || 'low')
+        (this.taskForm.controls['category'].value === 'User Story' ||
+          this.taskForm.controls['category'].value === 'Technical Task') &&
+        this.checkValidPriority(this.priority)
       ) {
         let task: Task = {
           title: this.taskForm.controls['title'].value!,
           taskID: Math.floor(100000 + Math.random() * 900000).toString(),
           description: this.taskForm.controls['description'].value!,
           assignedContacts: this.selectedContacts,
-          priority: this.taskForm.controls['priority'].value!,
+          priority: this.priority,
           category: this.taskForm.controls['category'].value!,
           dueDate: this.taskForm.controls['date'].value!,
           status: 'toDo',
@@ -134,10 +142,12 @@ export class AddTaskComponent {
     this.taskForm.clearValidators();
     this.taskForm.reset();
     this.submitBtnClicked = false;
+    this.selectedContacts = [];
+    this.subTasks = [];
   }
 
-  setPriority(prio: string) {
-    this.taskForm.controls['priority'].setValue(prio);
+  setPriority(prio: 'medium' | 'urgent' | 'low') {
+    this.priority = prio;
   }
 
   btnIsClicked() {
@@ -187,7 +197,7 @@ export class AddTaskComponent {
     this.taskForm.patchValue({
       category: category,
     });
-    this.closeDropdownCategory()
+    this.closeDropdownCategory();
   }
 
   updateSelected() {

@@ -53,9 +53,13 @@
 
                 <div id="todo-card-container" class="card-container" ondragstart="avoidGhostCard(event)"
                     ondrop="drop(event)" ondragover="allowDrop(event), showGhostcard();">
-                    <app-board-card [task]="localUser.tasks[0]"></app-board-card>
+
+                    @for (task of localUser.tasks; track $index) {
+                    @if (task.status === 'toDo') {<app-board-card [task]="task"></app-board-card>}
+                    }
+
                     <div class="board-column-noTask d-none">No Tasks To Do</div>
-                   
+
                 </div>
             </div>
             <!-- inProgress -->
@@ -73,6 +77,9 @@
 
                 <div id="inProgress-card-container" class="card-container" ondragstart="avoidGhostCard(event)"
                     ondrop="drop(event)" ondragover="allowDrop(event), showGhostcard()">
+                    @for (task of localUser.tasks; track $index) {
+                    @if (task.status === 'inProgress') {<app-board-card [task]="task"></app-board-card>}
+                    }
                     <div class="board-column-noTask">No Tasks in Progress</div>
                 </div>
             </div>
@@ -91,6 +98,9 @@
 
                 <div id="awaitFeedback-card-container" class="card-container" ondragstart="avoidGhostCard(event)"
                     ondrop="drop(event)" ondragover="allowDrop(event), showGhostcard();">
+                    @for (task of localUser.tasks; track $index) {
+                        @if (task.status === 'awaitFeedback') {<app-board-card [task]="task"></app-board-card>}
+                        }
                     <div class="board-column-noTask">No Tasks await Feedback</div>
                 </div>
             </div>
@@ -102,6 +112,9 @@
 
                 <div id="done-card-container" class="card-container" ondragstart="avoidGhostCard(event)"
                     ondrop="drop(event)" ondragover="allowDrop(event), showGhostcard();">
+                    @for (task of localUser.tasks; track $index) {
+                        @if (task.status === 'done') {<app-board-card [task]="task"></app-board-card>}
+                        }
                     <div class="board-column-noTask">No Tasks done</div>
                 </div>
             </div>
