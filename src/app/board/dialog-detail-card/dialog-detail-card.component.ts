@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import {
   MatDialog,
@@ -19,6 +19,8 @@ import { CommonModule } from '@angular/common';
 })
 export class DialogDetailCardComponent {
   localData: Task;
+  editmode = false;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: Task,
     public dialogRef: MatDialogRef<DialogDetailCardComponent>
@@ -33,12 +35,16 @@ export class DialogDetailCardComponent {
   updateData() {
     if (JSON.stringify(this.localData) !== JSON.stringify(this.data)) {
       this.dialogRef.close({ event: 'update', data: this.data });
-    }else{
+    } else {
       this.dialogRef.close({ event: 'close', data: this.data });
     }
   }
 
   deleteTask() {
     this.dialogRef.close({ event: 'delete' });
+  }
+
+  switchToEditMode() {
+    this.dialogRef.close({ event: 'editmode'});
   }
 }

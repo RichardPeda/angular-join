@@ -58,7 +58,7 @@
                     @if (task.status === 'toDo') {<app-board-card (clicked)="openDialog(index)" [task]="task"></app-board-card>}
                     }
 
-                    <div class="board-column-noTask d-none">No Tasks To Do</div>
+                    <div [ngClass]="{'d-none': amountTasksTodo > 0}" class="board-column-noTask">No Tasks To Do</div>
 
                 </div>
             </div>
@@ -80,7 +80,7 @@
                     @for (task of localUser.tasks; track task; let index = $index) {
                     @if (task.status === 'inProgress') {<app-board-card (clicked)="openDialog(index)" [task]="task"></app-board-card>}
                     }
-                    <div class="board-column-noTask">No Tasks in Progress</div>
+                    <div [ngClass]="{'d-none': amountTasksInProgress > 0}" class="board-column-noTask">No Tasks in Progress</div>
                 </div>
             </div>
             <!-- await Feedback -->
@@ -101,7 +101,7 @@
                     @for (task of localUser.tasks; track task; let index = $index) {
                         @if (task.status === 'awaitFeedback') {<app-board-card (clicked)="openDialog(index)" [task]="task"></app-board-card>}
                         }
-                    <div class="board-column-noTask">No Tasks await Feedback</div>
+                    <div [ngClass]="{'d-none': amountTasksAwaitFeedback > 0}" class="board-column-noTask">No Tasks await Feedback</div>
                 </div>
             </div>
             <!-- done -->
@@ -115,7 +115,7 @@
                     @for (task of localUser.tasks; track task; let index = $index) {
                         @if (task.status === 'done') {<app-board-card (clicked)="openDialog(index)" [task]="task"></app-board-card>}
                         }
-                    <div class="board-column-noTask">No Tasks done</div>
+                    <div [ngClass]="{'d-none': amountTasksDone > 0}" class="board-column-noTask">No Tasks done</div>
                 </div>
             </div>
         </div>
