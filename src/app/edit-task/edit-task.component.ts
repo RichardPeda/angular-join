@@ -137,10 +137,9 @@ export class EditTaskComponent {
     else return false;
   }
 
-  createTask() {
+  saveTask() {
     if (this.taskForm.valid) {
       this.findselectedContacts();
-      let newTasks = this.sessionDataService.user.tasks;
 
       if (
         (this.taskForm.controls['category'].value === 'User Story' ||
@@ -149,17 +148,18 @@ export class EditTaskComponent {
       ) {
         let task: Task = {
           title: this.taskForm.controls['title'].value!,
-          taskID: Math.floor(100000 + Math.random() * 900000).toString(),
+          taskID: this.data.taskID,
           description: this.taskForm.controls['description'].value!,
           assignedContacts: this.selectedContacts,
           priority: this.priority,
           category: this.taskForm.controls['category'].value!,
           dueDate: this.taskForm.controls['date'].value!,
-          status: 'toDo',
+          status: this.data.status,
           subtasks: this.subTasks,
         };
-        newTasks.push(task);
-        this.sessionDataService.setTask(newTasks);
+
+        this.data = task;
+        this.dialogRef.close({ event: 'update', data: this.data });
         this.resetForm();
       }
     }

@@ -28,7 +28,8 @@ import { CommonModule } from '@angular/common';
 })
 export class BoardComponent {
   _subscriptionUser: any;
-  _subscritiionDialog: any;
+  _subscriptionDialog: any;
+  _subscriptionEditDialog: any;
   editmode = false;
   localUser: User = {
     id: '',
@@ -67,8 +68,11 @@ export class BoardComponent {
 
   ngOnDestroy() {
     this._subscriptionUser.unsubscribe();
-    if (this._subscritiionDialog) {
-      this._subscritiionDialog.unsubscribe();
+    if (this._subscriptionDialog) {
+      this._subscriptionDialog.unsubscribe();
+    }
+    if (this._subscriptionEditDialog) {
+      this._subscriptionEditDialog.unsubscribe();
     }
   }
 
@@ -78,7 +82,7 @@ export class BoardComponent {
       maxHeight: '100%',
       data: this.localUser.tasks[index],
     });
-    this._subscritiionDialog = dialogRef.afterClosed().subscribe((result) => {
+    this._subscriptionDialog = dialogRef.afterClosed().subscribe((result) => {
       if (result && result.event == 'editmode') {
         this.openEditDialog(index);
       } else if (result && result.event == 'delete')
@@ -94,6 +98,14 @@ export class BoardComponent {
       maxHeight: '100%',
       data: this.localUser.tasks[index],
     });
+    this._subscriptionEditDialog = editDialogRef
+      .afterClosed()
+      .subscribe((result) => {
+        if (result && result.event == 'update') {
+          this.localUser.tasks.splice(index, 1, result.data);
+          this.sessionDataService.setTask(this.localUser.tasks);
+        }
+      });
   }
 
   resetCount() {
