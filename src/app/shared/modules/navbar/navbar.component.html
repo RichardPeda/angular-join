@@ -57,6 +57,8 @@
         </div>
     </div>
     <div class="sidebar-links">
-        <a id="sidePrivacy" class="sidebar-link-element" href="#">Privacy Policy</a>
-        <a id="sideLegal" class="sidebar-link-element" href="#">Legal notice</a>
+        <div class="sidebar-link-element" [ngClass]="{'sidebar-element-active': selectedPageName == 'privacy-policy'}"
+            (click)="linkToPrivacyPolicy()">Privacy Policy</div>
+        <div class="sidebar-link-element" [ngClass]="{'sidebar-element-active': selectedPageName == 'legal-notice'}"
+            (click)="linkToLegalNotice()">Legal notice</div>
     </div>

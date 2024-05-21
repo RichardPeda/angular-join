@@ -1,0 +1,57 @@
+
+
+@import '../../colors.scss';
+
+
+.content {
+    width: 100%;
+    height: 100%;
+    background-color: $clr-bg;
+    display: grid;
+    grid-template-rows: 96px 1fr;
+    grid-template-columns: 232px 1fr;
+    grid-template-areas:
+        "header header "
+        "sidebar content";
+}
+
+.main-sidecontent-container {
+    grid-area: content;
+    width: calc(100vw - 232px);
+    height: calc(100vh - 96px);
+    overflow-y: scroll;
+    padding-left: 96px;
+    padding-right: 96px;
+  }
+  
+  mark {
+    color: $clr-light-blue;
+    background-color: transparent;
+  }
+
+  /* Scrollbar */
+  .main-sidecontent-container::-webkit-scrollbar {
+    scrollbar-width: 0px;
+  }
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+
+@media (max-width: 1200px) {
+    .main-sidecontent-container {
+      margin-inline: auto;
+      width: calc(100% - 32px);
+      height: calc(100vh - 176px);
+      padding: 0;
+    }
+  
+    .header-container h1 {
+      margin-top: 48px;
+      margin-bottom: 32px;
+      font-size: 47px;
+    }
+  }

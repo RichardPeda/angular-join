@@ -1,7 +1,7 @@
-<div data-id="${index}" draggable='true' (click)="openDetailCard()" ondragstart="drag(event); rotateCard(event)"
-    id="card_${index}" class="board-task-card">
+<div data-id="${index}" (click)="openDetailCard()" id="card_${index}" class="board-task-card">
     <div class="board-card-header">
-        <p class="board-task-category">{{task.category}}</p>
+        <p [ngStyle]="{'background-color' : task.category == 'Technical Task'? '#1FD7C1' : '#0038FF'}"
+            class="board-task-category">{{task.category}}</p>
         <svg (click)="openCardMoveMenu()" class="board-card-move-btn" xmlns="http://www.w3.org/2000/svg" width="0"
             height="0" viewBox="0 0 512 512">
             <path
@@ -12,12 +12,13 @@
 
     <h6 class="board-task-title">{{task.title}}</h6>
     <p class="board-task-description">{{task.description}}</p>
-   
+
     <app-progress-bar [subtasks]="task.subtasks"></app-progress-bar>
     <div class="board-task-footer">
         <div class="board-task-profile-badge-container">
             @for (assignedTo of task.assignedContacts; track $index) {
-                <div class="board-task-profile-badge" [ngStyle]="{'background-color': assignedTo.badgecolor}">{{assignedTo.initials}}</div>
+            <div class="board-task-profile-badge" [ngStyle]="{'background-color': assignedTo.badgecolor}">
+                {{assignedTo.initials}}</div>
             }
         </div>
         <div class="board-task-priority-container">

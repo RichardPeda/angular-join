@@ -10,6 +10,8 @@ import { AddContactComponent } from './contacts/add-contact/add-contact.componen
 import { DataResolverService } from './services/data-resolver.service';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { BoardComponent } from './board/board/board.component';
+import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent, data: { animation: 'openClosePage' } },
@@ -18,4 +20,6 @@ export const routes: Routes = [
     { path: 'contacts/:id', data:{title : 'contacts'}, component: ContactsComponent },
     { path: 'addtask/:id', data:{title : 'Add task'}, component: AddTaskComponent },
     { path: 'board/:id', data:{title : 'Board'}, component: BoardComponent },
+    { path: 'legal-notice', data:{title : 'Legal Notice'}, component: LegalNoticeComponent },
+    { path: 'privacy-policy', data:{title : 'Privacy Policy'}, component: PrivacyPolicyComponent },
 ];

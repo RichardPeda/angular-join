@@ -10,6 +10,19 @@ import { DialogDetailCardComponent } from '../dialog-detail-card/dialog-detail-c
 import { EditTaskComponent } from '../../edit-task/edit-task.component';
 import { Task } from '../../interfaces/task.interface';
 import { CommonModule } from '@angular/common';
+import {
+  DragDropModule,
+  CdkDragDrop,
+  CdkDrag,
+  CdkDropList,
+  CdkDropListGroup,
+  moveItemInArray,
+  transferArrayItem,
+  CdkDragPlaceholder,
+  CdkDragEnter,
+  CdkDragExit,
+  CdkDragStart,
+} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-board',
@@ -22,6 +35,10 @@ import { CommonModule } from '@angular/common';
     DialogDetailCardComponent,
     EditTaskComponent,
     CommonModule,
+    DragDropModule,
+    CdkDropList,
+    CdkDrag,
+    CdkDragPlaceholder,
   ],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss',
@@ -40,10 +57,20 @@ export class BoardComponent {
     tasks: [],
   };
 
+  todo = ['toDo'];
+  inProgress = ['inProgress'];
+  awaitFeedback = ['awaitFeedback'];
+  done = ['done'];
+
+  dragableTask: Object = [];
+
   amountTasksTodo = 0;
   amountTasksInProgress = 0;
   amountTasksAwaitFeedback = 0;
   amountTasksDone = 0;
+  hideGhostCard = [true, true, true, true];
+  hideLabel = [false, false, false, false];
+  rotateValue = 0;
 
   constructor(
     public userService: UserdataService,
@@ -124,5 +151,77 @@ export class BoardComponent {
       if (element.status == 'inProgress') this.amountTasksInProgress++;
       if (element.status == 'done') this.amountTasksDone++;
     });
+  }
+
+  drag(event: CdkDragStart<string[]>, task: Task) {
+   this.rotateValue = 5;
+    
+    this.dragableTask = task;
+    this.hideGhostCard.forEach((v, i, a) => (a[i] = false));
+  }
+
+  resetGhostCard(event: CdkDragEnter<string[]>) {
+    switch (event.container.data[0]) {
+      case 'toDo':
+        this.hideGhostCard[0] = true;
+        this.hideLabel[0] = true;
+        break;
+      case 'inProgress':
+        this.hideGhostCard[1] = true;
+        this.hideLabel[1] = true;
+        break;
+      case 'awaitFeedback':
+        this.hideGhostCard[2] = true;
+        this.hideLabel[2] = true;
+        break;
+      case 'done':
+        this.hideGhostCard[3] = true;
+        this.hideLabel[3] = true;
+        break;
+    }
+  }
+
+  setGhostCard(event: CdkDragExit<string[]>) {
+    switch (event.container.data[0]) {
+      case 'toDo':
+        this.hideGhostCard[0] = false;
+        this.hideLabel[0] = false;
+        break;
+      case 'inProgress':
+        this.hideGhostCard[1] = false;
+        this.hideLabel[1] = false;
+        break;
+      case 'awaitFeedback':
+        this.hideGhostCard[2] = false;
+        this.hideLabel[2] = false;
+        break;
+      case 'done':
+        this.hideGhostCard[3] = false;
+        this.hideLabel[3] = false;
+        break;
+    }
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    let column = event.container.data[0];
+    this.hideGhostCard.forEach((v, i, a) => (a[i] = true));
+    this.hideLabel.forEach((v, i, a) => (a[i] = false));
+    this.rotateValue=0;
+
+    if (event.previousContainer !== event.container) {
+      this.localUser.tasks.forEach((task) => {
+        if (task == this.dragableTask) {
+          if (
+            column == 'toDo' ||
+            column == 'inProgress' ||
+            column == 'awaitFeedback' ||
+            column == 'done'
+          ) {
+            task.status = column;
+            this.sessionDataService.setTask(this.localUser.tasks);
+          }
+        }
+      });
+    }
   }
 }

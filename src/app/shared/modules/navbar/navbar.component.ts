@@ -40,6 +40,12 @@ export class NavbarComponent {
   linkToAddTask() {
     this.router.navigate(['addtask/' + this.docId]);
   }
+  linkToLegalNotice(){
+    this.router.navigate(['legal-notice'])
+  }
+  linkToPrivacyPolicy(){
+    this.router.navigate(['privacy-policy'])
+  }
 
   getURL() {
     let path = this.location.path();
@@ -47,6 +53,8 @@ export class NavbarComponent {
     else if (path.includes('contacts')) return 'contacts';
     else if (path.includes('addtask')) return 'addtask';
     else if (path.includes('board')) return 'board';
+    else if (path.includes('legal-notice')) return 'legal-notice';
+    else if (path.includes('privacy-policy')) return 'privacy-policy';
     else return 'summary';
   }
 }
