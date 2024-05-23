@@ -19,7 +19,6 @@ export class NavbarComponent {
     private userService: UserdataService,
     private router: Router,
     private location: Location,
-    private sessionDataService: SessiondataService
   ) {
     this.docId = this.userService.loadIdFromSessionStorage()!;
   }

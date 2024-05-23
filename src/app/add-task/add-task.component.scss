@@ -596,3 +596,36 @@
 .full-opacity {
     opacity: 1 !important;
 }
+
+
+.testbtn{
+    margin-left: 250px;
+}
+
+
+
+
+  
+
+  app-task-added-snackbar{
+    display: flex;
+    width: fit-content;
+    position: absolute;
+    z-index: 1000;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    animation: popup 800ms ease-in-out forwards;
+    
+ }
+
+ @keyframes popup {
+    from {
+      transform: translate(-50%, 0%);
+    
+    }
+  
+    to {
+        transform: translate(-50%, -50vh);
+    }
+  }

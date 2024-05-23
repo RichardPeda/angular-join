@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import {
   FormControl,
-  FormGroup,
   ReactiveFormsModule,
   FormBuilder,
   Validators,
@@ -12,7 +11,6 @@ import { SessiondataService } from '../services/sessiondata.service';
 import { ContactSelectionComponent } from '../shared/modules/contact-selection/contact-selection.component';
 import { ClickOutsideDirective } from '../shared/click-outside.directive';
 import { Contact } from '../interfaces/contact.interface';
-import { TaskObject } from '../shared/models/task.model';
 import { Subtask } from '../interfaces/subtask.interface';
 import { SubtaskComponent } from '../shared/modules/subtask/subtask.component';
 import { ProfileBadgeComponent } from '../shared/modules/profile-badge/profile-badge.component';
@@ -20,6 +18,10 @@ import { PrioritySelectionComponent } from '../shared/modules/priority-selection
 import { Task } from '../interfaces/task.interface';
 import { HeaderComponent } from '../shared/modules/header/header.component';
 import { NavbarComponent } from '../shared/modules/navbar/navbar.component';
+import { TaskAddedSnackbarComponent } from '../snackbars/task-added-snackbar/task-added-snackbar.component';
+import { UserdataService } from '../services/userdata.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-add-task',
@@ -34,9 +36,11 @@ import { NavbarComponent } from '../shared/modules/navbar/navbar.component';
     PrioritySelectionComponent,
     HeaderComponent,
     NavbarComponent,
+    TaskAddedSnackbarComponent
   ],
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class AddTaskComponent {
   _subscriptionUser: any;
@@ -51,7 +55,7 @@ export class AddTaskComponent {
   };
 
   subtasks: string[] = [];
-
+  hidePopup = true;
   filteredContacts: Contact[];
   selectedContacts: Contact[] = [];
   subTasks: Subtask[] = [];
@@ -71,11 +75,14 @@ export class AddTaskComponent {
   });
 
   priority: 'medium' | 'urgent' | 'low' = 'medium';
-
+  docId = '';
   constructor(
+    private userService: UserdataService,
+    private router: Router,
     private _formbuilder: FormBuilder,
     private sessionDataService: SessiondataService
   ) {
+    this.docId = this.userService.loadIdFromSessionStorage()!;
     this.localUser = this.sessionDataService.user;
     this.filteredContacts = this.localUser.contacts;
   }
@@ -132,6 +139,10 @@ export class AddTaskComponent {
         newTasks.push(task);
         this.sessionDataService.setTask(newTasks);
         this.resetForm();
+        this.openSnackbar();
+        setTimeout(() => {
+          this.linkToBoard();
+        }, 1500);
       }
     }
   }
@@ -235,5 +246,16 @@ export class AddTaskComponent {
   changeSubtaskTitle(title: string, index: number) {
     if (title === '') this.subTasks.splice(index, 1);
     else this.subTasks[index].title = title;
+  }
+
+  openSnackbar() {
+    this.hidePopup = false;
+    setTimeout(() => {
+      this.hidePopup = true;
+    }, 1500);
+  }
+
+  linkToBoard() {
+    this.router.navigate(['board/' + this.docId]);
   }
 }
