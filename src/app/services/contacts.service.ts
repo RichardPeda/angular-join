@@ -1,13 +1,15 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, OnChanges, inject } from '@angular/core';
 import { Contact } from '../interfaces/contact.interface';
 import { UserdataService } from './userdata.service';
 import { SessiondataService } from './sessiondata.service';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ContactsService {
   showSlider = false;
+  public _selectedContact = new Subject<Contact>();
   slideInMode = 'add' || 'edit';
 
   dummycontacts: Contact[] = [
@@ -120,7 +122,7 @@ export class ContactsService {
     badgecolor: '#FFA35E',
     initials: 'AF',
     register: 'A',
-    name: 'Arne Fröhlich',
+    name: 'Arne Bär',
     email: 'fröhlich@24-7.com',
     phone: '+49 815 79183212',
     selected: false,
@@ -137,10 +139,20 @@ export class ContactsService {
     selected: false,
   };
 
-  sessionService: SessiondataService = inject(SessiondataService);
+  constructor(private sessionService: SessiondataService) {
+    this.getFirstContact();
+  }
 
-  constructor() {
-    this.getFirstContact()
+  ngOnInit() {
+    this._selectedContact.next(this.selectedContact);
+  }
+
+  ngDoCheck() {
+    if (this.selectedContact != this.selectedContact) {
+      this._selectedContact.next(this.selectedContact);
+      console.log('checked');
+      
+    }
   }
 
   getFirstContact() {
@@ -151,6 +163,7 @@ export class ContactsService {
 
   showContactDetails(currentContact: Contact) {
     this.selectedContact = currentContact;
+    this._selectedContact.next(this.selectedContact);
   }
 
   editContact(currentContact: Contact) {

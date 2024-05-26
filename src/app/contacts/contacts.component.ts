@@ -26,19 +26,41 @@ import { User } from '../interfaces/user.interface';
   templateUrl: './contacts.component.html',
   styleUrl: './contacts.component.scss',
 })
-export class ContactsComponent implements OnInit {
+export class ContactsComponent {
   _subscriptionUser: any;
   _subscriptionLetters: any;
+  _subscriptionContact: any;
   registerletters = [''];
   localUser: User = {
     id: '',
     name: '',
     email: '',
     password: '',
-    contacts: [],
+    contacts: [
+      {
+        badgecolor: '',
+        email: '',
+        contactID: '',
+        initials: '',
+        name: '',
+        phone: '',
+        register: '',
+        selected: false,
+      },
+    ],
     tasks: [],
   };
-  // localUser: User;
+
+  selcontact: Contact = {
+    contactID: '3',
+    badgecolor: '#FFA35E',
+    initials: 'AF',
+    register: 'A',
+    name: 'Arne Fröhlich',
+    email: 'fröhlich@24-7.com',
+    phone: '+49 815 79183212',
+    selected: false,
+  };
 
   constructor(
     private _renderer: Renderer2,
@@ -48,7 +70,7 @@ export class ContactsComponent implements OnInit {
     public activatedroute: ActivatedRoute
   ) {
     this.localUser = this.sessionDataService.user;
-        
+    // this.selcontact = this.contactService.selectedContact;
     this.sessionDataService.getRegisterLetters(
       this.sessionDataService.user.contacts!
     );
@@ -69,10 +91,16 @@ export class ContactsComponent implements OnInit {
           this.registerletters = letters;
         }
       );
+    this._subscriptionContact = this.contactService._selectedContact.subscribe(
+      (contact: Contact) => {
+        this.selcontact = contact;
+      }
+    );
   }
 
   ngOnDestroy() {
     this._subscriptionUser.unsubscribe();
     this._subscriptionLetters.unsubscribe();
+    this._subscriptionContact.unsubscribe();
   }
 }

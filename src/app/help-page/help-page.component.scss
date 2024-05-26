@@ -1,0 +1,28 @@
+@import '../../colors.scss';
+
+
+.content {
+    width: 100%;
+    height: 100%;
+    background-color: $clr-bg;
+    display: grid;
+    grid-template-rows: 96px 1fr;
+    grid-template-columns: 232px 1fr;
+    grid-template-areas:
+        "header header "
+        "sidebar content";
+}
+
+.main-sidecontent-container {
+    grid-area: content;
+    width: calc(100vw - 232px);
+    height: calc(100vh - 96px);
+    overflow-y: scroll;
+    padding-left: 96px;
+    padding-right: 96px;
+}
+
+mark {
+    color: $clr-light-blue;
+    background-color: transparent;
+}

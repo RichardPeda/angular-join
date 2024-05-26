@@ -1,5 +1,3 @@
-
-
 <app-header></app-header>
 <app-navbar></app-navbar>
 
@@ -21,18 +19,20 @@
         <div class="summary-body">
             <div class="summary-overview">
                 <div class="overview-top">
-                    <div class="overview-top-card" id="toDoCard" (mouseover)="changeImg('pencil')" (mouseout)="resetImg('pencil')">
+                    <div class="overview-top-card" id="toDoCard" (mouseover)="changeImg('pencil')"
+                        (mouseout)="resetImg('pencil')">
                         <div class="top-icon">
-                            <img [src]="penImgSrc[penImgIdx]"  id="pencil" alt="Pencil" />
+                            <img [src]="penImgSrc[penImgIdx]" id="pencil" alt="Pencil" />
                         </div>
                         <div class="top-content">
                             <div class="task-number" id="toDo">1</div>
                             <div class="subtitel">To-do</div>
                         </div>
                     </div>
-                    <div class="overview-top-card" id="doneCard" (mouseover)="changeImg('done')" (mouseout)="resetImg('done')">
+                    <div class="overview-top-card" id="doneCard" (mouseover)="changeImg('done')"
+                        (mouseout)="resetImg('done')">
                         <div class="top-icon">
-                            <img [src]="doneImgSrc[doneImgIdx]" id="done"  alt="Done" />
+                            <img [src]="doneImgSrc[doneImgIdx]" id="done" alt="Done" />
                         </div>
                         <div class="top-content">
                             <div class="task-number" id="done1">1</div>
@@ -83,7 +83,8 @@
             </div>
             <div class="summary-greet" id="summaryGreet">
                 <div class="greet-body" id="greeting">
-                    <p>Good morning</p>
+                    <p>{{greeting}},</p>
+                    <h2>{{name}}</h2>
                 </div>
             </div>
         </div>

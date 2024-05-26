@@ -1,15 +1,15 @@
 <div id="details-container" class="details-container d-column-flex-start">
     <div id="detail-header" class="detail-header">
-        <div class="person-details-badge" [ngStyle]="{'background-color': contact.badgecolor}">{{contact.initials}}
+        <div class="person-details-badge" [ngStyle]="{'background-color': detailContact.badgecolor}">{{detailContact.initials}}
         </div>
         <div class="name-right">
-            <h2>{{contact.name}}</h2>
+            <h2>{{detailContact.name}}</h2>
             <div class="function-container">
-                <button id="edit-btn" class="edit-delete-btn" (click)="contactService.editContact(contact)">
+                <button id="edit-btn" class="edit-delete-btn" (click)="contactService.editContact(detailContact)">
                     <img src="../../assets/img/pencil-black.svg" alt="">
                     <span>Edit</span>
                 </button>
-                <button (click)="sessionService.deleteContact(contact)" id="delete-btn" class="edit-delete-btn">
+                <button (click)="sessionService.deleteContact(detailContact)" id="delete-btn" class="edit-delete-btn">
                     <img src="../../assets/img/trashcan-black.svg" alt="">
                     <span>Delete</span>
                 </button>
@@ -19,9 +19,9 @@
     <div class="contact-information-header">Contact Information</div>
     <div class="contact-information-container">
         <h6>E-Mail</h6>
-        <a href="mailto:${email}">{{contact.email}}</a>
+        <a href="mailto:${email}">{{detailContact.email}}</a>
         <h6>Phone</h6>
-        <span>{{contact.phone}}</span>
+        <span>{{detailContact.phone}}</span>
     </div>
     <div id="confirmed"></div>
 </div>

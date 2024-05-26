@@ -6,12 +6,11 @@ import { NavbarComponent } from './shared/modules/navbar/navbar.component';
 import { HeaderComponent } from './shared/modules/header/header.component';
 import { SummaryComponent } from './summary/summary.component';
 import { ContactsComponent } from './contacts/contacts.component';
-import { AddContactComponent } from './contacts/add-contact/add-contact.component';
-import { DataResolverService } from './services/data-resolver.service';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { BoardComponent } from './board/board/board.component';
 import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { HelpPageComponent } from './help-page/help-page.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent, data: { animation: 'openClosePage' } },
@@ -22,4 +21,5 @@ export const routes: Routes = [
     { path: 'board/:id', data:{title : 'Board'}, component: BoardComponent },
     { path: 'legal-notice', data:{title : 'Legal Notice'}, component: LegalNoticeComponent },
     { path: 'privacy-policy', data:{title : 'Privacy Policy'}, component: PrivacyPolicyComponent },
+    { path: 'help', data:{title : 'Help'}, component: HelpPageComponent },
 ];

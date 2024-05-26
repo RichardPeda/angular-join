@@ -82,6 +82,8 @@ export class LoginComponent {
       console.log(docInfo);
       this.router.navigate(['summary/' + docInfo.id]);
       this.userService.saveIdInSessionStorage(docInfo.id);
+      this.userService.saveDataInSessionStorage('initials', 'G');
+      this.userService.saveDataInSessionStorage('name', 'Guest User');
     });
   }
 }

@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Contact } from '../../interfaces/contact.interface';
 import { CommonModule } from '@angular/common';
 import { ContactsService } from '../../services/contacts.service';
@@ -12,22 +12,22 @@ import { SessiondataService } from '../../services/sessiondata.service';
   styleUrl: './contact-details.component.scss',
 })
 export class ContactDetailsComponent {
-
-  @Input() contact: Contact = {
-    contactID : '',
-    badgecolor: '',
-    name: '',
-    email: '',
-    phone: '',
-    initials: '',
-    register: '',
+  @Input() detailContact: Contact = {
+    contactID: '3',
+    badgecolor: '#FFA35E',
+    initials: 'AF',
+    register: 'A',
+    name: 'Arne Fröhlich',
+    email: 'fröhlich@24-7.com',
+    phone: '+49 815 79183212',
     selected: false,
   };
 
-  contactService : ContactsService = inject(ContactsService)
-  sessionService : SessiondataService = inject(SessiondataService);
+  // contactService : ContactsService = inject(ContactsService)
+  // sessionService : SessiondataService = inject(SessiondataService);
 
-  constructor(){
-
-  }
+  constructor(
+    public contactService: ContactsService,
+    public sessionService: SessiondataService
+  ) {}
 }

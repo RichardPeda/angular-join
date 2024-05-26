@@ -22,7 +22,7 @@
                 </div>
                 @for (contact of localUser.contacts; track $index) {
                 @if (contact.register.includes(letter)) {
-                <app-singlecontact [isSelected]="(contact.name == contactService.selectedContact.name)"
+                <app-singlecontact [isSelected]="(contact.name == selcontact.name)"
                     (selectedContact)="contactService.showContactDetails($event)" [contact]="contact"></app-singlecontact>
                 }
                 }
@@ -44,7 +44,7 @@
                 <span class="headline-claim">Better with a team</span>
             </div>
 
-            <app-contact-details [contact]="contactService.selectedContact"></app-contact-details>
+            <app-contact-details [detailContact]="selcontact"  ></app-contact-details>
         </div>
     </div>
 </div>

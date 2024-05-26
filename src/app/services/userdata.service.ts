@@ -21,8 +21,6 @@ import { ActivatedRoute } from '@angular/router';
 export class UserdataService {
   firestore: Firestore = inject(Firestore);
 
-  // users$;
-  // users;
   currentUser: User = {
     id: '',
     name: '',
@@ -33,11 +31,9 @@ export class UserdataService {
   };
 
   userId = '';
-  // 'tScm4A8H51cOmEe2OFs5'
 
   allUsers: User[] = [];
   unsubUsers;
-  // unsubGuest;
 
   constructor(private route: ActivatedRoute) {
     console.log(this.currentUser);
@@ -203,16 +199,27 @@ export class UserdataService {
         });
       }
     });
-   
   }
 
   saveIdInSessionStorage(id: string) {
     sessionStorage.setItem('userId', id);
   }
 
+ 
+  saveDataInSessionStorage(key: string, data: string) {
+    sessionStorage.setItem(key, data);
+  }
+
+
   loadIdFromSessionStorage(): string {
     let id = sessionStorage.getItem('userId');
     if (id) return id;
+    else return '';
+  }
+
+  loadDataFromSessionStoarage(key:string): string {
+    let dataString = sessionStorage.getItem(key);
+    if (dataString) return dataString;
     else return '';
   }
 
