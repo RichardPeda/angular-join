@@ -1,12 +1,10 @@
-
-
 <app-header></app-header>
 <app-navbar></app-navbar>
 
 <div class="content">
 
-    <div class="main-contacts-container">
-        <div id="contacts-list" class="contacts-list">
+    <div class="main-contacts-container" >
+        <div id="contacts-list" class="contacts-list" [ngClass]="{'hideMobile': openDetailsMenu}">
             <div class="btn-container">
                 <button class="btn-grey btn-add-contact" (click)="contactService.addPopup()">
 
@@ -22,33 +20,35 @@
                 </div>
                 @for (contact of localUser.contacts; track $index) {
                 @if (contact.register.includes(letter)) {
-                <app-singlecontact [isSelected]="(contact.name == selcontact.name)"
-                    (selectedContact)="contactService.showContactDetails($event)" [contact]="contact"></app-singlecontact>
+                <app-singlecontact (click)="openDetailsMobile()" [isSelected]="(contact.name == selectedContact.name)"
+                    (selectedContact)="contactService.showContactDetails($event)"
+                    [contact]="contact"></app-singlecontact>
                 }
                 }
                 }
             </div>
         </div>
 
-        <div id="contact-details-section">
-            <div id="click-background" class="d-none" onclick="closeDetailsMenu()"></div>
-            <div id="btn-details-container" class="btn-details-container d-none">
-                <button class="btn-grey btn-details-menu" onclick="openDetailsMenu()">
-                </button>
-            </div>
-            <div id="arrow-back-lightblue" class="d-none" onclick="initContactsHTML()"><img
-                    src="../../assets/img/arrow-back-lightblue.svg" alt=""></div>
+        <div class="contact-details-section" [ngClass]="{'showMobile': openDetailsMenu}">
             <div class="contacts-section-headline">
                 <h1 class="no-margin">Contacts</h1>
                 <div class="separator-upright-lightblue"></div>
                 <span class="headline-claim">Better with a team</span>
+                <div (click)="closeDetailsMobile()" [ngClass]="{'d-none': !mobileMode}" id="arrow-back-lightblue">
+                    <img src="../../assets/img/arrow-back-lightblue.svg" alt="">
+                </div>
             </div>
 
-            <app-contact-details [detailContact]="selcontact"  ></app-contact-details>
+            <app-contact-details [mobile]="mobileMode" [detailContact]="selectedContact"></app-contact-details>
+        
         </div>
     </div>
 </div>
 
 <div class="overlay" [ngClass]="{'show-overlay': contactService.showSlider}">
-    <app-add-contact  [contact]="contactService.slideInMode == 'edit' ?  contactService.selectedContact : contactService.emptyContact" (listUpdate)="sessionDataService.getRegisterLetters;" (isClosed)="contactService.slideOutPopup($event)" [slideIn]="contactService.showSlider" ></app-add-contact>
+    <app-add-contact
+        [contact]="contactService.slideInMode == 'edit' ?  contactService.selectedContact : contactService.emptyContact"
+        (listUpdate)="sessionDataService.getRegisterLetters;" (isClosed)="contactService.slideOutPopup($event)"
+        [slideIn]="contactService.showSlider">
+    </app-add-contact>
 </div>

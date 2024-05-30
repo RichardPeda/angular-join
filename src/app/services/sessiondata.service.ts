@@ -14,14 +14,14 @@ import {
 } from '@angular/fire/firestore';
 import { User } from '../interfaces/user.interface';
 import { Contact } from '../interfaces/contact.interface';
-import { Subject } from 'rxjs';
+import { AsyncSubject, BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Task } from '../interfaces/task.interface';
+import { ContactsService } from './contacts.service';
 @Injectable({
   providedIn: 'root',
 })
 export class SessiondataService {
-  public userSubject = new Subject<User>(); 
-  public registerLettersSubject = new Subject<string[]>(); 
+  public registerLettersSubject = new Subject<string[]>();
   docId = '';
   unsubGuest: any;
   firestore: Firestore = inject(Firestore);
@@ -33,6 +33,7 @@ export class SessiondataService {
     contacts: [],
     tasks: [],
   };
+  userSubject: BehaviorSubject<any> = new BehaviorSubject({});
   contacts = [];
   tasks = [];
   profileBadgeColors = [
@@ -56,7 +57,9 @@ export class SessiondataService {
 
   unsubUser;
 
-  constructor(private userService: UserdataService) {
+  constructor(
+    private userService: UserdataService
+  ) {
     this.docId = this.userService.loadIdFromSessionStorage();
 
     this.unsubUser = onSnapshot(
@@ -65,9 +68,13 @@ export class SessiondataService {
         let data = doc.data();
         this.user = this.userService.getCurrentUserData(doc.id, data!);
         console.log('dieser user', this.user);
-        this.userSubject.next(this.user)
+        this.userSubject.next(this.user);
       }
     );
+  }
+
+  getUserInfo() {
+    return this.userSubject.asObservable();
   }
 
   ngOnDestroy() {
@@ -86,21 +93,18 @@ export class SessiondataService {
     await updateDoc(docRef, {
       contacts: contact,
     });
-    this.getRegisterLetters(contact)
+    this.getRegisterLetters(contact);
   }
 
-  async setTask(task: Task[]){
+  async setTask(task: Task[]) {
     let docRef = this.userService.getSingleDocRef('users', this.docId);
     console.log('task is set');
     await updateDoc(docRef, {
       tasks: task,
     });
-    
   }
 
   deleteContact(contact: Contact) {
-    console.log('delete');
-    
     let update = false;
     let newContacts: Contact[] = this.user.contacts;
     newContacts.forEach((newContact, index) => {
@@ -111,7 +115,8 @@ export class SessiondataService {
     });
     if (update) this.setContact(newContacts);
     update = false;
-    this.getRegisterLetters(this.user.contacts)
+    this.getRegisterLetters(this.user.contacts);
+    // this.contactService.getFirstContact();
   }
 
   getInitials(name: string) {
@@ -143,7 +148,7 @@ export class SessiondataService {
       }
     });
     this.registerLetters.sort();
-    this.registerLettersSubject.next(this.registerLetters)
+    this.registerLettersSubject.next(this.registerLetters);
   }
   compare(a: Contact, b: Contact) {
     if (a.register < b.register) {

@@ -1,6 +1,7 @@
 <div id="details-container" class="details-container d-column-flex-start">
     <div id="detail-header" class="detail-header">
-        <div class="person-details-badge" [ngStyle]="{'background-color': detailContact.badgecolor}">{{detailContact.initials}}
+        <div class="person-details-badge" [ngStyle]="{'background-color': detailContact.badgecolor}">
+            {{detailContact.initials}}
         </div>
         <div class="name-right">
             <h2>{{detailContact.name}}</h2>
@@ -9,7 +10,8 @@
                     <img src="../../assets/img/pencil-black.svg" alt="">
                     <span>Edit</span>
                 </button>
-                <button (click)="sessionService.deleteContact(detailContact)" id="delete-btn" class="edit-delete-btn">
+                <button (click)="sessionService.deleteContact(detailContact); getFirstContact(); closeDialog()" id="delete-btn"
+                    class="edit-delete-btn">
                     <img src="../../assets/img/trashcan-black.svg" alt="">
                     <span>Delete</span>
                 </button>
@@ -24,4 +26,19 @@
         <span>{{detailContact.phone}}</span>
     </div>
     <div id="confirmed"></div>
+
+    <button [ngClass]="{'d-none': !mobile}" class="btn-grey btn-mobile-details" (click)="openDialog()"></button>
+
+    <div appClickOutside (clickOutside)="closeDialog()" class="details-dialog"
+        [ngClass]="{'d-none': !mobile || !showDialog}">
+        <button id="edit-btn" class="edit-delete-btn" (click)="contactService.editContact(detailContact)">
+            <img src="../../assets/img/pencil-black.svg" alt="">
+            <span>Edit</span>
+        </button>
+        <button (click)="sessionService.deleteContact(detailContact); getFirstContact(); closeDialog()" id="delete-btn"
+            class="edit-delete-btn">
+            <img src="../../assets/img/trashcan-black.svg" alt="">
+            <span>Delete</span>
+        </button>
+    </div>
 </div>

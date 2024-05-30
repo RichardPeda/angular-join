@@ -20,7 +20,7 @@ export class ClickOutsideDirective {
     const clickedInside =
       this.elementRef.nativeElement.contains(target) ||
       target.tagName === 'svg' ||
-      target.tagName === 'path'||
+      target.tagName === 'path' ||
       target.tagName === 'rect';
 
     if (!clickedInside) {

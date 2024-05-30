@@ -1,9 +1,5 @@
-
-
-
-
-
-<div [ngClass]="{'selected' : isSelected}" id="contact-container" class="contact-container" (click)="selectContact(contact)">
+<div [ngClass]="{'selected' : isSelected}" id="contact-container" class="contact-container"
+    (click)="selectContact(contact)">
     <div class="initials-badge" [ngStyle]="{'background-color': contact.badgecolor}">{{contact.initials}}</div>
     <div class="d-column-flex-start">
         <div [ngClass]="{'selected' : isSelected}" class="contact-name">{{contact.name}}</div>

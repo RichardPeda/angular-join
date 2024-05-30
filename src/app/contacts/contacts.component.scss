@@ -1,4 +1,5 @@
 @import '../../colors.scss';
+@import '../../mediaqueries.scss';
 
 
 .content {
@@ -11,7 +12,22 @@
     grid-template-areas:
         "header header "
         "sidebar content";
+
+    @media(max-width: $media-tablet-size) {
+        grid-template-columns: 0 1fr 0;
+        grid-template-rows: 96px 1fr 80px;
+        height: auto;
+        grid-template-areas:
+            "leftspace header rightspace "
+            "leftspace content rightspace "
+            "navbar navbar navbar ";
+    }
 }
+
+// #contact-details-section{
+//     width: 100%;
+// }
+
 
 @keyframes fade-in {
     0% {
@@ -51,11 +67,16 @@ body {
 
 .main-contacts-container {
     grid-area: content;
-    width: calc(100vw - 232px);
+    // width: calc(100vw - 232px);
     height: calc(100vh - 96px);
     display: flex;
     position: inherit;
     z-index: 1;
+
+    @media(max-width: $media-tablet-size) {
+        margin-left: 0;
+        margin-top: 0px;
+    }
 }
 
 #dark-background {
@@ -140,6 +161,8 @@ body {
     gap: 30px;
     margin-left: 55px;
     margin-top: 110px;
+
+
 }
 
 .separator-upright-lightblue {
@@ -304,7 +327,7 @@ body {
     }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 950px) {
     .main-contacts-container {
         height: calc(100vh - 176px);
         width: 100vw;
@@ -329,7 +352,7 @@ body {
     .btn-add-contact {
         width: 56px;
         height: 56px;
-        border-radius: 50%;
+        border-radius: 50% !important;
     }
 
     .btn-add-contact::before {
@@ -348,7 +371,7 @@ body {
     .registerbox {
         display: flex;
         align-items: center;
-        width: 90vw;
+        // width: 90vw;
 
         height: 78px;
         padding: 15px 24px 15px 37px;
@@ -442,7 +465,7 @@ body {
         flex-direction: column;
         align-items: flex-start;
         gap: 16px;
-        margin-left: 16px;
+        margin-left: 0;
         margin-top: 48px;
     }
 
@@ -516,7 +539,7 @@ body {
     #arrow-back-lightblue {
         display: block;
         position: absolute;
-        top: 48px;
+        top: 65px;
         right: 16px;
         cursor: pointer;
     }
@@ -653,12 +676,14 @@ body {
     gap: 16px;
     border: none;
     cursor: pointer;
+
+    &:hover {
+        background-color: $clr-light-blue;
+        box-shadow: $btn-hvr-box-shadow;
+    }
 }
 
-.btn-grey:hover {
-    background-color: $clr-light-blue;
-    box-shadow: $btn-hvr-box-shadow;
-}
+
 
 .btn-white {
     background-color: white;
@@ -694,7 +719,48 @@ body {
     display: none;
 }
 
-.show-overlay{
+.show-overlay {
     display: block;
 }
 
+
+
+.contact-details-section {
+    @media(max-width: 950px) {
+        width: 0;
+        opacity: 0;
+        justify-self: center;
+        padding-inline: 8px;
+    }
+}
+
+.hideMobile {
+    min-width: unset;
+    width: 0 !important;
+    opacity: 0;
+    overflow: hidden;
+}
+
+.showMobile {
+    width: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    opacity: 1;
+    transition: all 200ms ease-in;
+}
+
+.btn-mobile-details {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    position: fixed;
+    top: auto;
+    left: auto;
+    right: 16px;
+    bottom: 96px;
+    background-image: url('../../assets/img/more_vert.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+}

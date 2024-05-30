@@ -150,8 +150,7 @@ export class ContactsService {
   ngDoCheck() {
     if (this.selectedContact != this.selectedContact) {
       this._selectedContact.next(this.selectedContact);
-      console.log('checked');
-      
+          
     }
   }
 
@@ -159,6 +158,7 @@ export class ContactsService {
     let contactArray = this.sessionService.user.contacts;
     contactArray.sort(this.sessionService.compare);
     this.selectedContact = contactArray[0];
+    this._selectedContact.next(this.selectedContact);
   }
 
   showContactDetails(currentContact: Contact) {

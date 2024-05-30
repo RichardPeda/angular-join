@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { Contact } from '../interfaces/contact.interface';
 import { SinglecontactComponent } from './singlecontact/singlecontact.component';
 import { CommonModule } from '@angular/common';
@@ -11,6 +11,7 @@ import { UserdataService } from '../services/userdata.service';
 import { SessiondataService } from '../services/sessiondata.service';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '../interfaces/user.interface';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-contacts',
@@ -30,6 +31,7 @@ export class ContactsComponent {
   _subscriptionUser: any;
   _subscriptionLetters: any;
   _subscriptionContact: any;
+  $usercontact: any;
   registerletters = [''];
   localUser: User = {
     id: '',
@@ -51,7 +53,7 @@ export class ContactsComponent {
     tasks: [],
   };
 
-  selcontact: Contact = {
+  selectedContact: Contact = {
     contactID: '3',
     badgecolor: '#FFA35E',
     initials: 'AF',
@@ -62,6 +64,10 @@ export class ContactsComponent {
     selected: false,
   };
 
+  innerWidth = 0;
+  mobileMode = false;
+  openDetailsMenu = false;
+
   constructor(
     private _renderer: Renderer2,
     public contactService: ContactsService,
@@ -70,21 +76,23 @@ export class ContactsComponent {
     public activatedroute: ActivatedRoute
   ) {
     this.localUser = this.sessionDataService.user;
-    // this.selcontact = this.contactService.selectedContact;
-    this.sessionDataService.getRegisterLetters(
-      this.sessionDataService.user.contacts!
-    );
     this.registerletters = this.sessionDataService.registerLetters;
     this.sessionDataService.user.contacts.sort(this.sessionDataService.compare);
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     this._renderer.setStyle(document.body, 'overflow-x', 'hidden');
-    this._subscriptionUser = this.sessionDataService.userSubject.subscribe(
-      (user: User) => {
+    this.checkMobile();
+
+    this._subscriptionUser = this.sessionDataService
+      .getUserInfo()
+      .subscribe((user: User) => {
         this.localUser = user;
-      }
-    );
+
+        if (this.localUser.contacts)
+          this.sessionDataService.getRegisterLetters(this.localUser.contacts);
+      });
+
     this._subscriptionLetters =
       this.sessionDataService.registerLettersSubject.subscribe(
         (letters: string[]) => {
@@ -93,7 +101,7 @@ export class ContactsComponent {
       );
     this._subscriptionContact = this.contactService._selectedContact.subscribe(
       (contact: Contact) => {
-        this.selcontact = contact;
+        this.selectedContact = contact;
       }
     );
   }
@@ -102,5 +110,23 @@ export class ContactsComponent {
     this._subscriptionUser.unsubscribe();
     this._subscriptionLetters.unsubscribe();
     this._subscriptionContact.unsubscribe();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onWindowResize() {
+    this.checkMobile();
+  }
+
+  checkMobile() {
+    let width = window.innerWidth;
+    this.mobileMode = width <= 950 ? true : false;
+    if (!this.mobileMode) this.closeDetailsMobile();
+  }
+
+  openDetailsMobile() {
+    if (this.mobileMode) this.openDetailsMenu = true;
+  }
+  closeDetailsMobile() {
+    this.openDetailsMenu = false;
   }
 }

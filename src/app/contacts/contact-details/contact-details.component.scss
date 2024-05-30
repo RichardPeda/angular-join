@@ -1,16 +1,19 @@
 @import '../../../colors.scss';
 
 
+
 .details-container {
     margin-left: 55px;
     margin-top: 39px;
+
+    @media(max-width: 950px) {
+        margin-left: 0;
+    }
 }
 
 .detail-header {
-   
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
     margin-bottom: 30px;
 
     h2 {
@@ -64,17 +67,18 @@
 
 .edit-delete-btn {
     display: flex;
-    // align-items: center;
+   
     font-size: 16px;
     font-weight: 400;
     gap: 11px;
     cursor: pointer;
     border: none;
     color: $clr-dark-gray;
-    background-color: $clr-bg;
-    span{
-        background-color: $clr-bg;
-    }
+    background-color: transparent;
+
+    // span {
+    //     background-color: $clr-bg;
+    // }
 }
 
 .edit-delete-btn:hover {
@@ -85,20 +89,16 @@
     display: flex;
     gap: 10px;
     flex-direction: row;
-
-    background-color: white;
-    // width: 116px;
-    // height: 100px;
     justify-content: center;
-    // padding-left: 8px;
-    // box-shadow: $header-box-shadow;
     border-radius: 20px 20px 0 20px;
-    // transform: translateX(+200%);
-    // z-index: 23;
+
+    @media (max-width: 950px) {
+        display: none;
+    }
 }
 
 .name-right {
- 
+
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -109,4 +109,52 @@
 .contact-information-header {
     margin-top: 21px;
     margin-bottom: 21px;
+}
+
+.btn-grey {
+    background-color: $clr-dark-gray;
+    color: white;
+    font-size: 21px;
+    padding: 12px 0 12px 0;
+    border-radius: 10px;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $clr-light-blue;
+        box-shadow: $btn-hvr-box-shadow;
+    }
+}
+
+.btn-mobile-details {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    position: fixed;
+    top: auto;
+    left: auto;
+    right: 16px;
+    bottom: 96px;
+    background-image: url('../../../assets/img/more_vert.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.details-dialog {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: white;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    border-radius: 20px 20px 0px 20px;
+    position: fixed;
+    position: fixed;
+    right: 72px;
+    bottom: 152px;
 }
