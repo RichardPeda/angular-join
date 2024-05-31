@@ -67,7 +67,7 @@
 
 .edit-delete-btn {
     display: flex;
-   
+
     font-size: 16px;
     font-weight: 400;
     gap: 11px;
@@ -76,9 +76,7 @@
     color: $clr-dark-gray;
     background-color: transparent;
 
-    // span {
-    //     background-color: $clr-bg;
-    // }
+
 }
 
 .edit-delete-btn:hover {
@@ -89,7 +87,6 @@
     display: flex;
     gap: 10px;
     flex-direction: row;
-    justify-content: center;
     border-radius: 20px 20px 0 20px;
 
     @media (max-width: 950px) {
@@ -157,4 +154,14 @@
     position: fixed;
     right: 72px;
     bottom: 152px;
+}
+
+.contact-information-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    a {
+        margin-bottom: 7px;
+    }
 }

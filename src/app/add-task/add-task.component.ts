@@ -92,7 +92,6 @@ export class AddTaskComponent {
       (user: User) => {
         this.localUser = user;
         this.filteredContacts = this.localUser.contacts;
-        console.log('contacts from addTask', this.filteredContacts);
       }
     );
   }

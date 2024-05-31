@@ -36,34 +36,37 @@
                 <label id="input-name-label">
                     <input #name="ngModel" name="name" [(ngModel)]="contact.name" class="contact-inputField" type="text"
                         id="contact-input-name" placeholder="Name" required pattern="[a-zA-Z0-9\s]{1,}[a-zA-Z0-9]{1,}">
+                    <div class="login-error" [ngClass]="{'full-opacity': name.invalid && name.touched}">
+                        <p>This field is required. Please enter a name</p>
+                    </div>
 
                 </label>
-                <div class="login-error" [ngClass]="{'full-opacity': name.invalid && name.touched}">
-                    <p>This field is required. Please enter a name</p>
-                </div>
+
 
                 <label id="input-email-label">
-                    <input #email="ngModel"  name="email" [(ngModel)]="contact.email" class="contact-inputField" type="email"
-                        id="contact-input-email" placeholder="Email" required
+                    <input #email="ngModel" name="email" [(ngModel)]="contact.email" class="contact-inputField"
+                        type="email" id="contact-input-email" placeholder="Email" required
                         pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}">
+                    <div class="login-error" [ngClass]="{'full-opacity': email.invalid && email.touched}">
+                        <p>This field is required. Please enter a email address</p>
+                    </div>
                 </label>
-                <div class="login-error" [ngClass]="{'full-opacity': email.invalid && email.touched}">
-                    <p>This field is required. Please enter a email address</p>
-                </div>
+
 
                 <label id="input-phone-label">
-                    <input #phone="ngModel" name="phone" [(ngModel)]="contact.phone" class="contact-inputField" type="tel"
-                        id="contact-input-phone" placeholder="Phone" required pattern="[+0-9\s]{4,}">
+                    <input #phone="ngModel" name="phone" [(ngModel)]="contact.phone" class="contact-inputField"
+                        type="tel" id="contact-input-phone" placeholder="Phone" required pattern="[+0-9\s]{4,}">
+                    <div class="login-error" [ngClass]="{'full-opacity': phone.invalid && phone.touched}">
+                        <p>This field is required. Please enter a phone number</p>
+                    </div>
                 </label>
-                <div class="login-error" [ngClass]="{'full-opacity': phone.invalid && phone.touched}">
-                    <p>This field is required. Please enter a phone number</p>
-                </div>
+
 
             </div>
             <div id="buttons-container" class="cancel-create-buttons-container">
                 @if (contactService.slideInMode == 'add') {
-                <button class="btn-white btn-pos" type="reset">Cancel <img src="../../../assets/img/cancel.svg"
-                        alt=""></button>
+                <button (click)="closePopup()" [ngClass]="{'d-none': mobile}" class="btn-white btn-pos"
+                    type="reset">Cancel <img src="../../../assets/img/cancel.svg" alt=""></button>
                 <button id="createContactBtn" type="submit" class="btn-grey img-white btn-pos">
                     Create contact<img src="../../../assets/img/checked.svg"></button>
                 }@else {

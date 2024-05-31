@@ -83,7 +83,7 @@ export class LoginComponent {
       this.router.navigate(['summary/' + docInfo.id]);
       this.userService.saveIdInSessionStorage(docInfo.id);
       this.userService.saveDataInSessionStorage('initials', 'G');
-      this.userService.saveDataInSessionStorage('name', 'Guest User');
+      this.userService.saveDataInSessionStorage('name', 'guest');
     });
   }
 }

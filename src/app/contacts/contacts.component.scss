@@ -727,6 +727,7 @@ body {
 
 .contact-details-section {
     @media(max-width: 950px) {
+        display: none;
         width: 0;
         opacity: 0;
         justify-self: center;
@@ -742,6 +743,7 @@ body {
 }
 
 .showMobile {
+    display: block;
     width: auto;
     position: absolute;
     left: 0;

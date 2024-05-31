@@ -145,7 +145,7 @@ export class Guest implements User {
           ],
           priority: 'urgent',
           category: 'Technical Task',
-          dueDate: '2024-04-10',
+          dueDate: '2024-07-28',
           status: 'inProgress',
           subtasks: [
             { title: 'Draft initial concepts', done: false },
@@ -181,7 +181,7 @@ export class Guest implements User {
           ],
           priority: 'medium',
           category: 'Technical Task',
-          dueDate: '2024-04-15',
+          dueDate: '2024-07-15',
           status: 'toDo',
           subtasks: [
             { title: 'Design database schema', done: false },
@@ -239,7 +239,7 @@ export class Guest implements User {
           ],
           priority: 'urgent',
           category: 'Technical Task',
-          dueDate: '2024-04-20',
+          dueDate: '2024-08-20',
           status: 'awaitFeedback',
           subtasks: [
             { title: 'Conduct performance analysis', done: true },
@@ -274,7 +274,7 @@ export class Guest implements User {
           ],
           priority: 'medium',
           category: 'Technical Task',
-          dueDate: '2024-04-18',
+          dueDate: '2024-06-18',
           status: 'inProgress',
           subtasks: [
             { title: 'Design form layout', done: true },

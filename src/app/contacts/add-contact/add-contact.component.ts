@@ -50,6 +50,7 @@ export class AddContactComponent {
   rightBtnText = '';
 
   @Input() slideIn: boolean = false;
+  @Input() mobile: boolean = false;
   @Output() isClosed = new EventEmitter<boolean>();
   @Output() listUpdate = new EventEmitter<boolean>();
 
