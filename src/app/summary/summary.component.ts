@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { NavbarComponent } from '../shared/modules/navbar/navbar.component';
 import { HeaderComponent } from '../shared/modules/header/header.component';
 import { CommonModule } from '@angular/common';
@@ -6,15 +6,22 @@ import { UserdataService } from '../services/userdata.service';
 import { User } from '../interfaces/user.interface';
 import { SessiondataService } from '../services/sessiondata.service';
 import { Task } from '../interfaces/task.interface';
+import { GreetingAnimationComponent } from '../greeting-animation/greeting-animation.component';
 
 @Component({
   selector: 'app-summary',
   standalone: true,
-  imports: [NavbarComponent, HeaderComponent, CommonModule],
+  imports: [
+    NavbarComponent,
+    HeaderComponent,
+    CommonModule,
+    GreetingAnimationComponent,
+  ],
   templateUrl: './summary.component.html',
   styleUrl: './summary.component.scss',
 })
 export class SummaryComponent {
+  
   _subscriptionUser: any;
   localUser: User = {
     id: '',
@@ -50,6 +57,8 @@ export class SummaryComponent {
 
   taskHighestPriorityArray: Task[] = [];
   deadline = '';
+  mobileMode = false;
+  
 
   nrTasksInBoard = 0;
   nrTasksUrgent = 0;
@@ -89,6 +98,8 @@ export class SummaryComponent {
         }
       }
     );
+    this.checkMobile();
+    this.mobileGreeting();
   }
 
   ngOnDestroy() {
@@ -195,5 +206,25 @@ export class SummaryComponent {
     });
 
     return formattedDate;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onWindowResize() {
+    this.checkMobile();
+  }
+
+  checkMobile() {
+    let width = window.innerWidth;
+    this.mobileMode = width <= 1200 ? true : false;
+  }
+
+  mobileGreeting() {
+    if (this.mobileMode && this.sessionDataService.fadeout == 'show') {
+      setTimeout(() => {
+        this.sessionDataService.fadeout = 'hide';
+      }, 1500);
+    }
+    console.log(this.sessionDataService.fadeout);
+    
   }
 }

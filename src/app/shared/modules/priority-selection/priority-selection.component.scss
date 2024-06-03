@@ -28,6 +28,14 @@
     font-family: 'Inter', Helvetica, sans-serif;
     color: $clr-dark-gray;
     user-select: none;
+
+    @media (max-width: 450px) {
+
+        font-size: 16px;
+        padding-block: 4px;
+        width: 110px;
+
+    }
 }
 
 .addTask-prio-btn:hover:not(.selected) {
@@ -61,4 +69,21 @@
 
 .selected svg path {
     fill: white;
+}
+
+@media (max-width: 370px) {
+  
+
+    .addTask-prio-btn {
+        width: 95px;
+    }
+
+    .addTask-prio-btn,
+    .addTask-btn-container {
+        gap: 4px;
+    }
+
+    .addTask-prio-btn svg {
+        width: 18px;
+    }
 }

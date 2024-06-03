@@ -1,4 +1,5 @@
 @import '../../colors.scss';
+@import '../../mediaqueries.scss';
 
 .content {
     width: 100%;
@@ -10,6 +11,19 @@
     grid-template-areas:
         "header header "
         "sidebar content";
+
+    @media(max-width: $media-tablet-size) {
+        grid-template-columns: 12px 1fr 12px;
+        grid-template-rows: 96px 1fr 80px;
+        height: auto;
+        grid-template-areas:
+            "leftspace header rightspace "
+            "leftspace content rightspace "
+            "navbar navbar navbar ";
+    }
+    @media (max-width: 490px){
+        grid-template-columns: 5px 1fr 5px;
+    }
 }
 
 .mb-12 {
@@ -59,11 +73,17 @@
 }
 
 #content-container {
-   grid-area: content;
+    grid-area: content;
     margin-left: 96px;
     margin-top: 110px;
     margin-right: 64px;
     padding-bottom: 64px;
+
+    @media(max-width: $media-tablet-size) {
+        margin-left: 0;
+        margin-top: 48px;
+        margin-inline: auto;
+    }
 }
 
 .addTask-headline {
@@ -475,7 +495,7 @@
 
 @media (max-width: 1200px) {
     .addTask-column-wrapper * {
-        font-size: 16px;
+        font-size: 16px !important;
     }
 
     .addTask-hint {
@@ -524,13 +544,17 @@
     .addTask-subtask-container {
         margin-bottom: 80px;
     }
+
+    .cancel-btn{
+        display: none;
+    }
 }
 
 @media (max-width: 650px) {
     #content-container {
         /* width: 100vw; */
         margin-inline: auto;
-        padding-inline: 16px;
+        // padding-inline: 16px;
     }
 }
 
@@ -543,13 +567,7 @@
 
 @media (max-width: 450px) {
 
-    .addTask-prio-btn {
-        font-size: 16px;
-        /* width: auto; */
-        padding-block: 4px;
-        width: 110px;
-    }
-
+   
     .addTask-controls {
         max-width: 100%;
         left: 0;
@@ -558,24 +576,7 @@
     }
 }
 
-@media (max-width: 370px) {
-    #content-container {
-        padding-inline: 8px;
-    }
 
-    .addTask-prio-btn {
-        width: 95px;
-    }
-
-    .addTask-prio-btn,
-    .addTask-btn-container {
-        gap: 4px;
-    }
-
-    .addTask-prio-btn svg {
-        width: 18px;
-    }
-}
 
 
 .login-error {
@@ -585,9 +586,10 @@
     display: flex;
     font-size: 12px;
     color: $clr-prio-red;
-   
+
     opacity: 0;
-    p{
+
+    p {
         margin: 0;
     }
 
@@ -598,16 +600,16 @@
 }
 
 
-.testbtn{
+.testbtn {
     margin-left: 250px;
 }
 
 
 
 
-  
 
-  app-task-added-snackbar{
+
+app-task-added-snackbar {
     display: flex;
     width: fit-content;
     position: absolute;
@@ -616,16 +618,16 @@
     bottom: 0;
     transform: translateX(-50%);
     animation: popup 800ms ease-in-out forwards;
-    
- }
 
- @keyframes popup {
+}
+
+@keyframes popup {
     from {
-      transform: translate(-50%, 0%);
-    
+        transform: translate(-50%, 0%);
+
     }
-  
+
     to {
         transform: translate(-50%, -50vh);
     }
-  }
+}

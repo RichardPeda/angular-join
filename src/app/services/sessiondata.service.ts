@@ -54,6 +54,7 @@ export class SessiondataService {
     '#FFBB2B',
   ];
   registerLetters: string[] = [];
+  fadeout: 'show' | 'hide' = 'show';
 
   unsubUser;
 

@@ -75,7 +75,7 @@ export class ContactsComponent {
     public sessionDataService: SessiondataService,
     public activatedroute: ActivatedRoute
   ) {
-    this.localUser = this.sessionDataService.user;
+    // this.localUser = this.sessionDataService.user;
     this.registerletters = this.sessionDataService.registerLetters;
     this.sessionDataService.user.contacts.sort(this.sessionDataService.compare);
   }
@@ -90,7 +90,9 @@ export class ContactsComponent {
         this.localUser = user;
 
         if (this.localUser.contacts)
+          this.sessionDataService.user.contacts.sort(this.sessionDataService.compare);
           this.sessionDataService.getRegisterLetters(this.localUser.contacts);
+          this.registerletters = this.sessionDataService.registerLetters;
       });
 
     this._subscriptionLetters =

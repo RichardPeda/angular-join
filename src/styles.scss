@@ -35,6 +35,7 @@ $join-theme: mat.define-light-theme((color: (primary: $join-primary,
 
 
 @import 'font.scss';
+@import 'colors.scss';
 
 * {
   box-sizing: border-box;
@@ -43,6 +44,7 @@ $join-theme: mat.define-light-theme((color: (primary: $join-primary,
 body {
   margin: 0;
   font-family: "Inter", Helvetica, sans-serif;
+  background-color: $clr-bg;
 }
 
 html,

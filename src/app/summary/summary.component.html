@@ -87,7 +87,9 @@
                     <h2>{{name}}</h2>
                 </div>
             </div>
+            <!-- <app-greeting-animation [animationState]="fadeout" [greeting]="greeting" [name]="name"></app-greeting-animation> -->
         </div>
     </div>
 
 </div>
+<app-greeting-animation [animationState]="sessionDataService.fadeout" [greeting]="greeting" [name]="name"></app-greeting-animation>
