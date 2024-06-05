@@ -1,5 +1,5 @@
 import { CommonModule, Location } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -22,6 +22,7 @@ import {
   DocumentData,
   getDoc,
 } from '@angular/fire/firestore';
+import { LogoAnimationMobileComponent } from '../logo-animation-mobile/logo-animation-mobile.component';
 
 @Component({
   selector: 'app-login',
@@ -31,6 +32,7 @@ import {
     ReactiveFormsModule,
     MatCheckboxModule,
     LogoAnimationComponent,
+    LogoAnimationMobileComponent,
     RouterModule,
   ],
   templateUrl: './login.component.html',
@@ -40,6 +42,7 @@ export class LoginComponent {
   checkbox: boolean = false;
   checkboxColor: string = '#2a3647';
   userform: FormGroup;
+  mobileMode = false;
 
   firestore: Firestore = inject(Firestore);
 
@@ -52,6 +55,10 @@ export class LoginComponent {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
     });
+  }
+
+  ngOnInit() {
+    this.checkMobile();
   }
 
   guestLogin() {
@@ -85,5 +92,15 @@ export class LoginComponent {
       this.userService.saveDataInSessionStorage('initials', 'G');
       this.userService.saveDataInSessionStorage('name', 'guest');
     });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onWindowResize() {
+    this.checkMobile();
+  }
+
+  checkMobile() {
+    let width = window.innerWidth;
+    this.mobileMode = width <= 680 ? true : false;
   }
 }

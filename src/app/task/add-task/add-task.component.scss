@@ -1,5 +1,5 @@
-@import '../../colors.scss';
-@import '../../mediaqueries.scss';
+@import '../../../colors.scss';
+@import '../../../mediaqueries.scss';
 
 .content {
     width: 100%;
@@ -630,4 +630,16 @@ app-task-added-snackbar {
     to {
         transform: translate(-50%, -50vh);
     }
+}
+
+.wrapper{
+    margin: 50px;
+    padding: 1px;
+}
+
+.detail-close{
+    cursor: pointer;
+    position: absolute;
+    top: 50px;
+    right: 50px;
 }

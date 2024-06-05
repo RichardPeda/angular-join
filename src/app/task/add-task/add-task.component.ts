@@ -1,27 +1,27 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, Optional, ViewEncapsulation } from '@angular/core';
 import {
   FormControl,
   ReactiveFormsModule,
   FormBuilder,
   Validators,
 } from '@angular/forms';
-import { User } from '../interfaces/user.interface';
-import { SessiondataService } from '../services/sessiondata.service';
-import { ContactSelectionComponent } from '../shared/modules/contact-selection/contact-selection.component';
-import { ClickOutsideDirective } from '../shared/click-outside.directive';
-import { Contact } from '../interfaces/contact.interface';
-import { Subtask } from '../interfaces/subtask.interface';
-import { SubtaskComponent } from '../shared/modules/subtask/subtask.component';
-import { ProfileBadgeComponent } from '../shared/modules/profile-badge/profile-badge.component';
-import { PrioritySelectionComponent } from '../shared/modules/priority-selection/priority-selection.component';
-import { Task } from '../interfaces/task.interface';
-import { HeaderComponent } from '../shared/modules/header/header.component';
-import { NavbarComponent } from '../shared/modules/navbar/navbar.component';
-import { TaskAddedSnackbarComponent } from '../snackbars/task-added-snackbar/task-added-snackbar.component';
-import { UserdataService } from '../services/userdata.service';
+import { User } from '../../interfaces/user.interface';
+import { SessiondataService } from '../../services/sessiondata.service';
+import { ContactSelectionComponent } from '../../shared/modules/contact-selection/contact-selection.component';
+import { ClickOutsideDirective } from '../../shared/click-outside.directive';
+import { Contact } from '../../interfaces/contact.interface';
+import { Subtask } from '../../interfaces/subtask.interface';
+import { SubtaskComponent } from '../../shared/modules/subtask/subtask.component';
+import { ProfileBadgeComponent } from '../../shared/modules/profile-badge/profile-badge.component';
+import { PrioritySelectionComponent } from '../../shared/modules/priority-selection/priority-selection.component';
+import { Task } from '../../interfaces/task.interface';
+import { HeaderComponent } from '../../shared/modules/header/header.component';
+import { NavbarComponent } from '../../shared/modules/navbar/navbar.component';
+import { TaskAddedSnackbarComponent } from '../../snackbars/task-added-snackbar/task-added-snackbar.component';
+import { UserdataService } from '../../services/userdata.service';
 import { Router } from '@angular/router';
-
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-task',
@@ -36,7 +36,7 @@ import { Router } from '@angular/router';
     PrioritySelectionComponent,
     HeaderComponent,
     NavbarComponent,
-    TaskAddedSnackbarComponent
+    TaskAddedSnackbarComponent,
   ],
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss',
@@ -80,7 +80,8 @@ export class AddTaskComponent {
     private userService: UserdataService,
     private router: Router,
     private _formbuilder: FormBuilder,
-    private sessionDataService: SessiondataService
+    private sessionDataService: SessiondataService,
+    @Optional()public dialogRef: MatDialogRef<AddTaskComponent>
   ) {
     this.docId = this.userService.loadIdFromSessionStorage()!;
     this.localUser = this.sessionDataService.user;
@@ -256,5 +257,9 @@ export class AddTaskComponent {
 
   linkToBoard() {
     this.router.navigate(['board/' + this.docId]);
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
   }
 }

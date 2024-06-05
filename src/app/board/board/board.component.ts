@@ -23,6 +23,7 @@ import {
   CdkDragExit,
   CdkDragStart,
 } from '@angular/cdk/drag-drop';
+import { AddTaskComponent } from '../../task/add-task/add-task.component';
 
 @Component({
   selector: 'app-board',
@@ -39,6 +40,7 @@ import {
     CdkDropList,
     CdkDrag,
     CdkDragPlaceholder,
+    AddTaskComponent,
   ],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss',
@@ -47,6 +49,7 @@ export class BoardComponent {
   _subscriptionUser: any;
   _subscriptionDialog: any;
   _subscriptionEditDialog: any;
+  _subscriptionAddDialog: any;
   editmode = false;
   localUser: User = {
     id: '',
@@ -86,11 +89,11 @@ export class BoardComponent {
     this._subscriptionUser = this.sessionDataService.userSubject.subscribe(
       (user: User) => {
         this.localUser = user;
-        console.log('user vom board', this.localUser.tasks);
-        this.countTaskStatus();
+        // console.log('user vom board', this.localUser.tasks);
+        if (this.localUser.tasks) this.countTaskStatus();
       }
     );
-    this.countTaskStatus();
+    // this.countTaskStatus();
   }
 
   ngOnDestroy() {
@@ -103,7 +106,7 @@ export class BoardComponent {
     }
   }
 
-  openDialog(index: number) {
+  openDetailDialog(index: number) {
     const dialogRef = this.dialog.open(DialogDetailCardComponent, {
       minWidth: 'min(400px, 100%)',
       maxHeight: '100%',
@@ -154,8 +157,8 @@ export class BoardComponent {
   }
 
   drag(event: CdkDragStart<string[]>, task: Task) {
-   this.rotateValue = 5;
-    
+    this.rotateValue = 5;
+
     this.dragableTask = task;
     this.hideGhostCard.forEach((v, i, a) => (a[i] = false));
   }
@@ -163,20 +166,16 @@ export class BoardComponent {
   resetGhostCard(event: CdkDragEnter<string[]>) {
     switch (event.container.data[0]) {
       case 'toDo':
-        this.hideGhostCard[0] = true;
-        this.hideLabel[0] = true;
+        this.setCardLabel(0);
         break;
       case 'inProgress':
-        this.hideGhostCard[1] = true;
-        this.hideLabel[1] = true;
+        this.setCardLabel(1);
         break;
       case 'awaitFeedback':
-        this.hideGhostCard[2] = true;
-        this.hideLabel[2] = true;
+        this.setCardLabel(2);
         break;
       case 'done':
-        this.hideGhostCard[3] = true;
-        this.hideLabel[3] = true;
+        this.setCardLabel(3);
         break;
     }
   }
@@ -184,29 +183,34 @@ export class BoardComponent {
   setGhostCard(event: CdkDragExit<string[]>) {
     switch (event.container.data[0]) {
       case 'toDo':
-        this.hideGhostCard[0] = false;
-        this.hideLabel[0] = false;
+        this.resetCardLabel(0);
         break;
       case 'inProgress':
-        this.hideGhostCard[1] = false;
-        this.hideLabel[1] = false;
+        this.resetCardLabel(1);
         break;
       case 'awaitFeedback':
-        this.hideGhostCard[2] = false;
-        this.hideLabel[2] = false;
+        this.resetCardLabel(2);
         break;
       case 'done':
-        this.hideGhostCard[3] = false;
-        this.hideLabel[3] = false;
+        this.resetCardLabel(3);
         break;
     }
+  }
+  setCardLabel(number: number) {
+    this.hideGhostCard[number] = true;
+    this.hideLabel[number] = true;
+  }
+
+  resetCardLabel(number: number) {
+    this.hideGhostCard[number] = false;
+    this.hideLabel[number] = false;
   }
 
   drop(event: CdkDragDrop<string[]>) {
     let column = event.container.data[0];
     this.hideGhostCard.forEach((v, i, a) => (a[i] = true));
     this.hideLabel.forEach((v, i, a) => (a[i] = false));
-    this.rotateValue=0;
+    this.rotateValue = 0;
 
     if (event.previousContainer !== event.container) {
       this.localUser.tasks.forEach((task) => {
@@ -223,5 +227,15 @@ export class BoardComponent {
         }
       });
     }
+  }
+
+  openAddTaskDialog() {
+    const addDialogRef = this.dialog.open(AddTaskComponent, {
+      minWidth: 'min(400px, 100vw)',
+      maxWidth: '100vw',
+      maxHeight: '100%',
+      panelClass: 'addtaskPopup',
+    });
+    this._subscriptionAddDialog = addDialogRef.afterClosed();
   }
 }

@@ -67,7 +67,8 @@
         </div>
     </form>
 
-   <app-logo-animation></app-logo-animation>
+   <app-logo-animation [ngClass]="{disabled: mobileMode}"></app-logo-animation>
+   <app-logo-animation-mobile [ngClass]="{disabled: !mobileMode}"></app-logo-animation-mobile>
 
 
 </div>

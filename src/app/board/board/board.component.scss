@@ -33,10 +33,11 @@
 #board-content-container {
     grid-area: content;
     margin-left: 96px;
+   max-width: fit-content;
     margin-top: 110px;
     display: flex;
     flex-direction: column;
-    max-width: 100%;
+    // max-width: 100%;
     padding-left: 12px;
     padding-bottom: 80px;
     @media(max-width: $media-tablet-size) {
@@ -762,3 +763,4 @@ input[type='radio']:hover {
 .cdk-drag-preview {
     transform: rotate(5deg);
 }
+

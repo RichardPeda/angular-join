@@ -7,6 +7,7 @@ import { User } from '../interfaces/user.interface';
 import { SessiondataService } from '../services/sessiondata.service';
 import { Task } from '../interfaces/task.interface';
 import { GreetingAnimationComponent } from '../greeting-animation/greeting-animation.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-summary',
@@ -21,7 +22,6 @@ import { GreetingAnimationComponent } from '../greeting-animation/greeting-anima
   styleUrl: './summary.component.scss',
 })
 export class SummaryComponent {
-  
   _subscriptionUser: any;
   localUser: User = {
     id: '',
@@ -36,6 +36,7 @@ export class SummaryComponent {
   greeting = 'Hello';
   date = '';
   currentTimestamp = 0;
+  docId = '';
   nrOfTasks = [
     {
       status: 'toDo',
@@ -58,7 +59,6 @@ export class SummaryComponent {
   taskHighestPriorityArray: Task[] = [];
   deadline = '';
   mobileMode = false;
-  
 
   nrTasksInBoard = 0;
   nrTasksUrgent = 0;
@@ -76,7 +76,8 @@ export class SummaryComponent {
 
   sessionDataService = inject(SessiondataService);
 
-  constructor(private userService: UserdataService) {
+  constructor(private userService: UserdataService, private router: Router) {
+    this.docId = this.userService.loadIdFromSessionStorage()!;
     if (this.userService.loadDataFromSessionStoarage('name') !== 'guest')
       this.name = this.userService.loadDataFromSessionStoarage('name');
 
@@ -225,6 +226,8 @@ export class SummaryComponent {
       }, 1500);
     }
     console.log(this.sessionDataService.fadeout);
-    
+  }
+  linkToBoard() {
+    this.router.navigate(['board/' + this.docId]);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   trigger,
   state,
@@ -9,11 +9,11 @@ import {
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-logo-animation',
+  selector: 'app-logo-animation-mobile',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './logo-animation.component.html',
-  styleUrl: './logo-animation.component.scss',
+  templateUrl: './logo-animation-mobile.component.html',
+  styleUrl: './logo-animation-mobile.component.scss',
   animations: [
     trigger('startAnimation', [
       state(
@@ -27,16 +27,16 @@ import { CommonModule } from '@angular/common';
       state(
         'small',
         style({
-          top: '-26px',
-          left: '-10px',
-          transform: 'scale(0.365)',
+          top: '-83px',
+          left: '-50px',
+          transform: 'scale(0.2)',
         })
       ),
       transition('big => small', [animate('1s')]),
     ]),
   ],
 })
-export class LogoAnimationComponent {
+export class LogoAnimationMobileComponent {
   isBig = true;
   showBackground = false;
   animateBackground = '#f3f3f3';
