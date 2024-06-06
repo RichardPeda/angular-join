@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, Optional, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  Inject,
+  Input,
+  Optional,
+  ViewEncapsulation,
+} from '@angular/core';
 import {
   FormControl,
   ReactiveFormsModule,
@@ -20,7 +26,7 @@ import { HeaderComponent } from '../../shared/modules/header/header.component';
 import { NavbarComponent } from '../../shared/modules/navbar/navbar.component';
 import { TaskAddedSnackbarComponent } from '../../snackbars/task-added-snackbar/task-added-snackbar.component';
 import { UserdataService } from '../../services/userdata.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -53,6 +59,7 @@ export class AddTaskComponent {
     contacts: [],
     tasks: [],
   };
+  status: 'toDo' | 'inProgress' | 'awaitFeedback' | 'done' = 'toDo';
 
   subtasks: string[] = [];
   hidePopup = true;
@@ -79,9 +86,10 @@ export class AddTaskComponent {
   constructor(
     private userService: UserdataService,
     private router: Router,
+    private route: ActivatedRoute,
     private _formbuilder: FormBuilder,
     private sessionDataService: SessiondataService,
-    @Optional()public dialogRef: MatDialogRef<AddTaskComponent>
+    @Optional() public dialogRef: MatDialogRef<AddTaskComponent>
   ) {
     this.docId = this.userService.loadIdFromSessionStorage()!;
     this.localUser = this.sessionDataService.user;
@@ -95,6 +103,7 @@ export class AddTaskComponent {
         this.filteredContacts = this.localUser.contacts;
       }
     );
+    this.status = this.sessionDataService.reqTaskStatus;
   }
 
   ngOnDestroy() {
@@ -133,10 +142,11 @@ export class AddTaskComponent {
           priority: this.priority,
           category: this.taskForm.controls['category'].value!,
           dueDate: this.taskForm.controls['date'].value!,
-          status: 'toDo',
+          status: this.status,
           subtasks: this.subTasks,
         };
         newTasks.push(task);
+        this.sessionDataService.reqTaskStatus = 'toDo';
         this.sessionDataService.setTask(newTasks);
         this.resetForm();
         this.openSnackbar();

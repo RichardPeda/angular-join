@@ -55,12 +55,11 @@ export class SessiondataService {
   ];
   registerLetters: string[] = [];
   fadeout: 'show' | 'hide' = 'show';
+  reqTaskStatus: 'toDo' | 'inProgress' | 'awaitFeedback' | 'done' = 'toDo';
 
   unsubUser;
 
-  constructor(
-    private userService: UserdataService
-  ) {
+  constructor(private userService: UserdataService) {
     this.docId = this.userService.loadIdFromSessionStorage();
 
     this.unsubUser = onSnapshot(

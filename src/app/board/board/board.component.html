@@ -7,7 +7,7 @@
         <div class="board-headline-menu">
             <div class="board-headline">
                 <h1>Board</h1>
-                <div  class="board-addTask-control control-mobile">
+                <div (click)="linkToAddTask('toDo')"  class="board-addTask-control control-mobile">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M8.66602 11.3327H0.666016V8.66602H8.66602V0.666016H11.3327V8.66602H19.3327V11.3327H11.3327V19.3327H8.66602V11.3327Z"
@@ -26,7 +26,7 @@
                         </div>
                     </div>
                 </div>
-                <button (click)="openAddTaskDialog()" class="board-btn-addTask">
+                <button (click)="openAddTaskDialog('toDo')" class="board-btn-addTask">
                     Add Task
                     <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path

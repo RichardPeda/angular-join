@@ -24,6 +24,7 @@ import {
   CdkDragStart,
 } from '@angular/cdk/drag-drop';
 import { AddTaskComponent } from '../../task/add-task/add-task.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-board',
@@ -59,7 +60,7 @@ export class BoardComponent {
     contacts: [],
     tasks: [],
   };
-
+  docId = '';
   todo = ['toDo'];
   inProgress = ['inProgress'];
   awaitFeedback = ['awaitFeedback'];
@@ -79,9 +80,11 @@ export class BoardComponent {
     public userService: UserdataService,
     public sessionDataService: SessiondataService,
     private _renderer: Renderer2,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) {
     this.localUser = this.sessionDataService.user;
+    this.docId = this.userService.loadIdFromSessionStorage()!;
   }
 
   async ngOnInit() {
@@ -89,11 +92,9 @@ export class BoardComponent {
     this._subscriptionUser = this.sessionDataService.userSubject.subscribe(
       (user: User) => {
         this.localUser = user;
-        // console.log('user vom board', this.localUser.tasks);
         if (this.localUser.tasks) this.countTaskStatus();
       }
     );
-    // this.countTaskStatus();
   }
 
   ngOnDestroy() {
@@ -229,13 +230,23 @@ export class BoardComponent {
     }
   }
 
-  openAddTaskDialog() {
+  openAddTaskDialog(status: 'toDo' | 'inProgress' | 'awaitFeedback' | 'done') {
+    this.sessionDataService.reqTaskStatus = status;
     const addDialogRef = this.dialog.open(AddTaskComponent, {
       minWidth: 'min(400px, 100vw)',
       maxWidth: '100vw',
-      maxHeight: '100%',
+      maxHeight: '90%',
       panelClass: 'addtaskPopup',
     });
-    this._subscriptionAddDialog = addDialogRef.afterClosed();
+    this._subscriptionAddDialog = addDialogRef
+      .afterClosed()
+      .subscribe((result) => {
+        this.sessionDataService.reqTaskStatus = 'toDo';
+      });
+  }
+
+  linkToAddTask(status: 'toDo' | 'inProgress' | 'awaitFeedback' | 'done') {
+    this.sessionDataService.reqTaskStatus = status;
+    this.router.navigate(['addtask/' + this.docId]);
   }
 }
