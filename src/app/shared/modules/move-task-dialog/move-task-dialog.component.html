@@ -1,0 +1,10 @@
+<div class="content">
+
+    <label id="example-radio-group-label">Move Task to column:</label>
+    <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="status">
+        @for (move of moveTo; track move) {
+        <mat-radio-button class="example-radio-button" [value]="move">{{move}}</mat-radio-button>
+        }
+    </mat-radio-group>
+    <div>Your favorite season is: {{status}}</div>
+</div>

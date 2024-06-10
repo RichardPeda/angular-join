@@ -24,7 +24,8 @@ import {
   CdkDragStart,
 } from '@angular/cdk/drag-drop';
 import { AddTaskComponent } from '../../task/add-task/add-task.component';
-import { Router } from '@angular/router';
+import { Event, Router } from '@angular/router';
+import { ClickTargetDirective } from '../../shared/click-target.directive';
 
 @Component({
   selector: 'app-board',
@@ -107,7 +108,10 @@ export class BoardComponent {
     }
   }
 
-  openDetailDialog(index: number) {
+  openDetailDialog(event: MouseEvent, index: number) {
+    event.preventDefault()
+    // console.log(event.currentTarget);
+    
     const dialogRef = this.dialog.open(DialogDetailCardComponent, {
       minWidth: 'min(400px, 100%)',
       maxHeight: '100%',

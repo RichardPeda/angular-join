@@ -59,7 +59,7 @@
                     @for (task of localUser.tasks; track task; let index = $index) {
 
                     @if (task.status === 'toDo') {<app-board-card (cdkDragStarted)="drag($event,task)" draggable="true"
-                        (clicked)="openDetailDialog(index)" [task]="task" cdkDrag ></app-board-card>}
+                    appClickTarget (click)="openDetailDialog($event,index)" [task]="task" cdkDrag ></app-board-card>}
 
                     }
 
@@ -89,7 +89,7 @@
                     (cdkDropListExited)="setGhostCard($event)">
                     @for (task of localUser.tasks; track task; let index = $index) {
 
-                    @if (task.status === 'inProgress') {<app-board-card (clicked)="openDetailDialog(index)" [task]="task"
+                    @if (task.status === 'inProgress') {<app-board-card (click)="openDetailDialog($event,index)" [task]="task"
                         (cdkDragStarted)="drag($event,task)" draggable="true" cdkDrag></app-board-card>}
 
                     }
@@ -117,7 +117,7 @@
                     [cdkDropListData]="awaitFeedback" (cdkDropListDropped)="drop($event)"
                     (cdkDropListEntered)="resetGhostCard($event)" (cdkDropListExited)="setGhostCard($event)">
                     @for (task of localUser.tasks; track task; let index = $index) {
-                    @if (task.status === 'awaitFeedback') {<app-board-card (clicked)="openDetailDialog(index)" [task]="task"
+                    @if (task.status === 'awaitFeedback') {<app-board-card (click)="openDetailDialog($event, index)" [task]="task"
                         (cdkDragStarted)="drag($event,task)" draggable="true" cdkDrag></app-board-card>}
                     }
                     <div [ngClass]="{'d-none': amountTasksAwaitFeedback > 0|| hideLabel[2]}"
@@ -137,7 +137,7 @@
                     (cdkDropListDropped)="drop($event)" (cdkDropListEntered)="resetGhostCard($event)"
                     (cdkDropListExited)="setGhostCard($event)">
                     @for (task of localUser.tasks; track task; let index = $index) {
-                    @if (task.status === 'done') {<app-board-card (clicked)="openDetailDialog(index)" [task]="task"
+                    @if (task.status === 'done') {<app-board-card (click)="openDetailDialog($event,index)" [task]="task"
                         (cdkDragStarted)="drag($event,task)" draggable="true" cdkDrag></app-board-card>}
                     }
                     <div [ngClass]="{'d-none': amountTasksDone > 0|| hideLabel[3]}" class="board-column-noTask">No Tasks
