@@ -26,6 +26,8 @@ import {
 import { AddTaskComponent } from '../../task/add-task/add-task.component';
 import { Event, Router } from '@angular/router';
 import { ClickTargetDirective } from '../../shared/click-target.directive';
+import { MoveTaskDialogComponent } from '../../shared/modules/move-task-dialog/move-task-dialog.component';
+import { NoopScrollStrategy } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-board',
@@ -109,13 +111,12 @@ export class BoardComponent {
   }
 
   openDetailDialog(event: MouseEvent, index: number) {
-    event.preventDefault()
-    // console.log(event.currentTarget);
-    
+    event.preventDefault();
     const dialogRef = this.dialog.open(DialogDetailCardComponent, {
       minWidth: 'min(400px, 100%)',
       maxHeight: '100%',
       data: this.localUser.tasks[index],
+      scrollStrategy: new NoopScrollStrategy()
     });
     this._subscriptionDialog = dialogRef.afterClosed().subscribe((result) => {
       if (result && result.event == 'editmode') {
@@ -132,6 +133,7 @@ export class BoardComponent {
       minWidth: 'min(400px, 100%)',
       maxHeight: '100%',
       data: this.localUser.tasks[index],
+      scrollStrategy: new NoopScrollStrategy()
     });
     this._subscriptionEditDialog = editDialogRef
       .afterClosed()
@@ -241,6 +243,7 @@ export class BoardComponent {
       maxWidth: '100vw',
       maxHeight: '90%',
       panelClass: 'addtaskPopup',
+      scrollStrategy: new NoopScrollStrategy()
     });
     this._subscriptionAddDialog = addDialogRef
       .afterClosed()
@@ -252,5 +255,13 @@ export class BoardComponent {
   linkToAddTask(status: 'toDo' | 'inProgress' | 'awaitFeedback' | 'done') {
     this.sessionDataService.reqTaskStatus = status;
     this.router.navigate(['addtask/' + this.docId]);
+  }
+
+  openCardMoveMenu(index: number) {
+    console.log(index);
+  }
+
+  updateTaskStatus() {
+    this.sessionDataService.setTask(this.localUser.tasks);
   }
 }
