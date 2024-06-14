@@ -52,6 +52,7 @@ header {
     font-size: 20px;
     font-weight: bold;
     color: $clr-light-blue;
+    position: relative;
 }
 
 #user-profile-initials:hover {
@@ -81,4 +82,45 @@ header {
     #help-icon {
         display: none;
     }
+}
+
+.small-menu {
+    min-width: 150px;
+    height: 158px;
+    font-size: 16px;
+    font-weight: 400;
+    color: $clr-font-light;
+    display: flex;
+    flex-direction: column;
+    text-wrap: nowrap;
+    justify-content: space-around;
+    border-radius: 20px 0 20px 20px;
+    padding: 10px;
+    background-color: $clr-dark-gray;
+    position: absolute;
+    right: -30px;
+    top: 80px;
+    transition: all 125ms ease-in-out;
+    @media (max-width: 1200px) {
+        right: -10px;
+    }
+}
+
+.small-menu-link {
+    padding: 8px 16px 8px 16px;
+
+    &:hover {
+        background-color: $clr-sidebar-hover;
+    }
+
+}
+
+.help {
+    @media (min-width: 1200px) {
+        display: none;
+    }
+}
+
+.menu-hide{
+    transform: translateX(500px);
 }

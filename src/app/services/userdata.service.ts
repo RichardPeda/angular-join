@@ -74,7 +74,6 @@ export class UserdataService {
       contacts: user?.['contacts'],
       tasks: user?.['tasks'],
     };
-    // console.log('currentuser is: ', currentuser);
     return currentuser;
   }
 
@@ -195,7 +194,7 @@ export class UserdataService {
         this.currentUser = user;
         this.saveIdInSessionStorage(user.id!);
         this.route.params.subscribe((params) => {
-          console.log(params);
+          // console.log(params);
         });
       }
     });
@@ -205,11 +204,12 @@ export class UserdataService {
     sessionStorage.setItem('userId', id);
   }
 
- 
   saveDataInSessionStorage(key: string, data: string) {
     sessionStorage.setItem(key, data);
   }
-
+  deleteDataInSessionStorage(key: string) {
+    sessionStorage.removeItem(key);
+  }
 
   loadIdFromSessionStorage(): string {
     let id = sessionStorage.getItem('userId');
@@ -217,7 +217,7 @@ export class UserdataService {
     else return '';
   }
 
-  loadDataFromSessionStoarage(key:string): string {
+  loadDataFromSessionStoarage(key: string): string {
     let dataString = sessionStorage.getItem(key);
     if (dataString) return dataString;
     else return '';
