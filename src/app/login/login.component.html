@@ -6,7 +6,7 @@
 
     <div class="notUser">
         <p>Not a Join user?</p>
-        <button [routerLink]="['/signup']" routerLinkActive="router-link-active"   id="loadSignUp">Sign up</button>
+        <button [routerLink]="['/signup']" routerLinkActive="router-link-active" id="loadSignUp">Sign up</button>
     </div>
 
 
@@ -17,7 +17,6 @@
                 <div class="border-bottom"></div>
             </h1>
         </div>
-        <!-- type="email" id="logInemail" required -->
         <div class="input-layout">
             <div class="input-field">
                 <input placeholder="Email" formControlName="email" required="true" />
@@ -61,14 +60,14 @@
         </div>
         <div class="logIn-btns">
             <input class="logIn-btn" type="submit" [disabled]="!userform.valid" value="Log in" />
-            <button (click)="addNewGuestUser()" type="button" (click)="guestLogin()" class="logIn-btn-guest">
+            <button (click)="addNewGuestUser()" type="button" class="logIn-btn-guest">
                 Guest Log in
             </button>
         </div>
     </form>
 
-   <app-logo-animation [ngClass]="{disabled: mobileMode}"></app-logo-animation>
-   <app-logo-animation-mobile [ngClass]="{disabled: !mobileMode}"></app-logo-animation-mobile>
+    <app-logo-animation [ngClass]="{disabled: mobileMode}"></app-logo-animation>
+    <app-logo-animation-mobile [ngClass]="{disabled: !mobileMode}"></app-logo-animation-mobile>
 
 
 </div>

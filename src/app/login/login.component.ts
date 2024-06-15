@@ -21,6 +21,9 @@ import {
   QuerySnapshot,
   DocumentData,
   getDoc,
+  query,
+  getDocs,
+  where,
 } from '@angular/fire/firestore';
 import { LogoAnimationMobileComponent } from '../logo-animation-mobile/logo-animation-mobile.component';
 
@@ -43,7 +46,7 @@ export class LoginComponent {
   checkboxColor: string = '#2a3647';
   userform: FormGroup;
   mobileMode = false;
-
+  savedUsers = [];
   firestore: Firestore = inject(Firestore);
 
   constructor(
@@ -61,23 +64,22 @@ export class LoginComponent {
     this.checkMobile();
   }
 
-  guestLogin() {
-    console.log('login');
-  }
-
   rememberMe() {
     console.log('remember');
   }
 
-  onSubmit() {
-    console.log('submit');
-  }
+  async onSubmit() {
+    const q = query(
+      collection(this.firestore, 'users'),
+      where('email', '==', this.userform.controls['email'].value),
+      where('password', '==', this.userform.controls['password'].value),
+    );
 
-  // logInAsGuest() {
-  //   // this.userService.addNewGuestUser();
-  //   this.userService.loginAsGuest();
-  //   this.router.navigate(['summary']);
-  // }
+    let snapshot = await getDocs(q);
+    snapshot.forEach((doc) => {
+      console.log(doc.id, ' => ', doc.data());
+    });
+  }
 
   async addNewGuestUser() {
     let guest = new Guest();

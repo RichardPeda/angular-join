@@ -10,6 +10,9 @@ import {
   QuerySnapshot,
   DocumentData,
   getDoc,
+  query,
+  where,
+  getDocs,
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { User } from '../interfaces/user.interface';
@@ -241,5 +244,20 @@ export class UserdataService {
 
   getSingleDocRef(colId: string, docId: string) {
     return doc(collection(this.firestore, colId), docId);
+  }
+
+  async checkIfUserExists(name: string, email: string): Promise<boolean> {
+    const q = query(
+      collection(this.firestore, 'users'),
+      where('name', '==', name),
+      where('email', '==', email)
+    );
+
+    let snapshot = await getDocs(q);
+    // snapshot.forEach((doc) => {
+    //   console.log(doc.id, ' => ', doc.data());
+    // });
+    return snapshot.size > 0 ? false : true;
+    // console.log(snapshot.size);
   }
 }
