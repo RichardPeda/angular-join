@@ -28,6 +28,7 @@ export class SessiondataService {
   user: User = {
     id: '',
     name: '',
+    userinitials: '',
     email: '',
     password: '',
     contacts: [],
@@ -56,8 +57,10 @@ export class SessiondataService {
   registerLetters: string[] = [];
   fadeout: 'show' | 'hide' = 'show';
   reqTaskStatus: 'toDo' | 'inProgress' | 'awaitFeedback' | 'done' = 'toDo';
+  public initials = new Subject<string>();
+  public username = new Subject<string>();
 
-  unsubUser;
+  unsubUser:any;
 
   constructor(private userService: UserdataService) {
     this.docId = this.userService.loadIdFromSessionStorage();
@@ -69,6 +72,12 @@ export class SessiondataService {
         this.user = this.userService.getCurrentUserData(doc.id, data!);
         console.log('dieser user', this.user);
         this.userSubject.next(this.user);
+        if (this.user) {
+          this.initials.next(this.getInitials(this.user.name));
+          console.log(this.user.name);
+          
+          this.username.next(this.user.name);
+        }
       }
     );
   }
@@ -76,6 +85,26 @@ export class SessiondataService {
   getUserInfo() {
     return this.userSubject.asObservable();
   }
+
+ngOnInit(){
+  // this.docId = this.userService.loadIdFromSessionStorage();
+
+  // this.unsubUser = onSnapshot(
+  //   this.userService.getSingleDocRef('users', this.docId),
+  //   (doc) => {
+  //     let data = doc.data();
+  //     this.user = this.userService.getCurrentUserData(doc.id, data!);
+  //     console.log('dieser user', this.user);
+  //     this.userSubject.next(this.user);
+  //     if (this.user) {
+  //       this.initials.next(this.getInitials(this.user.name));
+  //       console.log(this.user.name);
+        
+  //       this.username.next(this.user.name);
+  //     }
+  //   }
+  // );
+}
 
   ngOnDestroy() {
     this.unsubUser();

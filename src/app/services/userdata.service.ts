@@ -27,6 +27,7 @@ export class UserdataService {
   currentUser: User = {
     id: '',
     name: '',
+    userinitials: '',
     email: '',
     password: '',
     contacts: [],
@@ -73,6 +74,7 @@ export class UserdataService {
       id: id,
       name: user?.['name'],
       email: user?.['email'],
+      userinitials: user?.['userinitials'],
       password: user?.['password'],
       contacts: user?.['contacts'],
       tasks: user?.['tasks'],
@@ -246,10 +248,10 @@ export class UserdataService {
     return doc(collection(this.firestore, colId), docId);
   }
 
-  async checkIfUserExists(name: string, email: string): Promise<boolean> {
+  async checkIfUserDontExists(name: string, email: string): Promise<boolean> {
     const q = query(
       collection(this.firestore, 'users'),
-      where('name', '==', name),
+      // where('name', '==', name),
       where('email', '==', email)
     );
 

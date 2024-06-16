@@ -13,9 +13,6 @@
                 <div class="border-bottom"></div>
             </h1>
         </div>
-
-
-
         <div class="input-layout">
             <div class="input-field">
                 <input formControlName="name" type="text" id="name" placeholder="Name" />
@@ -88,6 +85,7 @@
         <input [ngClass]="{'form-validate' :  newUserForm.valid && checkbox}" class="signUp-btn" type="submit"
             [disabled]="newUserForm.invalid || !checkbox" value="Sign up" />
     </form>
-
-
 </div>
+@if (showNotification) {
+<app-popup-notification [label]="notificationText"></app-popup-notification>
+}

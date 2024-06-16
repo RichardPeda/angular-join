@@ -36,6 +36,7 @@ export class ContactsComponent {
   localUser: User = {
     id: '',
     name: '',
+    userinitials: '',
     email: '',
     password: '',
     contacts: [
@@ -90,9 +91,11 @@ export class ContactsComponent {
         this.localUser = user;
 
         if (this.localUser.contacts)
-          this.sessionDataService.user.contacts.sort(this.sessionDataService.compare);
-          this.sessionDataService.getRegisterLetters(this.localUser.contacts);
-          this.registerletters = this.sessionDataService.registerLetters;
+          this.sessionDataService.user.contacts.sort(
+            this.sessionDataService.compare
+          );
+        this.sessionDataService.getRegisterLetters(this.localUser.contacts);
+        this.registerletters = this.sessionDataService.registerLetters;
       });
 
     this._subscriptionLetters =

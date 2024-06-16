@@ -58,6 +58,7 @@ export class BoardComponent {
   localUser: User = {
     id: '',
     name: '',
+    userinitials: '',
     email: '',
     password: '',
     contacts: [],
@@ -116,7 +117,7 @@ export class BoardComponent {
       minWidth: 'min(400px, 100%)',
       maxHeight: '100%',
       data: this.localUser.tasks[index],
-      scrollStrategy: new NoopScrollStrategy()
+      scrollStrategy: new NoopScrollStrategy(),
     });
     this._subscriptionDialog = dialogRef.afterClosed().subscribe((result) => {
       if (result && result.event == 'editmode') {
@@ -133,7 +134,7 @@ export class BoardComponent {
       minWidth: 'min(400px, 100%)',
       maxHeight: '100%',
       data: this.localUser.tasks[index],
-      scrollStrategy: new NoopScrollStrategy()
+      scrollStrategy: new NoopScrollStrategy(),
     });
     this._subscriptionEditDialog = editDialogRef
       .afterClosed()
@@ -243,7 +244,7 @@ export class BoardComponent {
       maxWidth: '100vw',
       maxHeight: '90%',
       panelClass: 'addtaskPopup',
-      scrollStrategy: new NoopScrollStrategy()
+      scrollStrategy: new NoopScrollStrategy(),
     });
     this._subscriptionAddDialog = addDialogRef
       .afterClosed()

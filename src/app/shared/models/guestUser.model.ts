@@ -5,15 +5,17 @@ import { User } from '../../interfaces/user.interface';
 export class Guest implements User {
   public name: string;
   public email: string;
+  public userinitials: string;
   public contacts: Contact[];
   public id?: string | undefined;
   public password: string;
   public tasks: Task[];
 
-  constructor() {
-    (this.name = 'guest'),
-      (this.email = ''),
-      (this.password = ''),
+  constructor(name: string, email: string, initials: string, password: string) {
+    (this.name = name),
+      (this.email = email),
+      (this.userinitials = initials),
+      (this.password = password),
       (this.contacts = [
         {
           contactID: '1',
@@ -288,6 +290,7 @@ export class Guest implements User {
     return {
       name: this.name,
       email: this.email,
+      userinitials: this.userinitials,
       password: this.password,
       contacts: this.contacts,
       tasks: this.tasks,

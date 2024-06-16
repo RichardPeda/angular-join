@@ -14,6 +14,8 @@ import { UserdataService } from '../services/userdata.service';
 import { User } from '../interfaces/user.interface';
 import { Guest } from '../shared/models/guestUser.model';
 import { addDoc, collection, query, where } from '@angular/fire/firestore';
+import { PopupNotificationComponent } from '../shared/modules/popup-notification/popup-notification.component';
+import { SessiondataService } from '../services/sessiondata.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -24,6 +26,7 @@ import { addDoc, collection, query, where } from '@angular/fire/firestore';
     FormsModule,
     CommonModule,
     RouterModule,
+    PopupNotificationComponent,
   ],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
@@ -31,7 +34,16 @@ import { addDoc, collection, query, where } from '@angular/fire/firestore';
 export class SignUpComponent {
   checkbox: boolean = false;
   newUserForm: FormGroup;
-  user: User = { name: '', email: '', password: '', contacts: [], tasks: [] };
+  user: User = {
+    name: '',
+    email: '',
+    userinitials: '',
+    password: '',
+    contacts: [],
+    tasks: [],
+  };
+  showNotification = false;
+  notificationText = '';
 
   constructor(private userService: UserdataService, private router: Router) {
     this.newUserForm = new FormGroup(
@@ -57,24 +69,43 @@ export class SignUpComponent {
     let name = this.newUserForm.get('name')?.value;
     let email = this.newUserForm.get('email')?.value;
     let password = this.newUserForm.get('password_1')?.value;
-    await this.addNewUser(name, email, password);
-    this.clearForm();
-    this.router.navigate(['']);
+
+    if (await this.addNewUser(name, email, password)) {
+      this.notificationText = 'You Signed Up successfully';
+      this.showNotification = true;
+      this.clearForm();
+      setTimeout(() => {
+        this.router.navigate(['']);
+      }, 2500);
+    } else {
+      this.notificationText = 'This email is already registered';
+      this.showNotification = true;
+      this.clearForm();
+      setTimeout(() => {
+        this.showNotification = false;
+      }, 2500);
+    }
   }
 
-  async addNewUser(name: string, email: string, pw: string) {
-    let guest = new Guest();
-    guest.name = name;
-    guest.email = email;
-    guest.password = pw;
+  async addNewUser(name: string, email: string, password: string) {
+    if (await this.userService.checkIfUserDontExists(name, email)) {
+      let initials = this.getInitials(name);
+      let guest = new Guest(name, email, initials, password);
+      // guest.name = name;
+      // guest.email = email;
+      // guest.password = password;
+      // guest.userinitials = this.getInitials(name);
+      console.log(guest);
 
-    if (await this.userService.checkIfUserExists(name, email)) {
+      console.log(guest.toJSON());
+
       const docRef = await addDoc(
         this.userService.getUserRef(),
         guest.toJSON()
       );
+      return true;
     } else {
-      console.log('user already exists');
+      return false;
     }
   }
 
@@ -88,5 +119,20 @@ export class SignUpComponent {
     this.newUserForm.markAsPristine();
     this.newUserForm.markAsUntouched();
     this.checkbox = false;
+  }
+
+  getInitials(name: string) {
+    let splitName = name.split(' ', 2);
+
+    let name_1 =
+      typeof splitName[0].charAt(0) == 'string'
+        ? splitName[0].charAt(0).toUpperCase()
+        : '';
+    let name_2 =
+      typeof splitName[1]?.charAt(0) == 'string'
+        ? splitName[1].charAt(0).toUpperCase()
+        : '';
+
+    return name_1 + name_2;
   }
 }

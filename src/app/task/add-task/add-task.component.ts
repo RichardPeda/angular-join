@@ -54,6 +54,7 @@ export class AddTaskComponent {
   localUser: User = {
     id: '',
     name: '',
+    userinitials: '',
     email: '',
     password: '',
     contacts: [],

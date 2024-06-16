@@ -48,6 +48,8 @@ export class LoginComponent {
   mobileMode = false;
   savedUsers = [];
   firestore: Firestore = inject(Firestore);
+  currentEmail: string | null | undefined = undefined;
+  currentPassword: string | null | undefined = undefined;
 
   constructor(
     public userService: UserdataService,
@@ -62,27 +64,54 @@ export class LoginComponent {
 
   ngOnInit() {
     this.checkMobile();
+    this.currentEmail = localStorage.getItem('email');
+    this.currentPassword = localStorage.getItem('password');
+    if (this.currentPassword && this.currentEmail) {
+      this.userform.controls['email'].setValue(this.currentEmail);
+      this.userform.controls['password'].setValue(this.currentPassword);
+    }
   }
 
-  rememberMe() {
-    console.log('remember');
+  rememberMe(email: string, password: string) {
+    if (this.checkbox) {
+      localStorage.setItem('email', email);
+      localStorage.setItem('password', password);
+    }
+  }
+
+  linkToSignUp() {
+    console.log('signup');
+
+    this.router.navigate(['signup/']);
   }
 
   async onSubmit() {
+    let email = this.userform.controls['email'].value;
+    let password = this.userform.controls['password'].value;
     const q = query(
       collection(this.firestore, 'users'),
-      where('email', '==', this.userform.controls['email'].value),
-      where('password', '==', this.userform.controls['password'].value),
+      where('email', '==', email),
+      where('password', '==', password)
     );
+    let docId = undefined;
+    let data;
 
     let snapshot = await getDocs(q);
     snapshot.forEach((doc) => {
-      console.log(doc.id, ' => ', doc.data());
+      docId = doc.id;
+      data = doc.data();
     });
+
+    if (docId) {
+      this.router.navigate(['summary/' + docId]);
+      this.userService.saveIdInSessionStorage(docId);
+      this.rememberMe(email, password);
+    }
   }
 
   async addNewGuestUser() {
-    let guest = new Guest();
+    let guest = new Guest('guest', 'demo@mail.com', 'G', '123456');
+    guest.userinitials = 'G';
 
     const docRef = await addDoc(
       this.userService.getUserRef(),
@@ -91,7 +120,7 @@ export class LoginComponent {
       console.log(docInfo);
       this.router.navigate(['summary/' + docInfo.id]);
       this.userService.saveIdInSessionStorage(docInfo.id);
-      this.userService.saveDataInSessionStorage('initials', 'G');
+      // this.userService.saveDataInSessionStorage('initials', 'G');
       this.userService.saveDataInSessionStorage('name', 'guest');
     });
   }
@@ -104,5 +133,24 @@ export class LoginComponent {
   checkMobile() {
     let width = window.innerWidth;
     this.mobileMode = width <= 680 ? true : false;
+  }
+
+  getInitials(name: string) {
+    let splitName = name.split(' ', 2);
+
+    let name_1 =
+      typeof splitName[0].charAt(0) == 'string'
+        ? splitName[0].charAt(0).toUpperCase()
+        : '';
+    let name_2 =
+      typeof splitName[1]?.charAt(0) == 'string'
+        ? splitName[1].charAt(0).toUpperCase()
+        : '';
+
+    return name_1 + name_2;
+  }
+
+  updateCheckbox(completed: boolean) {
+    this.checkbox = completed;
   }
 }

@@ -6,7 +6,7 @@
 
     <div class="notUser">
         <p>Not a Join user?</p>
-        <button [routerLink]="['/signup']" routerLinkActive="router-link-active" id="loadSignUp">Sign up</button>
+        <button (click)="linkToSignUp()" id="loadSignUp">Sign up</button>
     </div>
 
 
@@ -19,7 +19,7 @@
         </div>
         <div class="input-layout">
             <div class="input-field">
-                <input placeholder="Email" formControlName="email" required="true" />
+                <input autocomplete="email" placeholder="Email" formControlName="email" required="true" />
                 <div class="icon">
                     <img src="../../assets/img/mail.svg" alt="E-Mail" />
                 </div>
@@ -37,7 +37,7 @@
 
             <div class="loginPassword">
                 <div class="input-field" id="pwField">
-                    <input type="password" placeholder="Password" formControlName="password" />
+                    <input autocomplete="current-password" type="password" placeholder="Password" formControlName="password" />
                     <div class="icon">
                         <img id="logInpwIcon" src="../../assets/img/lock.svg" alt="Lock" />
                     </div>
@@ -52,7 +52,7 @@
 
             </div>
 
-            <mat-checkbox class="input-checkbox" [checked]="checkbox" [color]="'primary'"> Remember me</mat-checkbox>
+            <mat-checkbox class="input-checkbox" (change)="updateCheckbox($event.checked)" [checked]="checkbox" [color]="'primary'"> Remember me</mat-checkbox>
 
 
 

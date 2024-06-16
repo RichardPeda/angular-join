@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { UserdataService } from '../../../services/userdata.service';
 import { ClickOutsideMenuDirective } from '../../click-outside-menu.directive';
 import { CommonModule } from '@angular/common';
+import { SessiondataService } from '../../../services/sessiondata.service';
+import { User } from '../../../interfaces/user.interface';
+import { AppComponent } from '../../../app.component';
 
 @Component({
   selector: 'app-header',
@@ -15,9 +18,41 @@ export class HeaderComponent {
   docId = '';
   initials = '';
   showMenu = false;
-  constructor(private userService: UserdataService, private router: Router) {
+  _subscriptionUser: any;
+  localUser: User = {
+    id: '',
+    name: '',
+    userinitials: '',
+    email: '',
+    password: '',
+    contacts: [],
+    tasks: [],
+  };
+  constructor(
+    private userService: UserdataService,
+    private router: Router,
+    private sessionDataService: SessiondataService
+  ) {
     this.docId = this.userService.loadIdFromSessionStorage();
-    this.initials = this.userService.loadDataFromSessionStoarage('initials');
+
+    // this.initials$ = this.sessionDataService.initials.subscribe(
+    //   (initials: string) => {
+    //     this.initials = initials;
+    //   }
+    // );
+  }
+
+  ngOnInit(){
+    this._subscriptionUser = this.sessionDataService.userSubject.subscribe(
+      (user: User) => {
+        this.localUser = user;
+
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this._subscriptionUser.unsubscribe();
   }
 
   linkToHelp() {
@@ -36,7 +71,9 @@ export class HeaderComponent {
 
   logOut() {
     this.linkToStartPage();
-    this.userService.deleteDataInSessionStorage('userId')
+    this.userService.deleteDataInSessionStorage('userId');
+    // window.location.reload();
+    location.replace("/");
   }
 
   openMenu() {

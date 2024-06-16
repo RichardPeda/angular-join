@@ -51,6 +51,7 @@ export class EditTaskComponent {
   localUser: User = {
     id: '',
     name: '',
+    userinitials:'',
     email: '',
     password: '',
     contacts: [],

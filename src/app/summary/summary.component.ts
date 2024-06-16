@@ -26,6 +26,7 @@ export class SummaryComponent {
   localUser: User = {
     id: '',
     name: '',
+    userinitials: '',
     email: '',
     password: '',
     contacts: [],
@@ -73,21 +74,27 @@ export class SummaryComponent {
   ];
   penImgIdx = 0;
   doneImgIdx = 0;
+  name$: any;
 
   sessionDataService = inject(SessiondataService);
 
   constructor(private userService: UserdataService, private router: Router) {
     this.docId = this.userService.loadIdFromSessionStorage()!;
-    if (this.userService.loadDataFromSessionStoarage('name') !== 'guest')
-      this.name = this.userService.loadDataFromSessionStoarage('name');
-
-    this.greeting = this.greetingDay(this.name);
   }
 
   ngOnInit() {
+    console.log('init summary');
+
+    // this.name$ = this.sessionDataService.username.subscribe((name: string) => {
+    //   this.name = name;
+    //   this.greeting = this.greetingDay(this.name);
+    // });
+
     this._subscriptionUser = this.sessionDataService.userSubject.subscribe(
       (user: User) => {
         this.localUser = user;
+        this.greeting = this.greetingDay(this.localUser.name);
+        this.name = this.localUser.name;
 
         if (user) {
           this.nrOfTasks.forEach((element) => {
@@ -105,6 +112,7 @@ export class SummaryComponent {
 
   ngOnDestroy() {
     this._subscriptionUser.unsubscribe();
+  
   }
 
   changeImg(name: 'pencil' | 'done') {
