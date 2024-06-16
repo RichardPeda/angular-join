@@ -84,11 +84,15 @@
             <div class="summary-greet" id="summaryGreet">
                 <div class="greet-body" id="greeting">
                     <p>{{greeting}}</p>
+                    @if (name != 'guest') {
                     <h2>{{name}}</h2>
+                    }
+
                 </div>
             </div>
         </div>
     </div>
 
 </div>
-<app-greeting-animation [animationState]="sessionDataService.fadeout" [greeting]="greeting" [name]="name"></app-greeting-animation>
+<app-greeting-animation [animationState]="sessionDataService.fadeout" [greeting]="greeting"
+    [name]="name"></app-greeting-animation>

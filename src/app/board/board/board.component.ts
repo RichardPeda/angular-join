@@ -101,6 +101,9 @@ export class BoardComponent {
     );
   }
 
+  /**
+   * Unsubscribe the Observables
+   */
   ngOnDestroy() {
     this._subscriptionUser.unsubscribe();
     if (this._subscriptionDialog) {
@@ -111,6 +114,11 @@ export class BoardComponent {
     }
   }
 
+  /**
+   * Opens a MatDialog, detail view of the clicked card
+   * @param event Mouseevent
+   * @param index index of task
+   */
   openDetailDialog(event: MouseEvent, index: number) {
     event.preventDefault();
     const dialogRef = this.dialog.open(DialogDetailCardComponent, {
@@ -124,11 +132,14 @@ export class BoardComponent {
         this.openEditDialog(index);
       } else if (result && result.event == 'delete')
         this.localUser.tasks.splice(index, 1);
-
       this.sessionDataService.setTask(this.localUser.tasks);
     });
   }
 
+  /**
+   * Opens a MatDialog, to edit the task
+   * @param index index of task
+   */
   openEditDialog(index: number) {
     const editDialogRef = this.dialog.open(EditTaskComponent, {
       minWidth: 'min(400px, 100%)',
@@ -146,6 +157,9 @@ export class BoardComponent {
       });
   }
 
+  /**
+   * Reset all task status amounts
+   */
   resetCount() {
     this.amountTasksAwaitFeedback =
       this.amountTasksDone =
@@ -154,6 +168,9 @@ export class BoardComponent {
         0;
   }
 
+  /**
+   * Count task status amount, used for hide the label in the columns
+   */
   countTaskStatus() {
     this.resetCount();
     this.localUser.tasks.forEach((element) => {
@@ -166,11 +183,14 @@ export class BoardComponent {
 
   drag(event: CdkDragStart<string[]>, task: Task) {
     this.rotateValue = 5;
-
     this.dragableTask = task;
     this.hideGhostCard.forEach((v, i, a) => (a[i] = false));
   }
 
+  /**
+   * When moving card to column, the ghost card will be hide.
+   * @param event CdkDragEnter
+   */
   resetGhostCard(event: CdkDragEnter<string[]>) {
     switch (event.container.data[0]) {
       case 'toDo':
@@ -188,6 +208,10 @@ export class BoardComponent {
     }
   }
 
+  /**
+   * When the card is leaving the column, the ghost card will be shown.
+   * @param event CdkDragExit
+   */
   setGhostCard(event: CdkDragExit<string[]>) {
     switch (event.container.data[0]) {
       case 'toDo':
@@ -204,16 +228,29 @@ export class BoardComponent {
         break;
     }
   }
+
+  /**
+   * Set ghost card and label to true, to hide them, depends of column index.
+   * @param number index of column
+   */
   setCardLabel(number: number) {
     this.hideGhostCard[number] = true;
     this.hideLabel[number] = true;
   }
 
+  /**
+   * Set ghost card and label to false, to show them, depends of column index.
+   * @param number index of column
+   */
   resetCardLabel(number: number) {
     this.hideGhostCard[number] = false;
     this.hideLabel[number] = false;
   }
 
+  /**
+   * Drop the card in column. Update status and save in database.
+   * @param event CdkDragDrop
+   */
   drop(event: CdkDragDrop<string[]>) {
     let column = event.container.data[0];
     this.hideGhostCard.forEach((v, i, a) => (a[i] = true));
@@ -230,13 +267,17 @@ export class BoardComponent {
             column == 'done'
           ) {
             task.status = column;
-            this.sessionDataService.setTask(this.localUser.tasks);
+            this.updateTaskStatus()
           }
         }
       });
     }
   }
 
+  /**
+   * Opens a MatDialog to add a new Task.
+   * @param status status where the new task will be added
+   */
   openAddTaskDialog(status: 'toDo' | 'inProgress' | 'awaitFeedback' | 'done') {
     this.sessionDataService.reqTaskStatus = status;
     const addDialogRef = this.dialog.open(AddTaskComponent, {
@@ -253,15 +294,18 @@ export class BoardComponent {
       });
   }
 
+  /**
+   * Router Link to add Task page. Preset the status.
+   * @param status status where a new task will be added
+   */
   linkToAddTask(status: 'toDo' | 'inProgress' | 'awaitFeedback' | 'done') {
     this.sessionDataService.reqTaskStatus = status;
     this.router.navigate(['addtask/' + this.docId]);
   }
 
-  openCardMoveMenu(index: number) {
-    console.log(index);
-  }
-
+  /**
+   * Save the updated tasks in the database
+   */
   updateTaskStatus() {
     this.sessionDataService.setTask(this.localUser.tasks);
   }

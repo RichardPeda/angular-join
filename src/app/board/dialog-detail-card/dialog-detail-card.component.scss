@@ -1,12 +1,11 @@
 @import '../../../colors.scss';
 
 
-:host{
+:host {
     margin: 48px 40px;
 }
 
 .popup-card-container {
-    /* width: fit-content; */
     min-width: min(400px, 100%);
     width: min-content;
     height: fit-content;
@@ -155,7 +154,6 @@
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 2;
-    /* number of lines to show */
     line-clamp: 2;
     -webkit-box-orient: vertical;
 }

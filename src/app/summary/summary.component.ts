@@ -83,8 +83,6 @@ export class SummaryComponent {
   }
 
   ngOnInit() {
-    console.log('init summary');
-
     // this.name$ = this.sessionDataService.username.subscribe((name: string) => {
     //   this.name = name;
     //   this.greeting = this.greetingDay(this.name);
@@ -112,7 +110,6 @@ export class SummaryComponent {
 
   ngOnDestroy() {
     this._subscriptionUser.unsubscribe();
-  
   }
 
   changeImg(name: 'pencil' | 'done') {
@@ -129,7 +126,7 @@ export class SummaryComponent {
 
     const currentHour = currentTime.getHours();
 
-    let letter = name == '' ? '!' : ',';
+    let letter = name == 'guest' ? '!' : ',';
 
     if (currentHour < 12) {
       return 'Good morning' + letter;
@@ -233,8 +230,8 @@ export class SummaryComponent {
         this.sessionDataService.fadeout = 'hide';
       }, 1500);
     }
-    console.log(this.sessionDataService.fadeout);
   }
+
   linkToBoard() {
     this.router.navigate(['board/' + this.docId]);
   }
