@@ -51,7 +51,7 @@ export class EditTaskComponent {
   localUser: User = {
     id: '',
     name: '',
-    userinitials:'',
+    userinitials: '',
     email: '',
     password: '',
     contacts: [],
@@ -80,8 +80,6 @@ export class EditTaskComponent {
     this.localData = { ...data };
     this.localUser = this.sessionDataService.user;
     this.filteredContacts = this.localUser.contacts;
-    // this.filteredContacts = this.localUser.contacts;
-    // this.filteredContacts = this.localData.assignedContacts!;
   }
 
   taskForm = this._formbuilder.group({
@@ -108,6 +106,9 @@ export class EditTaskComponent {
     this.taskForm.controls['category'].setValue(this.localData.category);
   }
 
+  /**
+   * For edit mode join the contacts with the selected contacts in one list.
+   */
   joinContacts() {
     this.filteredContacts = this.localUser.contacts;
 
@@ -124,6 +125,9 @@ export class EditTaskComponent {
     this._subscriptionUser.unsubscribe();
   }
 
+  /**
+   * Filter the selected contacts of the task to mark them.
+   */
   findselectedContacts() {
     this.selectedContacts = [];
     this.localUser.contacts.forEach((c) => {
@@ -131,13 +135,20 @@ export class EditTaskComponent {
     });
   }
 
+  /**
+   * Returns true if the priority is medium, urgent or low. Otherwise return false.
+   * @param value Priority
+   * @returns boolean
+   */
   checkValidPriority(value: string): boolean {
-    if (value === 'medium') return true;
-    else if (value === 'urgent') return true;
-    else if (value === 'low') return true;
+    if (value === 'medium' || value === 'urgent' || value === 'low')
+      return true;
     else return false;
   }
 
+  /**
+   * Save the edited task. Validation check and emit an update of the dialog.
+   */
   saveTask() {
     if (this.taskForm.valid) {
       this.findselectedContacts();
@@ -166,6 +177,9 @@ export class EditTaskComponent {
     }
   }
 
+  /**
+   * Reset the form fields and the priority.
+   */
   resetForm() {
     this.taskForm.clearValidators();
     this.taskForm.reset();
@@ -175,14 +189,26 @@ export class EditTaskComponent {
     this.priority = 'medium';
   }
 
+  /**
+   * Set the priority.
+   * @param prio Setup priority
+   */
   setPriority(prio: 'medium' | 'urgent' | 'low') {
     this.priority = prio;
   }
 
+  /**
+   * Emit that the OK button is clicked.
+   */
   btnIsClicked() {
     this.submitBtnClicked = true;
   }
 
+  /**
+   * Validate the form input. Shows a message when form is not valid.
+   * @param form FormControl
+   * @returns boolean
+   */
   validateRequiredFormMessage(form: FormControl) {
     let showTitleMessage = false;
     if (form.errors && (form.touched || form.dirty)) {
@@ -191,6 +217,11 @@ export class EditTaskComponent {
     return showTitleMessage;
   }
 
+  /**
+   * When the Ok button is clicked show messages when forms are invalid.
+   * @param form FormControl
+   * @returns boolean
+   */
   showAllRequiredMessages(form: FormControl) {
     let showTitleMessage = false;
     if (form.errors && this.submitBtnClicked) {
@@ -199,15 +230,24 @@ export class EditTaskComponent {
     return showTitleMessage;
   }
 
+  /**
+   * Toggle to show contact dropdown menu.
+   */
   toggleDropdownContacts() {
     this.dropdownContactsClose = !this.dropdownContactsClose;
   }
 
+  /**
+   * Close contact dropdown menu.
+   */
   closeDropdownContacts() {
     this.dropdownContactsClose = true;
   }
 
-  openDropdownContacts(event: Event) {
+  /**
+   * When the filter function of contacts is used open the dropdown menu. When the field is empty close it.
+   */
+  openDropdownContacts() {
     if (this.taskForm.get('contactField')?.value == '')
       this.dropdownContactsClose = true;
     else this.dropdownContactsClose = false;

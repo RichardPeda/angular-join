@@ -28,6 +28,9 @@ export class ProgressBarComponent {
     this.calcSubtasks();
   }
 
+  /**
+   * Calculate the amount of finished subtasks. Convert it to progress between 0 and 100%.
+   */
   calcSubtasks() {
     this.finishedSubtasks = 0;
     this.totalSubtasks = this.subtasks.length;

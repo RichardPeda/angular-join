@@ -24,10 +24,6 @@
     }
 }
 
-// #contact-details-section{
-//     width: 100%;
-// }
-
 
 @keyframes fade-in {
     0% {
@@ -57,17 +53,12 @@
     animation: fade-out 0.5s ease-in-out forwards;
 }
 
-/****************/
-
 body {
     overflow-x: hidden;
 }
 
-
-
 .main-contacts-container {
     grid-area: content;
-    // width: calc(100vw - 232px);
     height: calc(100vh - 96px);
     display: flex;
     position: inherit;
@@ -154,15 +145,12 @@ body {
     background-image: $linear-gradient-hvr-light-grey;
 }
 
-/*Contact Details*/
 .contacts-section-headline {
     display: flex;
     align-items: center;
     gap: 30px;
     margin-left: 55px;
     margin-top: 110px;
-
-
 }
 
 .separator-upright-lightblue {

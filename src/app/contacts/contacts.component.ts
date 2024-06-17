@@ -76,7 +76,6 @@ export class ContactsComponent {
     public sessionDataService: SessiondataService,
     public activatedroute: ActivatedRoute
   ) {
-    // this.localUser = this.sessionDataService.user;
     this.registerletters = this.sessionDataService.registerLetters;
     this.sessionDataService.user.contacts.sort(this.sessionDataService.compare);
   }
@@ -122,15 +121,23 @@ export class ContactsComponent {
     this.checkMobile();
   }
 
+  /**
+   * Check if the page is in mobile mode. Close details if not.
+   */
   checkMobile() {
     let width = window.innerWidth;
     this.mobileMode = width <= 950 ? true : false;
     if (!this.mobileMode) this.closeDetailsMobile();
   }
-
+/**
+ * Open the details as dialog only in mobile mode.
+ */
   openDetailsMobile() {
     if (this.mobileMode) this.openDetailsMenu = true;
   }
+  /**
+   * Close the details view for mobile mode.
+   */
   closeDetailsMobile() {
     this.openDetailsMenu = false;
   }

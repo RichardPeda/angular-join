@@ -32,7 +32,7 @@ export class DialogDetailCardComponent {
   }
 
   /**
-   * Emit to dialog parent if the data must be updated or the dialog is closed without changes.
+   * Emit a event that the data must be updated or the dialog is closed without changes.
    */
   updateData() {
     if (JSON.stringify(this.localData) !== JSON.stringify(this.data)) {
@@ -43,14 +43,14 @@ export class DialogDetailCardComponent {
   }
 
   /**
-   * Emit to dialog parent to delete the task.
+   * Emit a event to delete the task after close the dialog.
    */
   deleteTask() {
     this.dialogRef.close({ event: 'delete' });
   }
 
   /**
-   * Emit to dialog parent to switch the task to edit mode.
+   * Emit a event to switch the task to edit mode after close the dialog.
    */
   switchToEditMode() {
     this.dialogRef.close({ event: 'editmode' });

@@ -25,6 +25,10 @@ export class SinglecontactComponent {
 
   @Input() isSelected : boolean = false;
 
+  /**
+   * Emit which contact is selected
+   * @param currentContact 
+   */
   selectContact(currentContact: Contact) {
     this.selectedContact.emit(currentContact);
   }

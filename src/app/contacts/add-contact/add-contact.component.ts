@@ -59,16 +59,25 @@ export class AddContactComponent {
     public sessionService: SessiondataService
   ) {}
 
+  /**
+   * Close the contact popup with slideout anmitation
+   */
   closePopup() {
     this.slideIn = false;
     this.isClosed.emit(this.slideIn);
   }
 
+  /**
+   * Submit the form with two different modes. Add contact and edit contact.
+   */
   formSubmitted() {
     if (this.contactService.slideInMode === 'add') this.addNewContact();
     else this.editContact();
   }
 
+  /**
+   * Edit the selected contact (contactID found). Emit to update, reset the form and close popup.
+   */
   editContact() {
     let update = false;
     let newContacts: Contact[] = this.sessionService.user.contacts;
@@ -92,6 +101,9 @@ export class AddContactComponent {
     this.closePopup();
   }
 
+  /**
+   * Add new contact. Generates a random contactID and a random badgecolor. Reset form and clos popup.
+   */
   async addNewContact() {
     let contact: Contact = {
       contactID: Math.floor(100000 + Math.random() * 900000).toString(),
@@ -112,6 +124,9 @@ export class AddContactComponent {
     this.closePopup();
   }
 
+  /**
+   * Reset the form
+   */
   resetInput() {
     this.contact.name = '';
     this.contact.email = '';

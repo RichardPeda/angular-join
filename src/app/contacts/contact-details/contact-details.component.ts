@@ -35,6 +35,9 @@ export class ContactDetailsComponent {
     public sessionService: SessiondataService
   ) {}
 
+  /**
+   * Starts a short cooldown to prevent too much trigger events.
+   */
   startCooldown() {
     this.cooldown = true;
     setTimeout(() => {
@@ -42,16 +45,25 @@ export class ContactDetailsComponent {
     }, this.RECHARGE_TIME);
   }
 
+  /**
+   * Open the contact details as a dialog in mobile mode
+   */
   openDialog() {
     if (!this.showDialog) {
       this.showDialog = true;
       this.startCooldown();
     } else this.closeDialog;
   }
+  /**
+   * Close the contact details as a dialog in mobile mode
+   */
   closeDialog() {
     if (this.showDialog && !this.cooldown) this.showDialog = false;
   }
 
+  /**
+   * Select the first contact of the list to fill the details component.
+   */
   getFirstContact() {
     this.contactService.getFirstContact();
   }
