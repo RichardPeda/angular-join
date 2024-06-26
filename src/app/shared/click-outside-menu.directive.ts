@@ -21,6 +21,8 @@ export class ClickOutsideMenuDirective {
 
     if (!clickedInside) {
       this.clickOutside.emit();
+      console.log('clicked outside');
+      
     }
   }
 }

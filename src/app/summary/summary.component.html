@@ -94,5 +94,5 @@
     </div>
 
 </div>
-<app-greeting-animation [animationState]="sessionDataService.fadeout" [greeting]="greeting"
-    [name]="name"></app-greeting-animation>
+@if (mobileMode) {<app-greeting-animation [animationState]="sessionDataService.fadeout" [greeting]="greeting"
+    [name]="name"></app-greeting-animation>}

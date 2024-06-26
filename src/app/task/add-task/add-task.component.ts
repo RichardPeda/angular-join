@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
+  ElementRef,
   Inject,
   Input,
   Optional,
+  ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
 import {
@@ -16,6 +18,7 @@ import { User } from '../../interfaces/user.interface';
 import { SessiondataService } from '../../services/sessiondata.service';
 import { ContactSelectionComponent } from '../../shared/modules/contact-selection/contact-selection.component';
 import { ClickOutsideDirective } from '../../shared/click-outside.directive';
+import { ClickOutsideMenuDirective } from '../../shared/click-outside-menu.directive';
 import { Contact } from '../../interfaces/contact.interface';
 import { Subtask } from '../../interfaces/subtask.interface';
 import { SubtaskComponent } from '../../shared/modules/subtask/subtask.component';
@@ -37,6 +40,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
     ReactiveFormsModule,
     ContactSelectionComponent,
     ClickOutsideDirective,
+    ClickOutsideMenuDirective,
     SubtaskComponent,
     ProfileBadgeComponent,
     PrioritySelectionComponent,
@@ -105,6 +109,7 @@ export class AddTaskComponent {
       }
     );
     this.status = this.sessionDataService.reqTaskStatus;
+    this.taskForm.controls['subtask'].disable();
   }
 
   ngOnDestroy() {
@@ -247,11 +252,24 @@ export class AddTaskComponent {
         done: false,
       };
       this.subTasks.push(subtask);
+      this.disableSubtaskInput();
     }
   }
 
+  @ViewChild('participantRef')
+  participantRef!: ElementRef;
+
   enableSubtaskInput() {
     this.subtaskInputDisable = false;
+    this.taskForm.controls['subtask'].enable();
+    this.participantRef.nativeElement.focus();
+  }
+
+  disableSubtaskInput() {
+    this.subtaskInputDisable = true;
+
+    this.taskForm.controls['subtask'].reset();
+    this.taskForm.controls['subtask'].disable();
   }
 
   changeSubtaskTitle(title: string, index: number) {

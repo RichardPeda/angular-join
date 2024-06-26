@@ -222,6 +222,7 @@ export class SummaryComponent {
   checkMobile() {
     let width = window.innerWidth;
     this.mobileMode = width <= 1200 ? true : false;
+    this.mobileGreeting()
   }
 
   mobileGreeting() {

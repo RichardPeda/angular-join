@@ -26,10 +26,13 @@ import {
   where,
 } from '@angular/fire/firestore';
 import { LogoAnimationMobileComponent } from '../logo-animation-mobile/logo-animation-mobile.component';
+import { PopupNotificationComponent } from '../shared/modules/popup-notification/popup-notification.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.scss',
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -37,9 +40,8 @@ import { LogoAnimationMobileComponent } from '../logo-animation-mobile/logo-anim
     LogoAnimationComponent,
     LogoAnimationMobileComponent,
     RouterModule,
+    PopupNotificationComponent,
   ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
 })
 export class LoginComponent {
   checkbox: boolean = false;
@@ -50,6 +52,8 @@ export class LoginComponent {
   firestore: Firestore = inject(Firestore);
   currentEmail: string | null | undefined = undefined;
   currentPassword: string | null | undefined = undefined;
+  showNotification = false;
+  notificationText = '';
 
   constructor(
     public userService: UserdataService,
@@ -72,6 +76,12 @@ export class LoginComponent {
     }
   }
 
+  /**
+   * When user login submit with correct parameters and "remember me" checkbox is checked,
+   * the parameters will be saved in the localstorage.
+   * @param email email from input field
+   * @param password password from input field
+   */
   rememberMe(email: string, password: string) {
     if (this.checkbox) {
       localStorage.setItem('email', email);
@@ -79,12 +89,17 @@ export class LoginComponent {
     }
   }
 
+  /**
+   * Routerlink to signup page.
+   */
   linkToSignUp() {
-    console.log('signup');
-
     this.router.navigate(['signup/']);
   }
 
+  /**
+   * When form field is submitted, a database query check the user and get the docId.
+   * Route to summary page
+   */
   async onSubmit() {
     let email = this.userform.controls['email'].value;
     let password = this.userform.controls['password'].value;
@@ -106,9 +121,31 @@ export class LoginComponent {
       this.router.navigate(['summary/' + docId]);
       this.userService.saveIdInSessionStorage(docId);
       this.rememberMe(email, password);
-    }
+    } else this.wrongLogin();
   }
 
+  /**
+   * User not found in database, cannot be logged in. Show notification.
+   */
+  wrongLogin() {
+    this.notificationText = 'Email or password not correct. Login failed.';
+    this.showNotification = true;
+    this.clearForm();
+    setTimeout(() => {
+      this.showNotification = false;
+    }, 2500);
+  }
+
+  /**
+   * Reset the form.
+   */
+  clearForm() {
+    this.userform.reset();
+  }
+
+  /**
+   * Login as guest user. Creates a new instance in database and redirect to summary.
+   */
   async addNewGuestUser() {
     let guest = new Guest('guest', 'demo@mail.com', 'G', '123456');
     guest.userinitials = 'G';
@@ -117,10 +154,8 @@ export class LoginComponent {
       this.userService.getUserRef(),
       guest.toJSON()
     ).then((docInfo) => {
-      console.log(docInfo);
       this.router.navigate(['summary/' + docInfo.id]);
       this.userService.saveIdInSessionStorage(docInfo.id);
-      // this.userService.saveDataInSessionStorage('initials', 'G');
       this.userService.saveDataInSessionStorage('name', 'guest');
     });
   }
@@ -130,11 +165,19 @@ export class LoginComponent {
     this.checkMobile();
   }
 
+  /**
+   * Check if page is in mobile mode.
+   */
   checkMobile() {
     let width = window.innerWidth;
     this.mobileMode = width <= 680 ? true : false;
   }
 
+  /**
+   * Converts the username to its initials. Max 2 letters
+   * @param name username
+   * @returns initials of the username with max 2 letters
+   */
   getInitials(name: string) {
     let splitName = name.split(' ', 2);
 
@@ -150,6 +193,10 @@ export class LoginComponent {
     return name_1 + name_2;
   }
 
+  /**
+   * Update the status of the checkbox
+   * @param completed MatCheckbox event
+   */
   updateCheckbox(completed: boolean) {
     this.checkbox = completed;
   }

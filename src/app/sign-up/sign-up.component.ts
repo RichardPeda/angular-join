@@ -91,14 +91,6 @@ export class SignUpComponent {
     if (await this.userService.checkIfUserDontExists(name, email)) {
       let initials = this.getInitials(name);
       let guest = new Guest(name, email, initials, password);
-      // guest.name = name;
-      // guest.email = email;
-      // guest.password = password;
-      // guest.userinitials = this.getInitials(name);
-      console.log(guest);
-
-      console.log(guest.toJSON());
-
       const docRef = await addDoc(
         this.userService.getUserRef(),
         guest.toJSON()

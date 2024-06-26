@@ -112,14 +112,14 @@
                 <!-- Subtasks -->
                 <div class="addTask-input-element">
                     <label class="addTask-label" for="addTask-subtask-input">Subtask</label>
-                    <div ondblclick="enableSubtaskInput()" class="addTask-inputField-subtask">
-                        <input formControlName="subtask" class="addTask-inputField-sub" type="text"
+                    <div appClickOutsideMenu (clickOutside)="disableSubtaskInput()" (dblclick)="enableSubtaskInput()"  class="addTask-inputField-subtask">
+                        <input (dblclick)="enableSubtaskInput()"  formControlName="subtask" class="addTask-inputField-sub" type="text" #participantRef
                             id="addTask-subtask-input" placeholder="Add new Subtask" />
 
                         <div id="addTask-delete-accept-container" [ngClass]="{'d-none' : subtaskInputDisable}"
                             class="addTask-delete-accept-container">
                             <div class="addTask-round-btn-frame">
-                                <img onclick="disableSubtaskInput()" class="addTask-add-btn"
+                                <img (click)="disableSubtaskInput()" class="addTask-add-btn"
                                     src="../../assets/img/cancel.svg" alt="" />
                             </div>
                             <div (click)="createSubtask()" class="addTask-round-btn-frame">

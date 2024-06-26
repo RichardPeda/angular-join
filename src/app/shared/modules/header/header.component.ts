@@ -34,12 +34,6 @@ export class HeaderComponent {
     private sessionDataService: SessiondataService
   ) {
     this.docId = this.userService.loadIdFromSessionStorage();
-
-    // this.initials$ = this.sessionDataService.initials.subscribe(
-    //   (initials: string) => {
-    //     this.initials = initials;
-    //   }
-    // );
   }
 
   ngOnInit(){
@@ -72,7 +66,6 @@ export class HeaderComponent {
   logOut() {
     this.linkToStartPage();
     this.userService.deleteDataInSessionStorage('userId');
-    // window.location.reload();
     location.replace("/");
   }
 

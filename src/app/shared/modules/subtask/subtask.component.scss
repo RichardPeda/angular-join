@@ -12,10 +12,11 @@
     justify-content: space-between;
     align-items: center;
     min-width: 100%;
-    padding: 8px;
+    padding: 6px 16px 4px 32px;
+    // padding: 8px;
     border-radius: 10px;
     position: relative;
-    padding-left: 16px;
+    // padding-left: 32px;
     cursor: pointer;
 }
 
@@ -43,10 +44,30 @@
     width: 5px;
     height: 5px;
     position: absolute;
-    left: 6px;
+    left: 16px;
     border-radius: 50%;
     background: $clr-dark-gray;
     display: inline-block;
+}
+
+.dot-before:has(> input:read-write)::before {
+    content: none !important;
+    background-color: white;
+}
+
+.dot-before:has(> input:read-write) {
+
+    background-color: white;
+    border-bottom: 1px solid $clr-light-blue;
+    border-radius: unset;
+}
+
+.dot-before:has(> input:read-write):hover {
+    pointer-events: none !important;
+}
+
+input:read-write {
+    background-color: white;
 }
 
 .addTask-subtask-element.no-before::before {

@@ -70,11 +70,11 @@ export class SessiondataService {
       (doc) => {
         let data = doc.data();
         this.user = this.userService.getCurrentUserData(doc.id, data!);
-        console.log('dieser user', this.user);
+       
         this.userSubject.next(this.user);
         if (this.user) {
           this.initials.next(this.getInitials(this.user.name));
-          console.log(this.user.name);
+         
           
           this.username.next(this.user.name);
         }

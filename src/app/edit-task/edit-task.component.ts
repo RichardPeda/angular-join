@@ -245,7 +245,7 @@ export class EditTaskComponent {
   }
 
   /**
-   * When the filter function of contacts is used open the dropdown menu. When the field is empty close it.
+   * When the filter function of contacts is used, open the dropdown menu. When the field is empty close it.
    */
   openDropdownContacts() {
     if (this.taskForm.get('contactField')?.value == '')
@@ -253,14 +253,24 @@ export class EditTaskComponent {
     else this.dropdownContactsClose = false;
   }
 
+  /**
+   * Toggle to show category dropdown menu.
+   */
   toggleDropdownCategory() {
     this.dropdownCategoryClose = !this.dropdownCategoryClose;
   }
 
+  /**
+   * Close category dropdown menu.
+   */
   closeDropdownCategory() {
     this.dropdownCategoryClose = true;
   }
 
+  /**
+   * Select category and patch to formfield value.
+   * @param category Chosen category
+   */
   selectCategory(category: 'Technical Task' | 'User Story') {
     this.taskForm.patchValue({
       category: category,
@@ -268,10 +278,16 @@ export class EditTaskComponent {
     this.closeDropdownCategory();
   }
 
+  /**
+   * Update the selected contacts.
+   */
   updateSelected() {
     this.findselectedContacts();
   }
 
+  /**
+   * Filter contacts when input field is filled. When the input field is empty, all contacts are shown.
+   */
   filterContacts() {
     let compare: string | null | undefined =
       this.taskForm.controls['contactField']?.value?.toLowerCase();
@@ -288,6 +304,9 @@ export class EditTaskComponent {
     }
   }
 
+  /**
+   * Create new subtask and add it to the array. Always set to undone.
+   */
   createSubtask() {
     if (this.taskForm.controls['subtask'].valid) {
       let subtask: Subtask = {
@@ -298,10 +317,18 @@ export class EditTaskComponent {
     }
   }
 
+  /**
+   * Enable subtask input field.
+   */
   enableSubtaskInput() {
     this.subtaskInputDisable = false;
   }
 
+  /**
+   * When subtask title changed, save it. An empty field deletes the subtask.
+   * @param title subtask title
+   * @param index index in subtask array
+   */
   changeSubtaskTitle(title: string, index: number) {
     if (title === '') this.subTasks.splice(index, 1);
     else this.subTasks[index].title = title;

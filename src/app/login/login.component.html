@@ -37,7 +37,8 @@
 
             <div class="loginPassword">
                 <div class="input-field" id="pwField">
-                    <input autocomplete="current-password" type="password" placeholder="Password" formControlName="password" />
+                    <input autocomplete="current-password" type="password" placeholder="Password"
+                        formControlName="password" />
                     <div class="icon">
                         <img id="logInpwIcon" src="../../assets/img/lock.svg" alt="Lock" />
                     </div>
@@ -52,7 +53,8 @@
 
             </div>
 
-            <mat-checkbox class="input-checkbox" (change)="updateCheckbox($event.checked)" [checked]="checkbox" [color]="'primary'"> Remember me</mat-checkbox>
+            <mat-checkbox class="input-checkbox" (change)="updateCheckbox($event.checked)" [checked]="checkbox"
+                [color]="'primary'"> Remember me</mat-checkbox>
 
 
 
@@ -71,3 +73,6 @@
 
 
 </div>
+@if (showNotification) {
+<app-popup-notification [label]="notificationText"></app-popup-notification>
+}
