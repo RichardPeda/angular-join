@@ -38,29 +38,32 @@ export class SubtaskComponent {
 
   ngOnInit() {
     this.inputData = this.title;
-    // this.form.controls['title'].setValue(this.title);
-    // this.form.controls['title'].disable();
   }
+
+  timeout = false;
 
   enableSubtask() {
     this.inEditMode = true;
+    this.timeout = true;
+    setTimeout(() => {
+      this.timeout = false;
+    }, 100);
   }
 
   disableSubtask() {
-    this.inEditMode = false;
+    if (!this.timeout) {
+      this.inEditMode = false;
+    }
   }
 
   editSubtask() {
-    // this.form.controls['title'].enable();
-    console.log('edit');
-    
     this.enableSubtask();
     this.inputRef.nativeElement.focus();
   }
 
   changeTitle() {
     if (this.inputData) this.updatedTitle.emit(this.inputData);
-    this.disableSubtask()
+    this.disableSubtask();
   }
 
   deleteSubtask() {

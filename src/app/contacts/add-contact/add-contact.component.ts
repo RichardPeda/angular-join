@@ -11,11 +11,12 @@ import {
 import { ContactsService } from '../../services/contacts.service';
 import { FormsModule } from '@angular/forms';
 import { SessiondataService } from '../../services/sessiondata.service';
+import { ClickOutsideDirective } from '../../shared/click-outside.directive';
 
 @Component({
   selector: 'app-add-contact',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ClickOutsideDirective],
   templateUrl: './add-contact.component.html',
   styleUrl: './add-contact.component.scss',
   animations: [

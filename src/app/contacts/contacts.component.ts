@@ -89,11 +89,12 @@ export class ContactsComponent {
       .subscribe((user: User) => {
         this.localUser = user;
 
-        if (this.localUser.contacts)
-          this.sessionDataService.user.contacts.sort(
-            this.sessionDataService.compare
-          );
-        this.sessionDataService.getRegisterLetters(this.localUser.contacts);
+        if (this.localUser.contacts){
+          this.sessionDataService.user.contacts.sort(this.sessionDataService.compare);
+          this.sessionDataService.getRegisterLetters(this.localUser.contacts);
+        }
+        
+       
         this.registerletters = this.sessionDataService.registerLetters;
       });
 
@@ -129,9 +130,9 @@ export class ContactsComponent {
     this.mobileMode = width <= 950 ? true : false;
     if (!this.mobileMode) this.closeDetailsMobile();
   }
-/**
- * Open the details as dialog only in mobile mode.
- */
+  /**
+   * Open the details as dialog only in mobile mode.
+   */
   openDetailsMobile() {
     if (this.mobileMode) this.openDetailsMenu = true;
   }
