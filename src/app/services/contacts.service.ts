@@ -150,7 +150,6 @@ export class ContactsService {
   ngDoCheck() {
     if (this.selectedContact != this.selectedContact) {
       this._selectedContact.next(this.selectedContact);
-          
     }
   }
 
@@ -180,6 +179,7 @@ export class ContactsService {
   slideInPopup() {
     this.showSlider = true;
   }
+
   slideOutPopup(value: boolean) {
     setTimeout(() => {
       this.showSlider = value;

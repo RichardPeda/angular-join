@@ -46,7 +46,7 @@
 </div>
 
 <div class="overlay" [ngClass]="{'show-overlay': contactService.showSlider}">
-    <app-add-contact [mobile]="mobileMode"
+    <app-add-contact  [mobile]="mobileMode"
         [contact]="contactService.slideInMode == 'edit' ?  contactService.selectedContact : contactService.emptyContact"
         (listUpdate)="sessionDataService.getRegisterLetters;" (isClosed)="contactService.slideOutPopup($event)"
         [slideIn]="contactService.showSlider">

@@ -1,4 +1,4 @@
-import { Component, OnChanges, Renderer2 } from '@angular/core';
+import { Component, Renderer2 } from '@angular/core';
 import { HeaderComponent } from '../../shared/modules/header/header.component';
 import { NavbarComponent } from '../../shared/modules/navbar/navbar.component';
 import { BoardCardComponent } from '../board-card/board-card.component';
@@ -15,19 +15,15 @@ import {
   CdkDragDrop,
   CdkDrag,
   CdkDropList,
-  CdkDropListGroup,
-  moveItemInArray,
-  transferArrayItem,
   CdkDragPlaceholder,
   CdkDragEnter,
   CdkDragExit,
   CdkDragStart,
 } from '@angular/cdk/drag-drop';
 import { AddTaskComponent } from '../../task/add-task/add-task.component';
-import { Event, Router } from '@angular/router';
-import { ClickTargetDirective } from '../../shared/click-target.directive';
-import { MoveTaskDialogComponent } from '../../shared/modules/move-task-dialog/move-task-dialog.component';
+import { Router } from '@angular/router';
 import { NoopScrollStrategy } from '@angular/cdk/overlay';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-board',
@@ -45,6 +41,7 @@ import { NoopScrollStrategy } from '@angular/cdk/overlay';
     CdkDrag,
     CdkDragPlaceholder,
     AddTaskComponent,
+    FormsModule,
   ],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss',
@@ -79,6 +76,9 @@ export class BoardComponent {
   hideGhostCard = [true, true, true, true];
   hideLabel = [false, false, false, false];
   rotateValue = 0;
+  filterActive = false;
+  searchInput = '';
+  filteredTasks: string[] = [];
 
   constructor(
     public userService: UserdataService,
@@ -267,7 +267,7 @@ export class BoardComponent {
             column == 'done'
           ) {
             task.status = column;
-            this.updateTaskStatus()
+            this.updateTaskStatus();
           }
         }
       });
@@ -309,4 +309,25 @@ export class BoardComponent {
   updateTaskStatus() {
     this.sessionDataService.setTask(this.localUser.tasks);
   }
+
+  filterTask() {
+    if (this.searchInput) {
+      this.filteredTasks = [];
+      this.filterActive = true;
+      this.localUser.tasks.forEach((task) => {
+        if (
+          task.title.toLowerCase().includes(this.searchInput.toLowerCase()) ||
+          task.description.toLowerCase().includes(this.searchInput.toLowerCase())
+        ) {
+          this.filteredTasks.push(task.taskID);
+        }
+      });
+    } else this.filterActive = false;
+  }
+
+
+
+
 }
+
+

@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { Contact } from '../../interfaces/contact.interface';
 import { CommonModule } from '@angular/common';
 import {
@@ -59,13 +65,29 @@ export class AddContactComponent {
     public contactService: ContactsService,
     public sessionService: SessiondataService
   ) {}
+  timeout = false;
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['slideIn'] && changes['slideIn'].currentValue == true) {
+      this.createTimeout();
+    }
+  }
+
+  createTimeout() {
+    this.timeout = true;
+    setTimeout(() => {
+      this.timeout = false;
+    }, 500);
+  }
 
   /**
    * Close the contact popup with slideout anmitation
    */
   closePopup() {
-    this.slideIn = false;
-    this.isClosed.emit(this.slideIn);
+    if (!this.timeout) {
+      this.slideIn = false;
+      this.isClosed.emit(this.slideIn);
+    }
   }
 
   /**

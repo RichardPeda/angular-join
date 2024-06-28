@@ -1,4 +1,4 @@
-<div [@slideAnimation]="slideIn ? 'inside' : 'outside'" class="contact-slider">
+<div appClickOutside (clickOutside)="closePopup()" [@slideAnimation]="slideIn ? 'inside' : 'outside'" class="contact-slider">
     <div class="slider-header-container">
         <img src="../../../assets/img/join_logo.svg" alt="">
 

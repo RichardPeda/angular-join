@@ -81,7 +81,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    &:focus-within {
+        outline: 1px solid $clr-light-blue;
+    }
 }
+
 
 .board-search-btn-frame {
     width: 48px;
@@ -743,4 +748,9 @@ input[type='radio']:hover {
 
 .cdk-drag-preview {
     transform: rotate(5deg);
+}
+
+
+.low-opacity{
+    opacity: 0.2;
 }
