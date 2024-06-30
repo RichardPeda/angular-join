@@ -40,8 +40,7 @@ export class UserdataService {
   unsubUsers;
 
   constructor(private route: ActivatedRoute) {
-    console.log(this.currentUser);
-    console.log('userdata initialisiert');
+   
 
     this.unsubUsers = onSnapshot(this.getUserRef(), (userList) => {
       userList.forEach((user) => {
@@ -190,7 +189,7 @@ export class UserdataService {
         },
       ],
     });
-    console.log('Document written with ID: ', docRef.id);
+   
   }
 
   loginAsGuest() {
@@ -199,7 +198,7 @@ export class UserdataService {
         this.currentUser = user;
         this.saveIdInSessionStorage(user.id!);
         this.route.params.subscribe((params) => {
-          // console.log(params);
+         
         });
       }
     });
