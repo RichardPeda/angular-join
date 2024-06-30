@@ -65,6 +65,10 @@ export class SignUpComponent {
     );
   }
 
+  /**
+   * If submit button is pressed, check database if user exists.
+   * If not, add new user, otherwise show notification text.
+   */
   async onSubmit() {
     let name = this.newUserForm.get('name')?.value;
     let email = this.newUserForm.get('email')?.value;
@@ -87,6 +91,14 @@ export class SignUpComponent {
     }
   }
 
+  /**
+   * Create new user, use object with existing contacts and tasks for demo.
+   * Apply this user to database.
+   * @param name username
+   * @param email user email address
+   * @param password user password
+   * @returns 
+   */
   async addNewUser(name: string, email: string, password: string) {
     if (await this.userService.checkIfUserDontExists(name, email)) {
       let initials = this.getInitials(name);
@@ -101,6 +113,9 @@ export class SignUpComponent {
     }
   }
 
+  /**
+   * Reset the form
+   */
   clearForm() {
     this.newUserForm.patchValue({
       name: '',
@@ -113,6 +128,11 @@ export class SignUpComponent {
     this.checkbox = false;
   }
 
+  /**
+   * Convert the username into its initials.
+   * @param name username
+   * @returns initials
+   */
   getInitials(name: string) {
     let splitName = name.split(' ', 2);
 

@@ -310,6 +310,10 @@ export class BoardComponent {
     this.sessionDataService.setTask(this.localUser.tasks);
   }
 
+  /**
+   * Filter the tasks when the input field is filled. If a task title or description is found, push the taskId to an array.
+   * This is used to lower the opactity of the task cards which are not found. The other stay with high opacity.
+   */
   filterTask() {
     if (this.searchInput) {
       this.filteredTasks = [];

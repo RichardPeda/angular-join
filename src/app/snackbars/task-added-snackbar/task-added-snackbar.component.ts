@@ -7,12 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   imports: [],
   templateUrl: './task-added-snackbar.component.html',
   styleUrl: './task-added-snackbar.component.scss',
-
 })
 export class TaskAddedSnackbarComponent {
-constructor(){
-
-}
-
-
+  constructor() {}
 }

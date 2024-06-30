@@ -116,6 +116,9 @@ export class AddTaskComponent {
     this._subscriptionUser.unsubscribe();
   }
 
+  /**
+   * This function looks for all selected user contacts and push it to an array.
+   */
   findselectedContacts() {
     this.selectedContacts = [];
     this.localUser.contacts.forEach((c) => {
@@ -123,6 +126,11 @@ export class AddTaskComponent {
     });
   }
 
+  /**
+   * This function returns true if the given value matches medium, urgent or low. Otherwise return false.
+   * @param value represents the priority medium, urgent or low
+   * @returns true if priority matches medium, urgent or low, otherwise returns false
+   */
   checkValidPriority(value: string): boolean {
     if (value === 'medium') return true;
     else if (value === 'urgent') return true;
@@ -130,6 +138,11 @@ export class AddTaskComponent {
     else return false;
   }
 
+  /**
+   * Create a new task if the form is valid. Including selected contacts, validated priority and category.
+   * The task is created with random taskID and with status of 'todo' and is applied to the database.
+   * After creation the form will be resetted and a snackbar is shown. 
+   */
   createTask() {
     if (this.taskForm.valid) {
       this.findselectedContacts();
@@ -163,6 +176,9 @@ export class AddTaskComponent {
     }
   }
 
+  /**
+   * Resets the form.
+   */
   resetForm() {
     this.taskForm.clearValidators();
     this.taskForm.reset();
@@ -172,14 +188,26 @@ export class AddTaskComponent {
     this.priority = 'medium';
   }
 
+  /**
+   * Set the priority to the given value.
+   * @param prio selected priority - medium, urgent or low
+   */
   setPriority(prio: 'medium' | 'urgent' | 'low') {
     this.priority = prio;
   }
 
+  /**
+   * Emitter if submit button is clicked.
+   */
   btnIsClicked() {
     this.submitBtnClicked = true;
   }
 
+  /**
+   * The function checks the given form, if there is an error of the formfield and returns true to show a message.
+   * @param form FormControl to validate
+   * @returns true if the form has an error
+   */
   validateRequiredFormMessage(form: FormControl) {
     let showTitleMessage = false;
     if (form.errors && (form.touched || form.dirty)) {
@@ -188,6 +216,12 @@ export class AddTaskComponent {
     return showTitleMessage;
   }
 
+  /**
+   * The function checks the given form when submit button is clicked,
+   * if there is an error of the formfield and returns true to show a message.
+   * @param form FormControl to validate
+   * @returns true if the form has an error
+   */
   showAllRequiredMessages(form: FormControl) {
     let showTitleMessage = false;
     if (form.errors && this.submitBtnClicked) {
@@ -196,28 +230,48 @@ export class AddTaskComponent {
     return showTitleMessage;
   }
 
+  /**
+   * Toggle the dropdown field of contacts open or close.
+   */
   toggleDropdownContacts() {
     this.dropdownContactsClose = !this.dropdownContactsClose;
   }
 
+  /**
+   * Close the dropdown field of contacts.
+   */
   closeDropdownContacts() {
     this.dropdownContactsClose = true;
   }
 
+  /**
+   * Open the dropdown field of contacts if the contact input field is not empty.
+   * @param event 
+   */
   openDropdownContacts(event: Event) {
     if (this.taskForm.get('contactField')?.value == '')
       this.dropdownContactsClose = true;
     else this.dropdownContactsClose = false;
   }
 
+  /**
+   * Toggle the dropdown field of category open or close.
+   */
   toggleDropdownCategory() {
     this.dropdownCategoryClose = !this.dropdownCategoryClose;
   }
 
+   /**
+   * close the dropdown field of category.
+   */
   closeDropdownCategory() {
     this.dropdownCategoryClose = true;
   }
 
+  /**
+   * If the category is selected, fill the form field with this value and close the dropdown.
+   * @param category Technical Task or User Story
+   */
   selectCategory(category: string) {
     this.taskForm.patchValue({
       category: category,
@@ -225,10 +279,16 @@ export class AddTaskComponent {
     this.closeDropdownCategory();
   }
 
+  /**
+   * Update the selected contacts.
+   */
   updateSelected() {
     this.findselectedContacts();
   }
 
+  /**
+   * Filter the contacts when the contacts inputfield is filled and push them into an array.
+   */
   filterContacts() {
     let compare: string | null | undefined =
       this.taskForm.controls['contactField']?.value?.toLowerCase();
@@ -245,6 +305,9 @@ export class AddTaskComponent {
     }
   }
 
+  /**
+   * Creates a subtask when the field is valid. Set it to undone and push it to a temporary array.
+   */
   createSubtask() {
     if (this.taskForm.controls['subtask'].valid) {
       let subtask: Subtask = {
@@ -259,24 +322,37 @@ export class AddTaskComponent {
   @ViewChild('participantRef')
   participantRef!: ElementRef;
 
+  /**
+   * Enable the input field of subtask and set the focus on it.
+   */
   enableSubtaskInput() {
     this.subtaskInputDisable = false;
     this.taskForm.controls['subtask'].enable();
     this.participantRef.nativeElement.focus();
   }
 
+  /**
+   * Disable the input field of subtask.
+   */
   disableSubtaskInput() {
     this.subtaskInputDisable = true;
-
     this.taskForm.controls['subtask'].reset();
     this.taskForm.controls['subtask'].disable();
   }
 
+  /**
+   * If the new subtask title is not empty, update it in the array. If its empty, delete it.
+   * @param title new title of subtask
+   * @param index number of subtask indes in temporary array
+   */
   changeSubtaskTitle(title: string, index: number) {
     if (title === '') this.subTasks.splice(index, 1);
     else this.subTasks[index].title = title;
   }
 
+  /**
+   * Show snackbar when a task is created
+   */
   openSnackbar() {
     this.hidePopup = false;
     setTimeout(() => {
@@ -284,10 +360,16 @@ export class AddTaskComponent {
     }, 1500);
   }
 
+  /**
+   * Routerlink to the board page.
+   */
   linkToBoard() {
     this.router.navigate(['board/' + this.docId]);
   }
 
+ /**
+  * If the compontent is opened as dialog, close the dialog with this function.
+  */
   closeDialog() {
     this.dialogRef.close();
   }

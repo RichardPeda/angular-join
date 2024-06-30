@@ -83,12 +83,7 @@ export class SummaryComponent {
   }
 
   ngOnInit() {
-    // this.name$ = this.sessionDataService.username.subscribe((name: string) => {
-    //   this.name = name;
-    //   this.greeting = this.greetingDay(this.name);
-    // });
-
-    this._subscriptionUser = this.sessionDataService.userSubject.subscribe(
+       this._subscriptionUser = this.sessionDataService.userSubject.subscribe(
       (user: User) => {
         this.localUser = user;
         this.greeting = this.greetingDay(this.localUser.name);
@@ -112,20 +107,31 @@ export class SummaryComponent {
     this._subscriptionUser.unsubscribe();
   }
 
+  /**
+   * Change the image of the card
+   * @param name name of the image
+   */
   changeImg(name: 'pencil' | 'done') {
     name === 'pencil' ? (this.penImgIdx = 1) : (this.doneImgIdx = 1);
   }
 
+  /**
+   * Reset the image of the card
+   * @param name name of the image
+   */
   resetImg(name: 'pencil' | 'done') {
     name === 'pencil' ? (this.penImgIdx = 0) : (this.doneImgIdx = 0);
   }
 
+  /**
+   * This function returns a greeting depending of the actual time.
+   * @param name username
+   * @returns greeting string
+   */
   greetingDay(name: string): string {
     const currentTime = new Date();
     this.getFullDate(currentTime);
-
     const currentHour = currentTime.getHours();
-
     let letter = name == 'guest' ? '!' : ',';
 
     if (currentHour < 12) {
@@ -137,22 +143,31 @@ export class SummaryComponent {
     }
   }
 
+  /**
+   * This function get the actual full date.
+   * @param time current time
+   */
   getFullDate(time: Date) {
     let date = time.toISOString();
     date = date.slice(0, 10);
     this.currentTimestamp = Date.parse(date);
   }
 
+  /**
+   * This function returns the actual timestamp.
+   * @param time current time
+   * @returns timestamp
+   */
   getTimestamp(time: string): number {
     let date = time.slice(0, 10);
     return Date.parse(date);
   }
 
-  /**
-   *
-   * @param status
-   * @returns
-   */
+ /**
+  * This function returns a number depending on the amount of task status.
+  * @param status task status - todo, await feedback, in progress
+  * @returns amount of task depending of status
+  */
   countTasksOfStatus(status: string): number {
     let num = 0;
     if (this.localUser.tasks) {
@@ -164,8 +179,8 @@ export class SummaryComponent {
   }
 
   /**
-   *
-   * @returns
+   * Returns the amount of all tasks for the number of task in board.
+   * @returns amount of all tasks
    */
   countAllTasks(): number {
     let num = 0;
@@ -190,6 +205,10 @@ export class SummaryComponent {
     }
   }
 
+  /**
+   * This function checks all urgent tasks and return the next deadline as date.
+   * @returns a date string in US format
+   */
   getDeadline() {
     let difference = 99999999999999;
     let date = '';
@@ -219,12 +238,18 @@ export class SummaryComponent {
     this.checkMobile();
   }
 
+  /**
+   * Check if the page is in mobile mode smaller 1200px.
+   */
   checkMobile() {
     let width = window.innerWidth;
     this.mobileMode = width <= 1200 ? true : false;
     this.mobileGreeting()
   }
 
+  /**
+   * In mobile mode show the mobile greeting component.
+   */
   mobileGreeting() {
     if (this.mobileMode && this.sessionDataService.fadeout == 'show') {
       setTimeout(() => {
@@ -233,6 +258,9 @@ export class SummaryComponent {
     }
   }
 
+  /**
+   * Routerlink to the board page.
+   */
   linkToBoard() {
     this.router.navigate(['board/' + this.docId]);
   }
