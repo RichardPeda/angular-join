@@ -45,6 +45,10 @@ body {
   margin: 0;
   font-family: "Inter", Helvetica, sans-serif;
   background-color: $clr-bg;
+
+  @media (max-width:350px) {
+    overflow-x: hidden;
+  }
 }
 
 html,
@@ -105,14 +109,14 @@ h6 {
   padding: 40px
 }
 
-.d-none{
+.d-none {
   display: none !important;
   opacity: 0 !important;
 }
 
-.addtaskPopup{
- overflow-y: auto;
- overflow-x: hidden;
+.addtaskPopup {
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* width */
@@ -134,4 +138,3 @@ h6 {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-

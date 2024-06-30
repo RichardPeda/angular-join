@@ -649,6 +649,17 @@
         height: 17px;
         font-size: 14px;
     }
+
+    .overview-top,
+    .overview-mid-card,
+    .overview-bottom {
+
+        gap: 5px;
+    }
+
+
+
+
 }
 
 @media (max-width: 340px) {

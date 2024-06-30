@@ -51,7 +51,8 @@
 
     @media (max-width: 1212px) {
         flex-direction: column;
-        width: 396px;
+        width: 100%;
+        max-width: 396px;
         height: auto;
     }
 }
