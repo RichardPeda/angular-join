@@ -22,7 +22,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding:16px;
+    padding: 16px;
 }
 
 .confirmation-container span {
@@ -30,4 +30,8 @@
     font-weight: 400;
     color: white;
     // margin-right: 16px;
+}
+
+svg {
+    margin-left: 16px;
 }

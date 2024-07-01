@@ -60,6 +60,7 @@ export class AddContactComponent {
   @Input() mobile: boolean = false;
   @Output() isClosed = new EventEmitter<boolean>();
   @Output() listUpdate = new EventEmitter<boolean>();
+  @Output() showNotification = new EventEmitter<boolean>();
 
   constructor(
     public contactService: ContactsService,
@@ -120,7 +121,6 @@ export class AddContactComponent {
 
     this.listUpdate.emit(update);
     update = false;
-    this.resetInput();
     this.closePopup();
   }
 
@@ -143,16 +143,9 @@ export class AddContactComponent {
     newContacts.push(contact);
 
     await this.sessionService.setContact(newContacts);
-    this.resetInput();
+    this.showNotification.emit(true);
     this.closePopup();
   }
 
-  /**
-   * Reset the form
-   */
-  resetInput() {
-    this.contact.name = '';
-    this.contact.email = '';
-    this.contact.phone = '';
-  }
+ 
 }

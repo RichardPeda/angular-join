@@ -87,23 +87,7 @@ export class SessiondataService {
   }
 
 ngOnInit(){
-  // this.docId = this.userService.loadIdFromSessionStorage();
-
-  // this.unsubUser = onSnapshot(
-  //   this.userService.getSingleDocRef('users', this.docId),
-  //   (doc) => {
-  //     let data = doc.data();
-  //     this.user = this.userService.getCurrentUserData(doc.id, data!);
-  //     console.log('dieser user', this.user);
-  //     this.userSubject.next(this.user);
-  //     if (this.user) {
-  //       this.initials.next(this.getInitials(this.user.name));
-  //       console.log(this.user.name);
-        
-  //       this.username.next(this.user.name);
-  //     }
-  //   }
-  // );
+ 
 }
 
   ngOnDestroy() {
@@ -118,7 +102,7 @@ ngOnInit(){
 
   async setContact(contact: Contact[]) {
     let docRef = this.userService.getSingleDocRef('users', this.docId);
-    console.log('contact is set');
+   
     await updateDoc(docRef, {
       contacts: contact,
     });
@@ -127,7 +111,7 @@ ngOnInit(){
 
   async setTask(task: Task[]) {
     let docRef = this.userService.getSingleDocRef('users', this.docId);
-    console.log('task is set');
+   
     await updateDoc(docRef, {
       tasks: task,
     });

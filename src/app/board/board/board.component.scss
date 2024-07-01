@@ -573,8 +573,7 @@
 @media (max-width: 1130px) {
     .board-column {
         min-height: unset;
-        width: calc(100vw - 350px);
-        overflow-x: auto;
+        width: calc(100vw - 20px);
         padding-bottom: 12px;
         padding-left: 5px;
     }
@@ -586,7 +585,8 @@
     .card-container {
         flex-direction: row;
         min-height: 100px;
-        padding-bottom: 0;
+      
+        padding: 5px;
         overflow-x: auto;
     }
 
@@ -657,10 +657,6 @@
     #board-content-container {
         margin-top: 48px;
         margin-left: 16px;
-    }
-
-    .board-column {
-        width: 100%;
     }
 }
 

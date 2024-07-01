@@ -20,7 +20,7 @@
                 </div>
                 @for (contact of localUser.contacts; track $index) {
                 @if (contact.register.includes(letter)) {
-                <app-singlecontact (click)="openDetailsMobile()" [isSelected]="(contact.name == selectedContact.name)"
+                <app-singlecontact (click)="openDetailsMobile()" [isSelected]="(contact.contactID == selectedContact.contactID)"
                     (selectedContact)="contactService.showContactDetails($event)"
                     [contact]="contact"></app-singlecontact>
                 }
@@ -46,9 +46,13 @@
 </div>
 
 <div class="overlay" [ngClass]="{'show-overlay': contactService.showSlider}">
-    <app-add-contact  [mobile]="mobileMode"
+    <app-add-contact  [mobile]="mobileMode" (showNotification)="showSnackbar()"
         [contact]="contactService.slideInMode == 'edit' ?  contactService.selectedContact : contactService.emptyContact"
         (listUpdate)="sessionDataService.getRegisterLetters;" (isClosed)="contactService.slideOutPopup($event)"
         [slideIn]="contactService.showSlider">
     </app-add-contact>
 </div>
+
+@if (showNotification) {
+    <app-popup-notification [label]="notificationText"></app-popup-notification>
+    }

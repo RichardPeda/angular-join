@@ -12,6 +12,7 @@ import { SessiondataService } from '../services/sessiondata.service';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '../interfaces/user.interface';
 import { of } from 'rxjs';
+import { PopupNotificationComponent } from '../shared/modules/popup-notification/popup-notification.component';
 
 @Component({
   selector: 'app-contacts',
@@ -23,6 +24,7 @@ import { of } from 'rxjs';
     HeaderComponent,
     NavbarComponent,
     AddContactComponent,
+    PopupNotificationComponent,
   ],
   templateUrl: './contacts.component.html',
   styleUrl: './contacts.component.scss',
@@ -53,6 +55,9 @@ export class ContactsComponent {
     ],
     tasks: [],
   };
+
+  showNotification = false;
+  notificationText = 'Contact succesfully created';
 
   selectedContact: Contact = {
     contactID: '3',
@@ -89,12 +94,13 @@ export class ContactsComponent {
       .subscribe((user: User) => {
         this.localUser = user;
 
-        if (this.localUser.contacts){
-          this.sessionDataService.user.contacts.sort(this.sessionDataService.compare);
+        if (this.localUser.contacts) {
+          this.sessionDataService.user.contacts.sort(
+            this.sessionDataService.compare
+          );
           this.sessionDataService.getRegisterLetters(this.localUser.contacts);
         }
-        
-       
+
         this.registerletters = this.sessionDataService.registerLetters;
       });
 
@@ -141,5 +147,12 @@ export class ContactsComponent {
    */
   closeDetailsMobile() {
     this.openDetailsMenu = false;
+  }
+
+  showSnackbar() {
+    this.showNotification = true;
+    setTimeout(() => {
+      this.showNotification = false;
+    }, 2500);
   }
 }

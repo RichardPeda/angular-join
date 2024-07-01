@@ -32,6 +32,7 @@ import {
   ],
 })
 export class PopupNotificationComponent {
+  @Input() svgContent : 'none' | 'board' = 'none';
   @Input() label: string = '';
 
   animate = false;

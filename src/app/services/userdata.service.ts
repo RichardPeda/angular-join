@@ -40,26 +40,12 @@ export class UserdataService {
   unsubUsers;
 
   constructor(private route: ActivatedRoute) {
-   
-
     this.unsubUsers = onSnapshot(this.getUserRef(), (userList) => {
       userList.forEach((user) => {
         let data = user.data();
         this.allUsers.push(this.getCurrentUserData(user.id, data));
-
-        // } else {
-        //   this.allUsers.forEach((savedUser) => {
-        //     if (!savedUser.id?.includes(user.id)) {
-        //       this.allUsers.push(this.getCurrentUserData(user.id, data));
-        //     }
-        //   });
-        // }
       });
     });
-
-    //   this.unsubGuest = onSnapshot(this.getSingleDocRef('users',this.loadIdFromSessionStorage()!), (doc) => {
-    //     console.log("Current data: ", doc.data());
-    // });
   }
 
   getCurrentUserName(name: string, user: any) {
@@ -189,7 +175,6 @@ export class UserdataService {
         },
       ],
     });
-   
   }
 
   loginAsGuest() {
@@ -197,9 +182,7 @@ export class UserdataService {
       if (user.name == 'guest') {
         this.currentUser = user;
         this.saveIdInSessionStorage(user.id!);
-        this.route.params.subscribe((params) => {
-         
-        });
+        this.route.params.subscribe((params) => {});
       }
     });
   }
@@ -250,15 +233,12 @@ export class UserdataService {
   async checkIfUserDontExists(name: string, email: string): Promise<boolean> {
     const q = query(
       collection(this.firestore, 'users'),
-      // where('name', '==', name),
+
       where('email', '==', email)
     );
 
     let snapshot = await getDocs(q);
-    // snapshot.forEach((doc) => {
-    //   console.log(doc.id, ' => ', doc.data());
-    // });
+
     return snapshot.size > 0 ? false : true;
-    // console.log(snapshot.size);
   }
 }

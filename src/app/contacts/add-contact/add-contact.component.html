@@ -29,7 +29,7 @@
         }
 
 
-        <form id="addContact-form" class="input-form-container" (ngSubmit)="formSubmitted()" #contactform="ngForm">
+        <form id="addContact-form" class="input-form-container" (ngSubmit)="formSubmitted(); contactform.reset()" #contactform="ngForm">
             <div class="inputfields">
                 <label id="input-name-label">
                     <input #name="ngModel" name="name" [(ngModel)]="contact.name" class="contact-inputField" type="text"
@@ -63,9 +63,9 @@
             </div>
             <div id="buttons-container" class="cancel-create-buttons-container">
                 @if (contactService.slideInMode == 'add') {
-                <button (click)="closePopup()" [ngClass]="{'d-none': mobile}" class="btn-white btn-pos"
+                <button (click)="closePopup(); contactform.reset()" [ngClass]="{'d-none': mobile}" class="btn-white btn-pos"
                     type="reset">Cancel <img src="../../../assets/img/cancel.svg" alt=""></button>
-                <button id="createContactBtn" type="submit" class="btn-grey img-white btn-pos">
+                <button id="createContactBtn" type="submit"  class="btn-grey img-white btn-pos">
                     Create contact<img src="../../../assets/img/checked.svg"></button>
                 }@else {
                 <button class="btn-white btn-pos" type="reset">Delete</button>

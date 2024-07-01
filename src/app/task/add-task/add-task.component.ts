@@ -31,6 +31,7 @@ import { TaskAddedSnackbarComponent } from '../../snackbars/task-added-snackbar/
 import { UserdataService } from '../../services/userdata.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { PopupNotificationComponent } from '../../shared/modules/popup-notification/popup-notification.component';
 
 @Component({
   selector: 'app-add-task',
@@ -47,6 +48,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
     HeaderComponent,
     NavbarComponent,
     TaskAddedSnackbarComponent,
+    PopupNotificationComponent,
   ],
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss',
@@ -71,6 +73,8 @@ export class AddTaskComponent {
   filteredContacts: Contact[];
   selectedContacts: Contact[] = [];
   subTasks: Subtask[] = [];
+  notificationText = 'Task added to board';
+  showNotification = false;
 
   dropdownContactsClose = true;
   dropdownCategoryClose = true;
@@ -141,7 +145,7 @@ export class AddTaskComponent {
   /**
    * Create a new task if the form is valid. Including selected contacts, validated priority and category.
    * The task is created with random taskID and with status of 'todo' and is applied to the database.
-   * After creation the form will be resetted and a snackbar is shown. 
+   * After creation the form will be resetted and a snackbar is shown.
    */
   createTask() {
     if (this.taskForm.valid) {
@@ -170,8 +174,12 @@ export class AddTaskComponent {
         this.resetForm();
         this.openSnackbar();
         setTimeout(() => {
+          if (this.dialogRef) {
+            this.closeDialog();
+          }
+
           this.linkToBoard();
-        }, 1500);
+        }, 3000);
       }
     }
   }
@@ -246,7 +254,7 @@ export class AddTaskComponent {
 
   /**
    * Open the dropdown field of contacts if the contact input field is not empty.
-   * @param event 
+   * @param event
    */
   openDropdownContacts(event: Event) {
     if (this.taskForm.get('contactField')?.value == '')
@@ -261,7 +269,7 @@ export class AddTaskComponent {
     this.dropdownCategoryClose = !this.dropdownCategoryClose;
   }
 
-   /**
+  /**
    * close the dropdown field of category.
    */
   closeDropdownCategory() {
@@ -354,10 +362,10 @@ export class AddTaskComponent {
    * Show snackbar when a task is created
    */
   openSnackbar() {
-    this.hidePopup = false;
+    this.showNotification = true;
     setTimeout(() => {
-      this.hidePopup = true;
-    }, 1500);
+      this.showNotification = false;
+    }, 2500);
   }
 
   /**
@@ -367,9 +375,9 @@ export class AddTaskComponent {
     this.router.navigate(['board/' + this.docId]);
   }
 
- /**
-  * If the compontent is opened as dialog, close the dialog with this function.
-  */
+  /**
+   * If the compontent is opened as dialog, close the dialog with this function.
+   */
   closeDialog() {
     this.dialogRef.close();
   }

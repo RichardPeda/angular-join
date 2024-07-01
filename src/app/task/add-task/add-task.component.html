@@ -170,5 +170,7 @@
     </form>
 
 </div>
-
-<app-task-added-snackbar [ngClass]="{'d-none': hidePopup}"></app-task-added-snackbar>
+@if (showNotification) {
+    <app-popup-notification [svgContent]="'board'" [label]="notificationText"></app-popup-notification>
+    }
+<!-- <app-task-added-snackbar [ngClass]="{'d-none': hidePopup}"></app-task-added-snackbar> -->
