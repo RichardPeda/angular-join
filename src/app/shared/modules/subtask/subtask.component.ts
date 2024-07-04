@@ -2,6 +2,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  HostListener,
   Input,
   Output,
   ViewChild,
@@ -36,11 +37,15 @@ export class SubtaskComponent {
   @ViewChild('inputRef')
   inputRef!: ElementRef;
 
+  @ViewChild('allComp')
+  allComp!: ElementRef;
+
   ngOnInit() {
     this.inputData = this.title;
   }
 
   timeout = false;
+  timeoutDisable = false;
 
   enableSubtask() {
     this.inEditMode = true;
@@ -53,6 +58,23 @@ export class SubtaskComponent {
   disableSubtask() {
     if (!this.timeout) {
       this.inEditMode = false;
+      if (this.inputData == '') {
+        this.deleteSubtask();
+      }
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClick(event: MouseEvent) {
+    let div = this.allComp.nativeElement.getBoundingClientRect();
+
+    if (
+      event.clientX < div.left ||
+      event.clientX > div.right ||
+      event.clientY < div.top ||
+      event.clientY > div.bottom
+    ) {
+      this.disableSubtask();
     }
   }
 
@@ -62,8 +84,14 @@ export class SubtaskComponent {
   }
 
   changeTitle() {
-    if (this.inputData) this.updatedTitle.emit(this.inputData);
-    this.disableSubtask();
+    if (this.inputData && this.inputData != '') {
+      this.updatedTitle.emit(this.inputData);
+      this.disableSubtask();
+    } else {
+      console.log('delete');
+
+      this.deleteSubtask();
+    }
   }
 
   deleteSubtask() {

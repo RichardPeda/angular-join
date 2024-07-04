@@ -1,7 +1,5 @@
-<div appClickOutside (clickOutside)="disableSubtask()" (dblclick)="enableSubtask()"
-    class="addTask-subtask-element dot-before" id="addTask-subtask-element_${index}">
-    <input [readOnly]="!inEditMode" #inputRef [(ngModel)]="inputData" id="addTask-subtask-listElement-input_${index}"
-        class="addTask-subtask-listElement" type="text">
+<div #allComp (dblclick)="enableSubtask()" class="addTask-subtask-element dot-before" id="addTask-subtask-element_${index}">
+    <input [readOnly]="!inEditMode" #inputRef [(ngModel)]="inputData" class="addTask-subtask-listElement" type="text">
 
     @if (!inEditMode) {
     <div (click)="editSubtask()" class="subtask-icon subtask-edit" id="subtask-edit_${index}">
@@ -21,11 +19,14 @@
         </svg>
     </div>
     @if (inEditMode) {
-    <div (click)="changeTitle()" class="subtask-icon subtask-accept" id="subtask-accept_${index}">
+    <div (click)="changeTitle()" class="subtask-icon subtask-accept">
         <svg width="38" height="30" viewBox="0 0 38 30" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M4.02832 15.0001L15.2571 26.0662L33.9717 3.93408" stroke="#2A3647" stroke-width="7"
                 stroke-linecap="round" stroke-linejoin="round" />
         </svg>
-    </div>}
+    </div>
+    }
+
+
 
 </div>

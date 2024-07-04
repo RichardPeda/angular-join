@@ -11,6 +11,8 @@ import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { HelpPageComponent } from './help-page/help-page.component';
 import { AddTaskPageComponent } from './task/add-task-page/add-task-page.component';
+import { PrivacyPolicyBlankComponent } from './privacy-policy-blank/privacy-policy-blank.component';
+import { LegalNoticeBlankComponent } from './legal-notice-blank/legal-notice-blank.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent, data: { animation: 'openClosePage' } },
@@ -20,6 +22,8 @@ export const routes: Routes = [
     { path: 'addtask/:id', data:{title : 'Add task'}, component: AddTaskPageComponent },
     { path: 'board/:id', data:{title : 'Board'}, component: BoardComponent },
     { path: 'legal-notice', data:{title : 'Legal Notice'}, component: LegalNoticeComponent },
+    { path: 'legal-notice-blank', data:{title : 'Legal Notice'}, component: LegalNoticeBlankComponent },
     { path: 'privacy-policy', data:{title : 'Privacy Policy'}, component: PrivacyPolicyComponent },
+    { path: 'privacy-policy-blank', data:{title : 'Privacy Policy'}, component: PrivacyPolicyBlankComponent },
     { path: 'help', data:{title : 'Help'}, component: HelpPageComponent },
 ];

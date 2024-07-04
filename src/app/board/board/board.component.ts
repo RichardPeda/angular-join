@@ -321,17 +321,13 @@ export class BoardComponent {
       this.localUser.tasks.forEach((task) => {
         if (
           task.title.toLowerCase().includes(this.searchInput.toLowerCase()) ||
-          task.description.toLowerCase().includes(this.searchInput.toLowerCase())
+          task.description
+            .toLowerCase()
+            .includes(this.searchInput.toLowerCase())
         ) {
           this.filteredTasks.push(task.taskID);
         }
       });
     } else this.filterActive = false;
   }
-
-
-
-
 }
-
-

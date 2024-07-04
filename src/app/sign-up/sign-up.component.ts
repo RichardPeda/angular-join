@@ -147,4 +147,8 @@ export class SignUpComponent {
 
     return name_1 + name_2;
   }
+
+  linkToPrivacyPolicy(){
+    this.router.navigate(['privacy-policy-blank'])
+  }
 }

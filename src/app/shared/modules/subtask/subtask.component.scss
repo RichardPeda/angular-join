@@ -18,6 +18,7 @@
     position: relative;
     // padding-left: 32px;
     cursor: pointer;
+   
 }
 
 .addTask-subtask-element:hover:not(.subtask-element-selected) {
@@ -33,6 +34,7 @@
 .addTask-subtask-listElement {
     flex: 1;
     border: none;
+    width: 80%;
     background-color: transparent;
     font-size: 16px;
     position: relative;
@@ -62,9 +64,9 @@
     border-radius: unset;
 }
 
-.dot-before:has(> input:read-write):hover {
-    pointer-events: none !important;
-}
+// .dot-before:has(> input:read-write):hover {
+//     pointer-events: none !important;
+// }
 
 input:read-write {
     background-color: white;
@@ -90,6 +92,7 @@ input:read-write {
 .subtask-delete,
 .subtask-accept {
     margin-left: 8px;
+    z-index: 50;
 }
 
 .d-none {

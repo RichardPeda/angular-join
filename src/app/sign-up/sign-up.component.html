@@ -75,7 +75,7 @@
             </div>
 
             <mat-checkbox [ngModelOptions]="{standalone: true}" class="input-checkbox" [(ngModel)]="checkbox"
-                [color]="'primary'">I accept the <a href="#" onclick="newTab('1')"> Privacy policy</a></mat-checkbox>
+                [color]="'primary'">I accept the <a (click)="linkToPrivacyPolicy()"> Privacy policy</a></mat-checkbox>
 
 
             <div class="signUp-error-pw confirmBox zero-opacity" id="errorMessageBox">

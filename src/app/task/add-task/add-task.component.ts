@@ -75,6 +75,7 @@ export class AddTaskComponent {
   subTasks: Subtask[] = [];
   notificationText = 'Task added to board';
   showNotification = false;
+  currentDate = '';
 
   dropdownContactsClose = true;
   dropdownCategoryClose = true;
@@ -114,10 +115,16 @@ export class AddTaskComponent {
     );
     this.status = this.sessionDataService.reqTaskStatus;
     this.taskForm.controls['subtask'].disable();
+    this.getCurrentDate();
   }
 
   ngOnDestroy() {
     this._subscriptionUser.unsubscribe();
+  }
+
+  getCurrentDate() {
+    let date = new Date();
+    this.currentDate = date.toLocaleDateString('en-CA');
   }
 
   /**
@@ -317,14 +324,14 @@ export class AddTaskComponent {
    * Creates a subtask when the field is valid. Set it to undone and push it to a temporary array.
    */
   createSubtask() {
-    if (this.taskForm.controls['subtask'].valid) {
+    if (this.taskForm.controls['subtask'].value) {
       let subtask: Subtask = {
-        title: this.taskForm.controls['subtask'].value!,
+        title: this.taskForm.controls['subtask'].value,
         done: false,
       };
       this.subTasks.push(subtask);
-      this.disableSubtaskInput();
     }
+    this.disableSubtaskInput();
   }
 
   @ViewChild('participantRef')
@@ -354,8 +361,11 @@ export class AddTaskComponent {
    * @param index number of subtask indes in temporary array
    */
   changeSubtaskTitle(title: string, index: number) {
-    if (title === '') this.subTasks.splice(index, 1);
-    else this.subTasks[index].title = title;
+    if (title) {
+      this.subTasks[index].title = title;
+    } else {
+      this.subTasks.splice(index, 1);
+    }
   }
 
   /**

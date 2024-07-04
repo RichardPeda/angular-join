@@ -216,10 +216,15 @@
     padding: 15px 24px;
     border-radius: 8px;
     background-color: $clr-dark-gray;
+    opacity: 0.3;
     color: #ffffff;
     font-size: 21px;
     border: none;
     font-weight: 700;
+}
+
+.form-validate{
+    opacity: 1;
 }
 
 .form-validate:hover {
