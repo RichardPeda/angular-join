@@ -104,6 +104,7 @@ body {
 
 .btn-add-contact::after {
     content: url('../../assets/img/person_add.svg');
+    transform: translateY(2px);
 }
 
 #register-container {

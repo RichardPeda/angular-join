@@ -8,8 +8,8 @@
 .popup-card-container {
     min-width: min(400px, 100%);
     width: min-content;
-    height: fit-content;
-    max-height: 100%;
+    max-height: 100vh;
+    // max-height: 100%;
     background-color: white;
     border-radius: 30px;
     padding: 48px 40px;
@@ -19,6 +19,7 @@
     flex-grow: 0;
     overflow-x: auto;
     z-index: 100;
+    overflow-y: auto;
 }
 
 

@@ -70,7 +70,7 @@
                 <button id="createContactBtn" type="submit" class="btn-grey img-white btn-pos">
                     Create contact<img src="../../../assets/img/checked.svg"></button>
                 }@else {
-                <button class="btn-white btn-pos" type="reset">Delete</button>
+                <button class="btn-white btn-pos" (click)="sessionService.deleteContact(preparedcontact); sessionService.showOtherContact()">Delete</button>
                 <button id="createContactBtn" type="submit" class="btn-grey img-white btn-pos">
                     Save<img src="../../../assets/img/checked.svg"></button>
                 }

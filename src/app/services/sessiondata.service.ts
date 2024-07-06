@@ -21,7 +21,6 @@ import { ContactsService } from './contacts.service';
   providedIn: 'root',
 })
 export class SessiondataService {
- 
   docId = '';
   unsubGuest: any;
   firestore: Firestore = inject(Firestore);
@@ -35,7 +34,8 @@ export class SessiondataService {
     tasks: [],
   };
   userSubject: BehaviorSubject<any> = new BehaviorSubject({});
-  public _selectedContact : BehaviorSubject<any> = new BehaviorSubject({});
+  public _selectedContact: BehaviorSubject<any> = new BehaviorSubject({});
+  public _contactDeleted: BehaviorSubject<any> = new BehaviorSubject(false);
   contacts = [];
   tasks = [];
   profileBadgeColors = [
@@ -55,16 +55,15 @@ export class SessiondataService {
     '#FF4646',
     '#FFBB2B',
   ];
- 
+
   fadeout: 'show' | 'hide' = 'show';
   reqTaskStatus: 'toDo' | 'inProgress' | 'awaitFeedback' | 'done' = 'toDo';
   public initials = new Subject<string>();
   public username = new Subject<string>();
 
-  unsubUser:any;
+  unsubUser: any;
 
   constructor(private userService: UserdataService) {
-   
     this.docId = this.userService.loadIdFromSessionStorage();
 
     this.unsubUser = onSnapshot(
@@ -72,20 +71,16 @@ export class SessiondataService {
       (doc) => {
         let data = doc.data();
         this.user = this.userService.getCurrentUserData(doc.id, data!);
-       
+
         this.userSubject.next(this.user);
         if (this.user) {
           this.initials.next(this.getInitials(this.user.name));
           this.username.next(this.user.name);
 
-          if(this.selectedContact.name === ''){
-            this.getFirstContact(this.user.contacts)
-            this._selectedContact.next(this.selectedContact)
+          if (this.selectedContact && this.selectedContact.name === '') {
+            this.getFirstContact(this.user.contacts);
+            this._selectedContact.next(this.selectedContact);
           }
-
-         
-          
-          
         }
       }
     );
@@ -95,9 +90,7 @@ export class SessiondataService {
     return this.userSubject.asObservable();
   }
 
-ngOnInit(){
- 
-}
+  ngOnInit() {}
 
   ngOnDestroy() {
     this.unsubUser();
@@ -111,7 +104,7 @@ ngOnInit(){
 
   async setContact(contact: Contact[]) {
     let docRef = this.userService.getSingleDocRef('users', this.docId);
-   
+
     await updateDoc(docRef, {
       contacts: contact,
     });
@@ -119,7 +112,7 @@ ngOnInit(){
 
   async setTask(task: Task[]) {
     let docRef = this.userService.getSingleDocRef('users', this.docId);
-   
+
     await updateDoc(docRef, {
       tasks: task,
     });
@@ -136,6 +129,9 @@ ngOnInit(){
     });
     if (update) this.setContact(newContacts);
     update = false;
+    this.showOtherContact();
+    this._contactDeleted.next(true);
+    this._contactDeleted.next(false);
   }
 
   getInitials(name: string) {
@@ -159,7 +155,6 @@ ngOnInit(){
     ];
   }
 
- 
   compare(a: Contact, b: Contact) {
     if (a.register < b.register) {
       return -1;
@@ -181,24 +176,34 @@ ngOnInit(){
     selected: false,
   };
 
+  emptyContact: Contact = {
+    contactID: '',
+    badgecolor: '',
+    name: '',
+    email: '',
+    phone: '',
+    initials: '',
+    register: '',
+    selected: false,
+  };
 
-  getFirstContact(contacts : Contact[]) {
-   
-    
-    let contactArray = contacts
+  getFirstContact(contacts: Contact[]) {
+    let contactArray = contacts;
     contactArray.sort(this.compare);
-    this.selectedContact = contactArray[3];
-    console.log('getFirstContact', this.selectedContact);
+    this.selectedContact = contactArray[0];
   }
 
- 
-  showContactDetails(currentContact: Contact) { 
-    console.log('showcontact', currentContact);
-    
+  showOtherContact() {
+    let contactArray = this.user.contacts;
+    contactArray.sort(this.compare);
+    if (contactArray.length > 0) {
+      this.selectedContact = contactArray[0];
+      this.showContactDetails(this.selectedContact);
+    }else this.showContactDetails(this.emptyContact)
+  }
+
+  showContactDetails(currentContact: Contact) {
     this.selectedContact = currentContact;
     this._selectedContact.next(this.selectedContact);
-    console.log(this._selectedContact);
-    
   }
-
 }

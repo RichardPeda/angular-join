@@ -36,11 +36,11 @@ export class ContactDetailsComponent {
     public sessionService: SessiondataService,
     private ref: ChangeDetectorRef
   ) {
-    // console.log('neuer kontakt details selected', this.detailcontact);
+   
     this._subscriptionContact = this.sessionService._selectedContact.subscribe(
       (contact: Contact) => {
         if (contact) this.detailcontact = contact;
-        // this.ref.detectChanges();
+      
       }
     );
   }

@@ -38,7 +38,7 @@
                     <img src="../../assets/img/arrow-back-lightblue.svg" alt="">
                 </div>
             </div>
-            {{selectedContact.name}}
+         
             <app-contact-details [mobile]="mobileMode" ></app-contact-details>
         
         </div>
@@ -46,7 +46,7 @@
 </div>
 
 <div class="overlay" [ngClass]="{'show-overlay': contactService.showSlider}">
-    <app-add-contact  [mobile]="mobileMode" (showNotification)="showSnackbar()"
+    <app-add-contact  [mobile]="mobileMode" (showNotification)="showSnackbar($event)"
         [contact]="contactService.slideInMode == 'edit' ?  contactService.selectedContact : contactService.emptyContact"
         (isClosed)="contactService.slideOutPopup($event)"
         [slideIn]="contactService.showSlider">

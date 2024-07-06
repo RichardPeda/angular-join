@@ -37,8 +37,8 @@ import { PopupNotificationComponent } from '../shared/modules/popup-notification
 })
 export class ContactsComponent {
   _subscriptionUser: any;
-  _subscriptionLetters: any;
   _subscriptionContact: any;
+  _subscriptionDeleted: any;
   $usercontact: any;
   registerLetters: string[] = [];
   localUser: User = {
@@ -88,7 +88,6 @@ export class ContactsComponent {
     public activatedroute: ActivatedRoute,
     private ref: ChangeDetectorRef
   ) {
-
     this.sessionDataService.user.contacts.sort(this.sessionDataService.compare);
   }
 
@@ -107,24 +106,23 @@ export class ContactsComponent {
           );
           this.getRegisterLetters(this.localUser.contacts);
         }
-
-  
       });
 
-    
-    this._subscriptionContact = this.sessionDataService._selectedContact.subscribe(
-      (contact: Contact) => {
+    this._subscriptionContact =
+      this.sessionDataService._selectedContact.subscribe((contact: Contact) => {
         if (contact) this.selectedContact = contact;
-       
-        // this.ref.detectChanges();
-      }
-    );
+      });
+      this._subscriptionDeleted =
+      this.sessionDataService._contactDeleted.subscribe((isDeleted: boolean) => {
+        if (isDeleted) this.showSnackbar('Contact successfully deleted')
+      });
+
   }
 
   ngOnDestroy() {
     this._subscriptionUser.unsubscribe();
-    this._subscriptionLetters.unsubscribe();
     this._subscriptionContact.unsubscribe();
+    this._subscriptionDeleted.unsubscribe();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -153,8 +151,10 @@ export class ContactsComponent {
     this.openDetailsMenu = false;
   }
 
-  showSnackbar() {
+  showSnackbar(eventText: string) {
     this.showNotification = true;
+    this.notificationText = eventText;
+
     setTimeout(() => {
       this.showNotification = false;
     }, 2500);
@@ -168,7 +168,5 @@ export class ContactsComponent {
       }
     });
     this.registerLetters.sort();
-    console.log(this.registerLetters);
-    
   }
 }

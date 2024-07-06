@@ -71,7 +71,7 @@ export class AddContactComponent {
   @Input() mobile: boolean = false;
   @Output() isClosed = new EventEmitter<boolean>();
   @Output() listUpdate = new EventEmitter<boolean>();
-  @Output() showNotification = new EventEmitter<boolean>();
+  @Output() showNotification = new EventEmitter<string>();
 
   constructor(
     public contactService: ContactsService,
@@ -83,7 +83,7 @@ export class AddContactComponent {
     if (changes['slideIn'] && changes['slideIn'].currentValue == true) {
       this.createTimeout();
       if (this.contactService.slideInMode == 'edit') {
-        this.preparedcontact = {...this.contact}
+        this.preparedcontact = { ...this.contact };
       }
     }
   }
@@ -121,34 +121,29 @@ export class AddContactComponent {
    * Edit the selected contact (contactID found). Emit to update, reset the form and close popup.
    */
   editContact() {
-    let update = false;
-    let saveContact;
     let newContacts: Contact[] = this.sessionService.user.contacts;
-    newContacts.forEach((contact) => {
-      if (contact.contactID === this.preparedcontact.contactID) {
-        contact.name = this.preparedcontact.name;
-        contact.email = this.preparedcontact.email;
-        contact.phone = this.preparedcontact.phone;
-        contact.initials = this.sessionService.getInitials(this.preparedcontact.name);
-        (contact.register = this.sessionService
-          .getInitials(this.preparedcontact.name)
-          .charAt(0)),
-          (update = true);
 
-        console.log(this.preparedcontact);
+    newContacts.forEach((contact, index) => {
+      if (contact.contactID === this.preparedcontact.contactID) {
+        let updatecontact: Contact = {
+          contactID: contact.contactID,
+          name: this.preparedcontact.name,
+          email: this.preparedcontact.email,
+          badgecolor: contact.badgecolor,
+          phone: this.preparedcontact.phone,
+          initials: this.sessionService.getInitials(this.preparedcontact.name),
+          register: this.sessionService
+            .getInitials(this.preparedcontact.name)
+            .charAt(0),
+          selected: false,
+        };
+
+        newContacts.splice(index, 1, updatecontact);
+        this.sessionService.setContact(newContacts);
+        this.sessionService.showContactDetails(updatecontact);
       }
     });
-    if (update) {
-      this.sessionService.setContact(newContacts);
-      //  this.contactService.selectContact(this.contact.contactID)
-      // this.contactService.getFirstContact()
-      console.log('add-contact', saveContact);
 
-      this.sessionService.showContactDetails(this.contact);
-    }
-
-    this.listUpdate.emit(update);
-    update = false;
     this.closePopup();
   }
 
@@ -163,7 +158,9 @@ export class AddContactComponent {
       badgecolor: this.sessionService.getRandomBadgeColor(),
       phone: this.preparedcontact.phone,
       initials: this.sessionService.getInitials(this.preparedcontact.name),
-      register: this.sessionService.getInitials(this.preparedcontact.name).charAt(0),
+      register: this.sessionService
+        .getInitials(this.preparedcontact.name)
+        .charAt(0),
       selected: false,
     };
 
@@ -171,7 +168,8 @@ export class AddContactComponent {
     newContacts.push(contact);
 
     await this.sessionService.setContact(newContacts);
-    this.showNotification.emit(true);
+    this.sessionService.showContactDetails(contact)
+    this.showNotification.emit('Contact succesfully created');
     this.closePopup();
   }
 }

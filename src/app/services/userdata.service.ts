@@ -40,7 +40,6 @@ export class UserdataService {
   unsubUsers;
 
   constructor(private route: ActivatedRoute) {
-    console.log('userservice');
     this.unsubUsers = onSnapshot(this.getUserRef(), (userList) => {
       userList.forEach((user) => {
         let data = user.data();
@@ -219,8 +218,6 @@ export class UserdataService {
 
   ngOnDestroy() {
     this.unsubUsers();
-    // this.unsubGuest();
-    // this.users.unsubscribe();
   }
 
   getUserRef() {

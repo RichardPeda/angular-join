@@ -1,4 +1,4 @@
-import { Component, Renderer2 } from '@angular/core';
+import { Component, HostListener, Renderer2 } from '@angular/core';
 import { HeaderComponent } from '../../shared/modules/header/header.component';
 import { NavbarComponent } from '../../shared/modules/navbar/navbar.component';
 import { BoardCardComponent } from '../board-card/board-card.component';
@@ -52,6 +52,7 @@ export class BoardComponent {
   _subscriptionEditDialog: any;
   _subscriptionAddDialog: any;
   editmode = false;
+  mobileMode = false;
   localUser: User = {
     id: '',
     name: '',
@@ -93,6 +94,7 @@ export class BoardComponent {
 
   async ngOnInit() {
     this._renderer.setStyle(document.body, 'overflow-x', 'hidden');
+    this.checkMobile();
     this._subscriptionUser = this.sessionDataService.userSubject.subscribe(
       (user: User) => {
         this.localUser = user;
@@ -329,5 +331,18 @@ export class BoardComponent {
         }
       });
     } else this.filterActive = false;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onWindowResize() {
+    this.checkMobile();
+  }
+
+  /**
+   * Check if the page is in mobile mode. Close details if not.
+   */
+  checkMobile() {
+    let width = window.innerWidth;
+    this.mobileMode = width <= 950 ? true : false;
   }
 }

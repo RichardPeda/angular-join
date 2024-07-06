@@ -59,7 +59,7 @@
                     @for (task of localUser.tasks; track task; let index = $index) {
 
                     @if (task.status === 'toDo') {<app-board-card class="card-box" (setTask)="updateTaskStatus()"
-                        (cdkDragStarted)="drag($event,task)" draggable="true" appClickTarget
+                        (cdkDragStarted)="drag($event,task)" [cdkDragDisabled]="mobileMode" appClickTarget
                         (click)="openDetailDialog($event,index)" [task]="task" cdkDrag
                         [ngClass]="{'low-opacity': filterActive && !filteredTasks.includes(task.taskID)}"></app-board-card>}
 
@@ -93,7 +93,7 @@
 
                     @if (task.status === 'inProgress') {<app-board-card class="card-box" (setTask)="updateTaskStatus()"
                         (click)="openDetailDialog($event,index)" [task]="task" (cdkDragStarted)="drag($event,task)"
-                        draggable="true" cdkDrag
+                        [cdkDragDisabled]="mobileMode" cdkDrag
                         [ngClass]="{'low-opacity': filterActive && !filteredTasks.includes(task.taskID)}"></app-board-card>}
 
                     }
@@ -123,7 +123,7 @@
                     @for (task of localUser.tasks; track task; let index = $index) {
                     @if (task.status === 'awaitFeedback') {<app-board-card class="card-box" (setTask)="updateTaskStatus()"
                         (click)="openDetailDialog($event, index)" [task]="task" (cdkDragStarted)="drag($event,task)"
-                        draggable="true" cdkDrag
+                        [cdkDragDisabled]="mobileMode" cdkDrag
                         [ngClass]="{'low-opacity': filterActive && !filteredTasks.includes(task.taskID)}"></app-board-card>}
                     }
                     <div [ngClass]="{'d-none': amountTasksAwaitFeedback > 0|| hideLabel[2]}"
@@ -145,7 +145,7 @@
                     @for (task of localUser.tasks; track task; let index = $index) {
                     @if (task.status === 'done') {<app-board-card class="card-box" (setTask)="updateTaskStatus()"
                         (click)="openDetailDialog($event,index)" [task]="task" (cdkDragStarted)="drag($event,task)"
-                        draggable="true" cdkDrag
+                        [cdkDragDisabled]="mobileMode" cdkDrag
                         [ngClass]="{'low-opacity': filterActive && !filteredTasks.includes(task.taskID)}"></app-board-card>}
                     }
                     <div [ngClass]="{'d-none': amountTasksDone > 0|| hideLabel[3]}" class="board-column-noTask">No Tasks
