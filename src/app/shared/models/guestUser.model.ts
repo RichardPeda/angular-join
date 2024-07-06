@@ -43,7 +43,7 @@ export class Guest implements User {
           initials: 'AF',
           register: 'A',
           name: 'Arne Fröhlich',
-          email: 'fröhlich@24-7.com',
+          email: 'froehlich@24-7.com',
           phone: '+49 815 79183212',
           selected: false,
         },

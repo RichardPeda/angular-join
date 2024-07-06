@@ -15,7 +15,7 @@ import {
   transition,
 } from '@angular/animations';
 import { ContactsService } from '../../services/contacts.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { SessiondataService } from '../../services/sessiondata.service';
 import { ClickOutsideDirective } from '../../shared/click-outside.directive';
 
@@ -54,6 +54,17 @@ export class AddContactComponent {
     register: '',
     selected: false,
   };
+
+  preparedcontact: Contact = {
+    contactID: '',
+    badgecolor: '',
+    name: '',
+    email: '',
+    phone: '',
+    initials: '',
+    register: '',
+    selected: false,
+  };
   rightBtnText = '';
 
   @Input() slideIn: boolean = false;
@@ -71,6 +82,9 @@ export class AddContactComponent {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['slideIn'] && changes['slideIn'].currentValue == true) {
       this.createTimeout();
+      if (this.contactService.slideInMode == 'edit') {
+        this.preparedcontact = {...this.contact}
+      }
     }
   }
 
@@ -94,9 +108,13 @@ export class AddContactComponent {
   /**
    * Submit the form with two different modes. Add contact and edit contact.
    */
-  formSubmitted() {
-    if (this.contactService.slideInMode === 'add') this.addNewContact();
-    else this.editContact();
+  formSubmitted(ngForm: NgForm) {
+    if (ngForm.valid && ngForm.submitted) {
+      if (this.contactService.slideInMode === 'add') this.addNewContact();
+      else this.editContact();
+
+      ngForm.resetForm();
+    }
   }
 
   /**
@@ -104,20 +122,30 @@ export class AddContactComponent {
    */
   editContact() {
     let update = false;
+    let saveContact;
     let newContacts: Contact[] = this.sessionService.user.contacts;
     newContacts.forEach((contact) => {
-      if (contact.contactID === this.contact.contactID) {
-        contact.name = this.contact.name;
-        contact.email = this.contact.email;
-        contact.phone = this.contact.phone;
-        contact.initials = this.sessionService.getInitials(this.contact.name);
+      if (contact.contactID === this.preparedcontact.contactID) {
+        contact.name = this.preparedcontact.name;
+        contact.email = this.preparedcontact.email;
+        contact.phone = this.preparedcontact.phone;
+        contact.initials = this.sessionService.getInitials(this.preparedcontact.name);
         (contact.register = this.sessionService
-          .getInitials(this.contact.name)
+          .getInitials(this.preparedcontact.name)
           .charAt(0)),
           (update = true);
+
+        console.log(this.preparedcontact);
       }
     });
-    if (update) this.sessionService.setContact(newContacts);
+    if (update) {
+      this.sessionService.setContact(newContacts);
+      //  this.contactService.selectContact(this.contact.contactID)
+      // this.contactService.getFirstContact()
+      console.log('add-contact', saveContact);
+
+      this.sessionService.showContactDetails(this.contact);
+    }
 
     this.listUpdate.emit(update);
     update = false;
@@ -130,12 +158,12 @@ export class AddContactComponent {
   async addNewContact() {
     let contact: Contact = {
       contactID: Math.floor(100000 + Math.random() * 900000).toString(),
-      name: this.contact.name,
-      email: this.contact.email,
+      name: this.preparedcontact.name,
+      email: this.preparedcontact.email,
       badgecolor: this.sessionService.getRandomBadgeColor(),
-      phone: this.contact.phone,
-      initials: this.sessionService.getInitials(this.contact.name),
-      register: this.sessionService.getInitials(this.contact.name).charAt(0),
+      phone: this.preparedcontact.phone,
+      initials: this.sessionService.getInitials(this.preparedcontact.name),
+      register: this.sessionService.getInitials(this.preparedcontact.name).charAt(0),
       selected: false,
     };
 
@@ -146,6 +174,4 @@ export class AddContactComponent {
     this.showNotification.emit(true);
     this.closePopup();
   }
-
- 
 }

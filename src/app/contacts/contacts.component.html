@@ -14,14 +14,14 @@
 
 
             <div id="register-container">
-                @for (letter of registerletters; track $index) {
+                @for (letter of registerLetters; track $index) {
                 <div class="d-column-flex-start full-width">
                     <div class="registerbox">{{letter}}</div>
                 </div>
                 @for (contact of localUser.contacts; track $index) {
                 @if (contact.register.includes(letter)) {
                 <app-singlecontact (click)="openDetailsMobile()" [isSelected]="(contact.contactID == selectedContact.contactID)"
-                    (selectedContact)="contactService.showContactDetails($event)"
+                    (selectedContact)="sessionDataService.showContactDetails($event)"
                     [contact]="contact"></app-singlecontact>
                 }
                 }
@@ -38,8 +38,8 @@
                     <img src="../../assets/img/arrow-back-lightblue.svg" alt="">
                 </div>
             </div>
-
-            <app-contact-details [mobile]="mobileMode" [detailContact]="selectedContact"></app-contact-details>
+            {{selectedContact.name}}
+            <app-contact-details [mobile]="mobileMode" ></app-contact-details>
         
         </div>
     </div>
@@ -48,7 +48,7 @@
 <div class="overlay" [ngClass]="{'show-overlay': contactService.showSlider}">
     <app-add-contact  [mobile]="mobileMode" (showNotification)="showSnackbar()"
         [contact]="contactService.slideInMode == 'edit' ?  contactService.selectedContact : contactService.emptyContact"
-        (listUpdate)="sessionDataService.getRegisterLetters;" (isClosed)="contactService.slideOutPopup($event)"
+        (isClosed)="contactService.slideOutPopup($event)"
         [slideIn]="contactService.showSlider">
     </app-add-contact>
 </div>

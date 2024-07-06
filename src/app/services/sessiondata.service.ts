@@ -21,7 +21,7 @@ import { ContactsService } from './contacts.service';
   providedIn: 'root',
 })
 export class SessiondataService {
-  public registerLettersSubject = new Subject<string[]>();
+ 
   docId = '';
   unsubGuest: any;
   firestore: Firestore = inject(Firestore);
@@ -35,6 +35,7 @@ export class SessiondataService {
     tasks: [],
   };
   userSubject: BehaviorSubject<any> = new BehaviorSubject({});
+  public _selectedContact : BehaviorSubject<any> = new BehaviorSubject({});
   contacts = [];
   tasks = [];
   profileBadgeColors = [
@@ -54,7 +55,7 @@ export class SessiondataService {
     '#FF4646',
     '#FFBB2B',
   ];
-  registerLetters: string[] = [];
+ 
   fadeout: 'show' | 'hide' = 'show';
   reqTaskStatus: 'toDo' | 'inProgress' | 'awaitFeedback' | 'done' = 'toDo';
   public initials = new Subject<string>();
@@ -63,6 +64,7 @@ export class SessiondataService {
   unsubUser:any;
 
   constructor(private userService: UserdataService) {
+   
     this.docId = this.userService.loadIdFromSessionStorage();
 
     this.unsubUser = onSnapshot(
@@ -74,9 +76,16 @@ export class SessiondataService {
         this.userSubject.next(this.user);
         if (this.user) {
           this.initials.next(this.getInitials(this.user.name));
+          this.username.next(this.user.name);
+
+          if(this.selectedContact.name === ''){
+            this.getFirstContact(this.user.contacts)
+            this._selectedContact.next(this.selectedContact)
+          }
+
          
           
-          this.username.next(this.user.name);
+          
         }
       }
     );
@@ -106,7 +115,6 @@ ngOnInit(){
     await updateDoc(docRef, {
       contacts: contact,
     });
-    this.getRegisterLetters(contact);
   }
 
   async setTask(task: Task[]) {
@@ -128,8 +136,6 @@ ngOnInit(){
     });
     if (update) this.setContact(newContacts);
     update = false;
-    this.getRegisterLetters(this.user.contacts);
-    // this.contactService.getFirstContact();
   }
 
   getInitials(name: string) {
@@ -153,16 +159,7 @@ ngOnInit(){
     ];
   }
 
-  getRegisterLetters(contacts: Contact[]) {
-    this.registerLetters = [];
-    contacts.forEach((contact) => {
-      if (!this.registerLetters.includes(contact.register)) {
-        this.registerLetters.push(contact.register);
-      }
-    });
-    this.registerLetters.sort();
-    this.registerLettersSubject.next(this.registerLetters);
-  }
+ 
   compare(a: Contact, b: Contact) {
     if (a.register < b.register) {
       return -1;
@@ -172,4 +169,36 @@ ngOnInit(){
     }
     return 0;
   }
+
+  selectedContact: Contact = {
+    contactID: '',
+    badgecolor: '',
+    name: '',
+    email: '',
+    phone: '',
+    initials: '',
+    register: '',
+    selected: false,
+  };
+
+
+  getFirstContact(contacts : Contact[]) {
+   
+    
+    let contactArray = contacts
+    contactArray.sort(this.compare);
+    this.selectedContact = contactArray[3];
+    console.log('getFirstContact', this.selectedContact);
+  }
+
+ 
+  showContactDetails(currentContact: Contact) { 
+    console.log('showcontact', currentContact);
+    
+    this.selectedContact = currentContact;
+    this._selectedContact.next(this.selectedContact);
+    console.log(this._selectedContact);
+    
+  }
+
 }

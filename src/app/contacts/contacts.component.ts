@@ -1,4 +1,10 @@
-import { Component, HostListener, OnInit, Renderer2 } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  HostListener,
+  OnInit,
+  Renderer2,
+} from '@angular/core';
 import { Contact } from '../interfaces/contact.interface';
 import { SinglecontactComponent } from './singlecontact/singlecontact.component';
 import { CommonModule } from '@angular/common';
@@ -34,7 +40,7 @@ export class ContactsComponent {
   _subscriptionLetters: any;
   _subscriptionContact: any;
   $usercontact: any;
-  registerletters = [''];
+  registerLetters: string[] = [];
   localUser: User = {
     id: '',
     name: '',
@@ -79,9 +85,10 @@ export class ContactsComponent {
     public contactService: ContactsService,
     public userService: UserdataService,
     public sessionDataService: SessiondataService,
-    public activatedroute: ActivatedRoute
+    public activatedroute: ActivatedRoute,
+    private ref: ChangeDetectorRef
   ) {
-    this.registerletters = this.sessionDataService.registerLetters;
+
     this.sessionDataService.user.contacts.sort(this.sessionDataService.compare);
   }
 
@@ -98,21 +105,18 @@ export class ContactsComponent {
           this.sessionDataService.user.contacts.sort(
             this.sessionDataService.compare
           );
-          this.sessionDataService.getRegisterLetters(this.localUser.contacts);
+          this.getRegisterLetters(this.localUser.contacts);
         }
 
-        this.registerletters = this.sessionDataService.registerLetters;
+  
       });
 
-    this._subscriptionLetters =
-      this.sessionDataService.registerLettersSubject.subscribe(
-        (letters: string[]) => {
-          this.registerletters = letters;
-        }
-      );
-    this._subscriptionContact = this.contactService._selectedContact.subscribe(
+    
+    this._subscriptionContact = this.sessionDataService._selectedContact.subscribe(
       (contact: Contact) => {
-        this.selectedContact = contact;
+        if (contact) this.selectedContact = contact;
+       
+        // this.ref.detectChanges();
       }
     );
   }
@@ -154,5 +158,17 @@ export class ContactsComponent {
     setTimeout(() => {
       this.showNotification = false;
     }, 2500);
+  }
+
+  getRegisterLetters(contacts: Contact[]) {
+    this.registerLetters = [];
+    contacts.forEach((contact) => {
+      if (!this.registerLetters.includes(contact.register)) {
+        this.registerLetters.push(contact.register);
+      }
+    });
+    this.registerLetters.sort();
+    console.log(this.registerLetters);
+    
   }
 }

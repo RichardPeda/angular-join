@@ -750,3 +750,14 @@ input[type='radio']:hover {
 .low-opacity{
     opacity: 0.2;
 }
+
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+ .card-box.cdk-drop-list-dragging .card-box:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  

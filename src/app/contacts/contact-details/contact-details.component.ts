@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { Contact } from '../../interfaces/contact.interface';
 import { CommonModule } from '@angular/common';
 import { ContactsService } from '../../services/contacts.service';
@@ -13,14 +13,14 @@ import { ClickOutsideDirective } from '../../shared/click-outside.directive';
   styleUrl: './contact-details.component.scss',
 })
 export class ContactDetailsComponent {
-  @Input() detailContact: Contact = {
-    contactID: '3',
-    badgecolor: '#FFA35E',
-    initials: 'AF',
-    register: 'A',
-    name: 'Arne Fröhlich',
-    email: 'fröhlich@24-7.com',
-    phone: '+49 815 79183212',
+  detailcontact: Contact = {
+    contactID: '',
+    badgecolor: '',
+    initials: '',
+    register: '',
+    name: '',
+    email: '',
+    phone: '',
     selected: false,
   };
 
@@ -29,12 +29,30 @@ export class ContactDetailsComponent {
   showDialog = false;
   cooldown = false;
   RECHARGE_TIME = 100; //ms
+  _subscriptionContact: any;
 
   constructor(
     public contactService: ContactsService,
-    public sessionService: SessiondataService
-  ) {}
+    public sessionService: SessiondataService,
+    private ref: ChangeDetectorRef
+  ) {
+    // console.log('neuer kontakt details selected', this.detailcontact);
+    this._subscriptionContact = this.sessionService._selectedContact.subscribe(
+      (contact: Contact) => {
+        if (contact) this.detailcontact = contact;
+        // this.ref.detectChanges();
+      }
+    );
+  }
 
+  ngOnInit() {
+   
+   
+  }
+
+  ngOnDestroy() {
+    this._subscriptionContact.unsubscribe();
+  }
   /**
    * Starts a short cooldown to prevent too much trigger events.
    */
@@ -64,7 +82,7 @@ export class ContactDetailsComponent {
   /**
    * Select the first contact of the list to fill the details component.
    */
-  getFirstContact() {
-    this.contactService.getFirstContact();
-  }
+  // getFirstContact() {
+  //   this.sessionService.getFirstContact();
+  // }
 }

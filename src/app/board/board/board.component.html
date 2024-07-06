@@ -58,7 +58,7 @@
 
                     @for (task of localUser.tasks; track task; let index = $index) {
 
-                    @if (task.status === 'toDo') {<app-board-card (setTask)="updateTaskStatus()"
+                    @if (task.status === 'toDo') {<app-board-card class="card-box" (setTask)="updateTaskStatus()"
                         (cdkDragStarted)="drag($event,task)" draggable="true" appClickTarget
                         (click)="openDetailDialog($event,index)" [task]="task" cdkDrag
                         [ngClass]="{'low-opacity': filterActive && !filteredTasks.includes(task.taskID)}"></app-board-card>}
@@ -91,7 +91,7 @@
                     (cdkDropListExited)="setGhostCard($event)">
                     @for (task of localUser.tasks; track task; let index = $index) {
 
-                    @if (task.status === 'inProgress') {<app-board-card (setTask)="updateTaskStatus()"
+                    @if (task.status === 'inProgress') {<app-board-card class="card-box" (setTask)="updateTaskStatus()"
                         (click)="openDetailDialog($event,index)" [task]="task" (cdkDragStarted)="drag($event,task)"
                         draggable="true" cdkDrag
                         [ngClass]="{'low-opacity': filterActive && !filteredTasks.includes(task.taskID)}"></app-board-card>}
@@ -121,7 +121,7 @@
                     [cdkDropListData]="awaitFeedback" (cdkDropListDropped)="drop($event)"
                     (cdkDropListEntered)="resetGhostCard($event)" (cdkDropListExited)="setGhostCard($event)">
                     @for (task of localUser.tasks; track task; let index = $index) {
-                    @if (task.status === 'awaitFeedback') {<app-board-card (setTask)="updateTaskStatus()"
+                    @if (task.status === 'awaitFeedback') {<app-board-card class="card-box" (setTask)="updateTaskStatus()"
                         (click)="openDetailDialog($event, index)" [task]="task" (cdkDragStarted)="drag($event,task)"
                         draggable="true" cdkDrag
                         [ngClass]="{'low-opacity': filterActive && !filteredTasks.includes(task.taskID)}"></app-board-card>}
@@ -143,7 +143,7 @@
                     (cdkDropListDropped)="drop($event)" (cdkDropListEntered)="resetGhostCard($event)"
                     (cdkDropListExited)="setGhostCard($event)">
                     @for (task of localUser.tasks; track task; let index = $index) {
-                    @if (task.status === 'done') {<app-board-card (setTask)="updateTaskStatus()"
+                    @if (task.status === 'done') {<app-board-card class="card-box" (setTask)="updateTaskStatus()"
                         (click)="openDetailDialog($event,index)" [task]="task" (cdkDragStarted)="drag($event,task)"
                         draggable="true" cdkDrag
                         [ngClass]="{'low-opacity': filterActive && !filteredTasks.includes(task.taskID)}"></app-board-card>}

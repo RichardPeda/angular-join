@@ -2,14 +2,14 @@ import { Injectable, OnChanges, inject } from '@angular/core';
 import { Contact } from '../interfaces/contact.interface';
 import { UserdataService } from './userdata.service';
 import { SessiondataService } from './sessiondata.service';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ContactsService {
   showSlider = false;
-  public _selectedContact = new Subject<Contact>();
+  public _selectedContact : BehaviorSubject<any> = new BehaviorSubject({});
   slideInMode = 'add' || 'edit';
 
   dummycontacts: Contact[] = [
@@ -123,7 +123,7 @@ export class ContactsService {
     initials: 'AF',
     register: 'A',
     name: 'Arne Bär',
-    email: 'fröhlich@24-7.com',
+    email: 'froehlich@24-7.com',
     phone: '+49 815 79183212',
     selected: false,
   };
@@ -140,11 +140,14 @@ export class ContactsService {
   };
 
   constructor(private sessionService: SessiondataService) {
-    this.getFirstContact();
+   
   }
 
   ngOnInit() {
     this._selectedContact.next(this.selectedContact);
+    // this.getFirstContact()
+    
+    
   }
 
   ngDoCheck() {
@@ -153,17 +156,20 @@ export class ContactsService {
     }
   }
 
-  getFirstContact() {
+  
+
+  selectContact(id: string) {
     let contactArray = this.sessionService.user.contacts;
     contactArray.sort(this.sessionService.compare);
-    this.selectedContact = contactArray[0];
-    this._selectedContact.next(this.selectedContact);
+    contactArray.forEach((contact) => {
+      if (contact.contactID === id) {
+        this.selectedContact = contact;
+        this._selectedContact.next(this.selectedContact);
+      }
+    });
   }
 
-  showContactDetails(currentContact: Contact) {
-    this.selectedContact = currentContact;
-    this._selectedContact.next(this.selectedContact);
-  }
+  
 
   editContact(currentContact: Contact) {
     this.selectedContact = currentContact;
