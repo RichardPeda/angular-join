@@ -48,12 +48,24 @@ export class UserdataService {
     });
   }
 
+  /**
+   * Returns the user when the name is found
+   * @param name username
+   * @param user current user
+   * @returns user if name is found
+   */
   getCurrentUserName(name: string, user: any) {
     if (user.name == name) {
       return user;
     }
   }
 
+  /**
+   * This function creates takes the user data and add the user id. Returns an user object.
+   * @param id ID from firebase
+   * @param user user data from firebase
+   * @returns complete user with id and date
+   */
   getCurrentUserData(id: string, user: DocumentData): User {
     let currentuser: User = {
       id: id,
@@ -177,6 +189,9 @@ export class UserdataService {
     });
   }
 
+  /**
+   * Login as a guest user
+   */
   loginAsGuest() {
     this.allUsers.forEach((user) => {
       if (user.name == 'guest') {
@@ -187,29 +202,56 @@ export class UserdataService {
     });
   }
 
+  /**
+   * This function saves the user id in the session storage for later purposes.
+   * @param id user id
+   */
   saveIdInSessionStorage(id: string) {
     sessionStorage.setItem('userId', id);
   }
 
+  /**
+   * This function saves any data string in the sessionStorage with a given key.
+   * @param key storage key
+   * @param data data string
+   */
   saveDataInSessionStorage(key: string, data: string) {
     sessionStorage.setItem(key, data);
   }
+
+  /**
+   * This function deletes a key in the sessionStorage
+   * @param key storage key
+   */
   deleteDataInSessionStorage(key: string) {
     sessionStorage.removeItem(key);
   }
 
+  /**
+   * This fuction returns an user id from the sessionStorage if available.
+   * @returns id or empty string
+   */
   loadIdFromSessionStorage(): string {
     let id = sessionStorage.getItem('userId');
     if (id) return id;
     else return '';
   }
 
+  /**
+   * This function loads data from sessionStorage with a given key if available.
+   * @param key storage key
+   * @returns data string
+   */
   loadDataFromSessionStoarage(key: string): string {
     let dataString = sessionStorage.getItem(key);
     if (dataString) return dataString;
     else return '';
   }
 
+  /**
+   * This function load user data from cloud firestore
+   * @param docId firebase doc id
+   */
   async getUserData(docId: string) {
     const docRef = doc(this.getUserRef(), docId);
     const docSnap = await getDoc(docRef);

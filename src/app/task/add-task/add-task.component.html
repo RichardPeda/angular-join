@@ -4,8 +4,8 @@
     <form id="addTask-form" (submit)="createTask()" [formGroup]="taskForm">
         <div class="addTask-column-wrapper">
 
-            <svg (click)="closeDialog()"  class="detail-close" width="13" height="14"
-                viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg (click)="closeDialog()" class="detail-close" width="13" height="14" viewBox="0 0 13 14" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M6.24953 7.00008L11.4925 12.2431M1.00653 12.2431L6.24953 7.00008L1.00653 12.2431ZM11.4925 1.75708L6.24853 7.00008L11.4925 1.75708ZM6.24853 7.00008L1.00653 1.75708L6.24853 7.00008Z"
                     stroke="#2A3647" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -66,8 +66,8 @@
             <div class="addTask-column right-column">
                 <div class="addTask-input-element">
                     <label class="addTask-label required" for="addTask-input-date">Due Date</label>
-                    <input formControlName="date" class="addTask-inputField" type="date" min="{{currentDate}}" id="addTask-input-date"
-                        placeholder="dd/mm/yy" />
+                    <input formControlName="date" class="addTask-inputField" type="date" min="{{currentDate}}"
+                        id="addTask-input-date" placeholder="dd/mm/yy" />
                     <div class="login-error"
                         [ngClass]="{'full-opacity': validateRequiredFormMessage(taskForm.controls['date']) || showAllRequiredMessages(taskForm.controls['date'])}">
                         <p>This field is required</p>
@@ -112,9 +112,11 @@
                 <!-- Subtasks -->
                 <div class="addTask-input-element">
                     <label class="addTask-label" for="addTask-subtask-input">Subtask</label>
-                    <div appClickOutsideMenu (clickOutside)="disableSubtaskInput()" (dblclick)="enableSubtaskInput()"  class="addTask-inputField-subtask">
-                        <input (dblclick)="enableSubtaskInput()"  formControlName="subtask" class="addTask-inputField-sub" type="text" #participantRef
-                            id="addTask-subtask-input" placeholder="Add new Subtask" />
+                    <div appClickOutsideMenu (clickOutside)="disableSubtaskInput()" (dblclick)="enableSubtaskInput()"
+                        class="addTask-inputField-subtask">
+                        <input (dblclick)="enableSubtaskInput()" formControlName="subtask"
+                            class="addTask-inputField-sub" type="text" #participantRef id="addTask-subtask-input"
+                            placeholder="Add new Subtask" />
 
                         <div id="addTask-delete-accept-container" [ngClass]="{'d-none' : subtaskInputDisable}"
                             class="addTask-delete-accept-container">
@@ -156,7 +158,8 @@
                             stroke="#2A3647" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </button>
-                <button (click)="btnIsClicked()" id="addTask-submit-btn" type="submit"
+                <button [disabled]="taskForm.invalid" [ngClass]="{'form-validate' : taskForm.valid}"
+                    (click)="btnIsClicked()" id="addTask-submit-btn" type="submit"
                     class="addTask-control-btn create-btn">
                     Create Task
                     <svg class="create-svg" width="38" height="30" viewBox="0 0 38 30" fill="none"
@@ -171,5 +174,5 @@
 
 </div>
 @if (showNotification) {
-    <app-popup-notification [svgContent]="'board'" [label]="notificationText"></app-popup-notification>
-    }
+<app-popup-notification [svgContent]="'board'" [label]="notificationText"></app-popup-notification>
+}

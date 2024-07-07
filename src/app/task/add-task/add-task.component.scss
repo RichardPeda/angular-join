@@ -21,7 +21,8 @@
             "leftspace content rightspace "
             "navbar navbar navbar ";
     }
-    @media (max-width: 490px){
+
+    @media (max-width: 490px) {
         grid-template-columns: 5px 1fr 5px;
     }
 }
@@ -437,7 +438,8 @@
     padding: 16px;
     font-size: 21px;
     cursor: pointer;
-    @media(max-width: 330px){
+
+    @media(max-width: 330px) {
         font-size: 16px !important;
         text-wrap: nowrap;
     }
@@ -464,6 +466,19 @@
     border: 1px solid $clr-dark-gray;
     background-color: $clr-dark-gray;
     color: white;
+    opacity: 0.3;
+    cursor: not-allowed;
+
+}
+
+.form-validate {
+    opacity: 1;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $clr-light-blue;
+        border-color: $clr-light-blue;
+    }
 }
 
 .create-svg {
@@ -473,10 +488,6 @@
     flex-shrink: 0;
 }
 
-.addTask-control-btn:last-child:hover {
-    background-color: $clr-light-blue;
-    border-color: $clr-light-blue;
-}
 
 .popup {
     grid-template-columns: 1fr;
@@ -549,7 +560,7 @@
         margin-bottom: 80px;
     }
 
-    .cancel-btn{
+    .cancel-btn {
         display: none;
     }
 }
@@ -569,7 +580,7 @@
 
 @media (max-width: 450px) {
 
-   
+
     .addTask-controls {
         max-width: 100%;
         left: 0;
@@ -634,15 +645,16 @@ app-task-added-snackbar {
     }
 }
 
-.wrapper{
+.wrapper {
     margin: 50px;
     padding: 1px;
-    @media (max-width: 650px){
+
+    @media (max-width: 650px) {
         margin-inline: auto;
     }
 }
 
-.detail-close{
+.detail-close {
     cursor: pointer;
     position: absolute;
     top: 50px;

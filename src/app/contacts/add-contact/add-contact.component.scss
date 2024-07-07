@@ -114,7 +114,7 @@
 
     @media (max-width: 1212px) {
         width: 100%;
-       
+
     }
 
 }
@@ -231,7 +231,8 @@ label {
     align-items: center;
     gap: 16px;
     border: none;
-    cursor: pointer;
+    cursor: not-allowed;
+    opacity: 0.3;
 
     img {
         width: 15.5px;
@@ -239,10 +240,17 @@ label {
     }
 }
 
-.btn-grey:hover {
-    background-color: $clr-light-blue;
-    box-shadow: $btn-hvr-box-shadow;
+.form-validate {
+    opacity: 1;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $clr-light-blue;
+        box-shadow: $btn-hvr-box-shadow;
+    }
 }
+
+
 
 .cancel-create-buttons-container {
     display: flex;

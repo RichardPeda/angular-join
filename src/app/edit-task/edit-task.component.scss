@@ -438,6 +438,18 @@
     border: 1px solid $clr-dark-gray;
     background-color: $clr-dark-gray;
     color: white;
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.form-validate {
+    opacity: 1;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $clr-light-blue;
+        border-color: $clr-light-blue;
+    }
 }
 
 .create-svg {
@@ -447,10 +459,7 @@
     flex-shrink: 0;
 }
 
-.addTask-control-btn:last-child:hover {
-    background-color: $clr-light-blue;
-    border-color: $clr-light-blue;
-}
+
 
 .popup {
     grid-template-columns: 1fr;

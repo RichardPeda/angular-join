@@ -17,9 +17,13 @@ export class ClickOutsideDirective {
 
   @HostListener('document:click', ['$event.target'])
   public onClick(target: any) {
-    let innerTarget = target as HTMLElement;  
+    let innerTarget = target as HTMLElement;
 
-    const clickedInside = this.elementRef.nativeElement.contains(innerTarget) || innerTarget.className == 'svg';
+    const clickedInside =
+      this.elementRef.nativeElement.contains(innerTarget) ||
+      innerTarget.nodeName == 'svg' ||
+      innerTarget.nodeName == 'rect' ||
+      innerTarget.nodeName == 'path';
 
     if (!clickedInside) {
       setTimeout(() => {

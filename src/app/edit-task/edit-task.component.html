@@ -139,7 +139,7 @@
             <p class="addTask-hint">This field is required</p>
             <div class="addTask-control-btn-container">
                
-                <button (click)="btnIsClicked()" id="addTask-submit-btn" type="submit"
+                <button [disabled]="taskForm.invalid" [ngClass]="{'form-validate': !taskForm.invalid}" (click)="btnIsClicked()" id="addTask-submit-btn" type="submit"
                     class="addTask-control-btn create-btn">
                     Ok
                     <svg class="create-svg" width="38" height="30" viewBox="0 0 38 30" fill="none"

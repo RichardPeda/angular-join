@@ -34,9 +34,10 @@
             #contactform="ngForm">
             <div class="inputfields">
                 <label id="input-name-label">
-                    <input #name="ngModel" name="name" [(ngModel)]="preparedcontact.name" class="contact-inputField" type="text"
-                        id="contact-input-name" placeholder="Name" required>
-                    <div class="login-error" [ngClass]="{'full-opacity': name.invalid && name.touched || (name.invalid && contactform.submitted)}">
+                    <input #name="ngModel" name="name" [(ngModel)]="preparedcontact.name" class="contact-inputField"
+                        type="text" id="contact-input-name" placeholder="Name" required>
+                    <div class="login-error"
+                        [ngClass]="{'full-opacity': name.invalid && name.touched || (name.invalid && contactform.submitted)}">
                         <p>This field is required. Please enter a name</p>
                     </div>
 
@@ -46,7 +47,8 @@
                     <input #email="ngModel" name="email" [(ngModel)]="preparedcontact.email" class="contact-inputField"
                         type="email" id="contact-input-email" placeholder="Email" required
                         pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,4}">
-                    <div class="login-error" [ngClass]="{'full-opacity': email.invalid && email.touched || (email.invalid && contactform.submitted)}">
+                    <div class="login-error"
+                        [ngClass]="{'full-opacity': email.invalid && email.touched || (email.invalid && contactform.submitted)}">
                         <p>This field is required. Please enter a email address</p>
                     </div>
                 </label>
@@ -55,7 +57,8 @@
                 <label id="input-phone-label">
                     <input #phone="ngModel" name="phone" [(ngModel)]="preparedcontact.phone" class="contact-inputField"
                         type="tel" id="contact-input-phone" placeholder="Phone" required pattern="[+0-9\s]{4,}">
-                    <div class="login-error" [ngClass]="{'full-opacity': phone.invalid && phone.touched || (phone.invalid && contactform.submitted)}">
+                    <div class="login-error"
+                        [ngClass]="{'full-opacity': phone.invalid && phone.touched || (phone.invalid && contactform.submitted)}">
                         <p>This field is required. Please enter a phone number</p>
                     </div>
                 </label>
@@ -67,11 +70,14 @@
                 <button (click)="closePopup(); contactform.reset()" [ngClass]="{'d-none': mobile}"
                     class="btn-white btn-pos" type="reset">Cancel <img src="../../../assets/img/cancel.svg"
                         alt=""></button>
-                <button id="createContactBtn" type="submit" class="btn-grey img-white btn-pos">
+                <button [disabled]="contactform.invalid" [ngClass]="{'form-validate': !contactform.invalid}"
+                    id="createContactBtn" type="submit" class="btn-grey img-white btn-pos">
                     Create contact<img src="../../../assets/img/checked.svg"></button>
                 }@else {
-                <button class="btn-white btn-pos" (click)="sessionService.deleteContact(preparedcontact); sessionService.showOtherContact()">Delete</button>
-                <button id="createContactBtn" type="submit" class="btn-grey img-white btn-pos">
+                <button class="btn-white btn-pos"
+                    (click)="sessionService.deleteContact(preparedcontact); sessionService.showOtherContact()">Delete</button>
+                <button [disabled]="contactform.invalid" [ngClass]="{'form-validate': !contactform.invalid}"
+                    id="createContactBtn" type="submit" class="btn-grey img-white btn-pos">
                     Save<img src="../../../assets/img/checked.svg"></button>
                 }
 
