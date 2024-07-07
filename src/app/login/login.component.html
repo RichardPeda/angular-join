@@ -68,11 +68,20 @@
         </div>
     </form>
 
+   
+    <div class="link-container">
+        <a (click)="linkToPrivacyPolicy()"> Privacy policy</a>
+        <a (click)="linkToLegalNotice()"> Legal Notice</a>
+    </div>
+
     <app-logo-animation [ngClass]="{disabled: mobileMode}"></app-logo-animation>
     <app-logo-animation-mobile [ngClass]="{disabled: !mobileMode}"></app-logo-animation-mobile>
 
 
 </div>
+
+
+
 @if (showNotification) {
 <app-popup-notification [label]="notificationText"></app-popup-notification>
 }

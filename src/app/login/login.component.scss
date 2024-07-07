@@ -4,6 +4,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     min-height: 100vh;
     background-color: rgb(243, 243, 243);
 }
@@ -469,5 +470,19 @@ footer {
 
 .disabled{
     display: none;
+}
+
+.link-container{
+    display: flex;
+    gap: 16px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 30px;
+    a{
+        font-size: 16px;
+        color: $clr-font-light;
+        cursor: pointer;
+    }
 }
 

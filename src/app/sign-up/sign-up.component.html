@@ -85,6 +85,11 @@
         <input [ngClass]="{'form-validate' :  newUserForm.valid && checkbox}" class="signUp-btn" type="submit"
             [disabled]="newUserForm.invalid || !checkbox" value="Sign up" />
     </form>
+
+    <div class="link-container">
+        <a (click)="linkToPrivacyPolicy()"> Privacy policy</a>
+        <a (click)="linkToLegalNotice()"> Legal Notice</a>
+    </div>
 </div>
 @if (showNotification) {
 <app-popup-notification [label]="notificationText"></app-popup-notification>

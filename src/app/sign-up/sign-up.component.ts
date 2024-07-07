@@ -151,4 +151,8 @@ export class SignUpComponent {
   linkToPrivacyPolicy(){
     this.router.navigate(['privacy-policy-blank'])
   }
+
+  linkToLegalNotice(){
+    this.router.navigate(['legal-notice-blank'])
+  }
 }

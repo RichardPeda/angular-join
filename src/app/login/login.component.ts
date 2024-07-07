@@ -200,4 +200,11 @@ export class LoginComponent {
   updateCheckbox(completed: boolean) {
     this.checkbox = completed;
   }
+
+  linkToLegalNotice() {
+    this.router.navigate(['legal-notice-blank']);
+  }
+  linkToPrivacyPolicy() {
+    this.router.navigate(['privacy-policy-blank']);
+  }
 }

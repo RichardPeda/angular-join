@@ -406,3 +406,17 @@ footer {
 .full-opacity{
     opacity: 1 !important;
 }
+
+.link-container{
+    display: flex;
+    gap: 16px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 30px;
+    a{
+        font-size: 16px;
+        color: $clr-font-light;
+        cursor: pointer;
+    }
+}

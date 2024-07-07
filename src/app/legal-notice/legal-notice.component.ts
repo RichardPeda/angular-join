@@ -3,6 +3,7 @@ import { HeaderComponent } from '../shared/modules/header/header.component';
 import { NavbarComponent } from '../shared/modules/navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { UserdataService } from '../services/userdata.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-legal-notice',
@@ -15,7 +16,11 @@ export class LegalNoticeComponent {
   docId = '';
  
 
-  constructor(  private userService: UserdataService,){
+  constructor(  private userService: UserdataService, private _location :Location){
     this.docId = this.userService.loadIdFromSessionStorage()!;
+  }
+
+  navigateBack() {
+    this._location.back();
   }
 }
